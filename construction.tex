@@ -1,0 +1,1423 @@
+\chapter{Constructing Groups}
+
+In Chapter 2 we saw a simple way that we could combine two groups to 
+get a third group: the direct product.  In this chapter we look at 
+other ways to construct new groups from already known groups.
+
+\section{Quotient Groups}
+
+Let $G$ be a group, and $N$ a normal subgroup of $G$.  We can (at least
+potentially) define a binary operation $\ast$ on the set of cosets of $N$
+by
+\[
+  Nx \ast Ny = Nxy.
+\]
+The difficulty with this definition is that there may be many
+different choices for $x'$ and $y'$, so that $Nx' = Nx$
+and $Ny = Ny'$, and it is not immediate why we should have $Nxy =
+Nx'y'$.  However they are in fact equal since $x' = ux$ and $y' = vy$ for some
+$u$ and $v \in N$, and since $N$ is normal, we have $z = xvx^{-1} \in N$, so
+\[
+  x'y' = uxvy = uxvx^{-1}xy = (uz)xy,
+\]
+so $Nx'y' = N(uz)xy = Nxy$.  So $\ast$ is a well-defined binary 
+operation, and it is only well-defined if $N$ is normal.
+
+\begin{proposition}
+  Let $G$ be a group and $N$ a normal subgroup of $G$.  Let $G/N$ be the set
+  of all cosets of $N$ in $G$. Then $(G/N, \ast, N)$ is a group.
+\end{proposition}
+\begin{proof}
+  We first observe that $G/N$ is associative, since for any right cosets
+  $Nx$, $Ny$ and $Nz \in G/N$, we have
+  \[
+    (Nx \ast Ny) \ast Nz = Nxy \ast Nz = Nxyz = Nx \ast Nyz = Nx 
+    \ast (Ny \ast Nz).
+  \]
+  
+  The set $N$ is an identity, since $N = Ne$, and so
+  \[
+    Ne \ast Nx = Nex = Nx \qquad \text{and} Nx \ast Ne = Nxe = Nx.
+  \]
+  
+  Finally, $Nx^{-1}$ is the inverse of $Nx$, since
+  \[
+    Nx \ast Nx^{-1} = Nxx^{-1} = Ne = N \qquad \text{and} \qquad 
+    Nx^{-1} \ast Nx = Nx^{-1}x = Ne = N.
+  \]
+\end{proof}
+
+In fact, there is another way of looking at this product.  If we 
+consider cosets $Nx$ and $Ny$, then we have that the product of the 
+cosets as sets is
+\[
+  (Nx)(Ny) = (xN)(Ny) = (xN^{2})y = (xN)y = (Nx)y = Nxy,
+\]
+recalling that $Nx = xN$ since $N$ is normal, and $N^{2} = N$ since
+$N$ is a subgroup.  In other words, $Nx \ast Ny$ is given by the
+product of sets $(Nx)(Ny)$.  In some texts this is used as the 
+definition of the product.
+
+\begin{definition}
+  If $G$ is a group, and $N$ a normal subgroup of $G$, then we call $G/N$ the 
+  \defn{quotient group}{quotient group} of $N$ in $G$.  
+\end{definition}
+
+\begin{example}
+  Let $D_{6} = \{1, a, a^{2}, b, ab, a^{2}b\}$ as usual.  If $N = 
+  \{1, a, a^{2}\}$, then $N$ is normal, and the cosets are $N$ and 
+  $Nb$.  Then the Cayley table of $D_{6}/N$ is simply
+  \[
+    \begin{array}{c|cc}
+      \ast & N & Nb \\
+      \hline
+      N & N & Nb \\
+      Nb & Nb & N
+    \end{array}
+  \]
+  Clearly, $D_{6}/N \isom C_{2}$.
+\end{example}
+
+\begin{example}
+  The additive group of integers is Abelian, so every subgroup is 
+  normal.  If we have a subgroup of the form
+  \[
+    N = m\integers = \{mx : x \in \integers \},
+  \]
+  then we observed in Example~\ref{eg:equivmodm} that the cosets of 
+  this subgroup are the sets of numbers which have the same remainer 
+  modulo $m$, or more concretely,
+  \[
+    \integers/N = \{N, N + 1, N + 2, \ldots, N + (m-1)\}.
+  \]
+  The group operation on these cosets is just
+  \[
+    (N + x) + (N + y) = N + (x+y) = N + z,
+  \]
+  where $z = x + y \pmod{m}$.  In other words $\integers/m\integers 
+  \isom Z_{m}$.  Indeed, this is a common way of defining addition modulo 
+  $m$.
+\end{example}
+
+From the theory developed in the previous chapters, we can 
+immediately conclude the following.
+
+\begin{proposition}
+  Let $G$ be a group, and $N$ a subgroup of $G$.  Then
+  \begin{theoremenum}
+    \item if $|G|$ is finite, then $|G/N| = |G|/|N|$,
+    \item the function $\alpha(x) = Nx$ is a homomorphism from $G$ 
+    to $G/N$, and $\ker \alpha = N$.
+  \end{theoremenum}
+\end{proposition}
+\begin{proof}
+  (i) This is immediate from the fact that $|G/N| = [G : N]$ and 
+  Lagrange's Theorem.
+  
+  (ii) That $\alpha$ is a homomorphism follows immediately from the 
+  fact that
+  \[
+    \alpha(x) \ast \alpha(y) = Nx \ast Ny = Nxy = \alpha(xy).
+  \]
+  It is immediate that $N \subseteq \ker \alpha$, since if $x \in 
+  N$, $\alpha(x) = Nx = N$.  Similarly, if $\alpha(x) = N$, then 
+  $Nx = N$, which only happens when $x \in N$. So $\ker \alpha = N$.
+\end{proof}
+
+\begin{corollary}
+  A subgroup $N$ of a group $G$ is normal if and only if it is the 
+  kernel of some homomorphism.
+\end{corollary}
+
+The relationship between quotient groups and homomorphisms is 
+significantly deeper than this corollary, however.  These 
+relationships are encapsulated in a trilogy of theorems called the 
+Isomorphism Theorems.  Unfortunately there is little consensus about 
+which of the three should be first, second and third.
+
+\begin{theorem}[First Isomorphism Theorem]
+  Let $G$ and $H$ be groups, and $\alpha: G \to H$ a homomorphism.  
+  Then
+  \[
+    \alpha(G) \isom G/\ker \alpha.
+  \]
+\end{theorem}
+\begin{proof}
+  For simplicity of notation, let $N = \ker \alpha$.
+  
+  We would like to define a function $\beta : G/\ker \alpha \to
+  \alpha(G)$ by $\beta(Nx) = \alpha(x)$, but it's not clear that this 
+  is a well-defined function.  To verify that this definition is 
+  good, we need to show that if $Nx = Ny$ then $\beta(Nx) = 
+  \beta(Ny)$ so that the value of $\beta$ does not depend on the choice 
+  of $x$.
+  
+  Now if $Nx = Ny$ we have that $xy^{-1} \in N$, so $\alpha(xy^{-1}) = 
+  e$, and hence
+  \[
+    \alpha(y) = e\alpha(y) = \alpha(xy^{-1})\alpha(y) = 
+    \alpha(xy^{-1}y) = \alpha(x).
+  \]
+  So we conclude that if $Nx = Ny$ then $beta(Nx) = \beta(Ny)$, and 
+  so $\beta$ is well-defined.
+  
+  Furthermore, $\beta$ is a homomorphism, since
+  \[
+    \beta(Nx \ast Ny) = \beta(Nxy) = \alpha(xy) = 
+    \alpha(x)\alpha(y) = \beta(Nx)\beta(Ny).
+  \]
+  
+  We also have that $\beta$ is onto, since if $y \in \alpha(G)$, then 
+  $y = \alpha(x)$ for some $x \in G$, but then $y = \beta(Nx)$.
+  
+  Finally, if $\beta(Nx) = \beta(Ny)$, then $\alpha(x) = \alpha(y)$, so
+  \[
+    \alpha(xy^{-1}) = \alpha(x)(\alpha(y))^{-1} = 
+    \alpha(x)(\alpha(x))^{-1} = e.
+  \]
+  This means that $xy^{-1} \in \ker \alpha = N$, so $Nx = Ny$.  
+  Hence $\beta$ is one-to-one.
+  
+  So $\beta$ is an isomorphism, and we conclude that $G/\ker \alpha 
+  \isom \alpha(G)$.
+\end{proof}
+
+We will now turn to look at how the subgroup structure of $G$ and the
+subgroup structure of $G/N$ are related.  Letting $\alpha: G \to G/N$
+be given by $\alpha(x) = Nx$, we have that if $H \le G$, then
+$\alpha(H) \le G/N$ and if $K \subseteq G/N$ then $\alpha^{-1}(K) \le
+G$ from Propositions~\ref{prop:homsubgroup} and
+\ref{prop:inversehomsubgroup}.  A deeper question is if there is any 
+relationship between normal subgroups of $G$ and normal subgroups of 
+$G/N$.
+
+\begin{proposition}
+  Let $G$ be a group and $N$ a normal subgroup of $G$.  Then every
+  subgroup of $N$ is equal to $K/N$ where for some $K$ with $N \le K
+  \le G$.  Furthermore $K/N$ is normal if and only if $K$ is normal.
+\end{proposition}
+\begin{proof}
+  Let $\alpha: G \to G/N$ be given by $\alpha(x) = Nx$.
+
+  Let $H$ be a subgroup of $G/N$, and let $K = \alpha^{-1}(H)$, so
+  that $K$ is a subgroup of $G$, and since $N = \alpha^{-1}(\{e\}) 
+  \subseteq \alpha^{-1}(H)$, so $N \le K$.  So $H = \alpha(K)$ and if we
+  restrict $\alpha$ to $K$, the First Isomorphism Theorem tells us
+  that
+  \[
+    \alpha(K) \isom K/N.
+  \]
+  Furthermore, recall from the proof of the First Isomorphism Theorem
+  that this isomorphism is given by $\beta(Nx) = \alpha(x)$, and
+  $\alpha(x) = Nx$, so $\beta$ is just the identity map, and so $H =
+  K/N$.
+  
+  If $K$ is normal in $G$, then $x^{-1}Kx = K$ for each $x \in G$, and 
+  so
+  \[
+    (Nx^{-1}) \ast \alpha(K) \ast (Nx) = \alpha(x^{-1}) \ast \alpha(K)
+    \ast \alpha(x) = \alpha(x^{-1}Kx) = \alpha(K),
+  \]
+  so $H = \alpha(K)$ is normal in $G/N$.
+  
+  Conversely, if $H = K/N$ is normal in $G/N$, then
+  Theorem~\ref{thm:inversenormal} tells us immediately that
+  $\alpha^{-1}(H) = K$ is normal in $G$.
+\end{proof}
+
+Now if $N \lhd K \lhd G$, as in the last part of the Proposition, we
+note that $N$ is normal when regarded as a subgroup of $K$ also, and
+so we can take three quotients: $G/N$, $G/K$ and $K/N$.  The Second 
+Isomorphism Theorem gives us a relationship between these three 
+quotients.
+
+\begin{theorem}[Second Isomorphism Theorem]
+  Let $G$ be a group and $N$ and $K$ normal subgroups of $G$ with $N 
+  \le K$.  Then
+  \[
+    (G/N)/(K/N) \isom G/K.
+  \]
+\end{theorem}
+\begin{proof}
+  We first note that since $K$ is normal, the previous proposition tells us 
+  that $K/N$ is normal in $G/N$, and so $(G/N)/(K/N)$ is defined.
+  
+  We would like to define a function $\alpha: G/N \to G/K$ by 
+  $\alpha(Nx) = Kx$, but once again we must be careful that this 
+  well-defined, since there are multiple possible choices for $x$ 
+  which give the same coset $Nx$.  If $Nx = Ny$, then we recall that 
+  $xy^{-1} \in N$, and so $xy^{-1} \in K$ as well.  So $K = 
+  K(xy^{-1})$,
+  \[
+    \alpha(Ny) = Ky = (Kxy^{-1})y = Kx = \alpha(Ny).
+  \]
+  So this is a well-defined function.
+  
+  Furthermore, $\alpha$ is a homomorphism, since
+  \[
+    \alpha(Nx \ast Ny) = \alpha(Nxy) = Kxy = Kx \ast Ky = \alpha(Nx) 
+    \ast \alpha(Ny).
+  \]
+  We observe that $\alpha(Nx) = K$ if and only if $x \in K$, or
+  equivalently, $Nx \in K/N$.  But this means that $\ker \alpha =
+  K/N$.  We also have that since every coset of $K$ is of the form 
+  $Kx$ for some $x \in G$, we have that $\alpha(G/N) = \{ \alpha(Nx) : 
+  x \in G \} = \{ Kx : x \in G\} = G/K$, so $\alpha$ is onto.
+  
+  Now the First Isomorphism Theorem tells us that
+  \[
+    \alpha(G/N) \isom (G/N)/\ker \alpha,
+  \]
+  But we know that $\alpha(G/N) = G/K$ and $\ker \alpha = K/N$, so
+  \[
+    G/K \isom (G/N)/(K/N).
+  \]
+\end{proof}
+
+Note that this theorem essentially says that the quotient operation
+cancels in the way that you would expect a quotient to cancel: if $G$,
+$K$ and $N$ were numbers you would expect the same equation to hold.
+
+We can also ask what happens if $K$ is a general subgroup of $G$.  In
+this case we can't talk about $K/N$, since we may not have $N
+\subseteq K$.  However we do know that the meet of $K$ and $N$ is a
+subgroup of $K$.  Indeed we have that for any $x \in K$, and $y \in K
+\wedge N$ we have that $x^{-1}yx \in K$, since $K$ is a subgroup.  But
+we also have that $x^{-1}yx \in N$, since $N$ is normal.  Hence $K
+\wedge N$ is a normal subgroup of the subgroup $K$.  So we can
+consider the quotient group $K/(K \wedge N)$.  Similarly, although $N$
+is not a subgroup of $K$, we know that $N \vee K$ contains $N$, and
+since $N$ is normal, we can consider the quotient group $(K \vee N)/N$.
+
+\begin{theorem}[Third Isomorphism Theorem]
+  Let $G$ be a group, $K$ a subgroup of $G$ and $N$ a normal subgroup 
+  of $G$.  Then
+  \[
+    K/(K \wedge N) \isom (K \vee N)/N.
+  \]
+\end{theorem}
+\begin{proof}
+  Recall from Proposition~\ref{prop:normalproduct} that $K \vee N = 
+  NK$ when $N$ is normal.
+  
+  We define a function $\alpha: K \to G/N$ by $\alpha(x) = Nx$.  This
+  is a homomorphism since
+  \[
+    \alpha(xy) = Nxy = Nx \ast Ny = \alpha(x) \ast \alpha(y).
+  \]
+  The image of $\alpha$ is the set
+  \[
+    \alpha(K) = \{ Nx : x \in K \} = NK/N = (N \vee K)/N.
+  \]
+  Furthermore, the kernel of $\alpha$ is the set of $x$ such that 
+  $\alpha(x) = N$, ie.~all $x \in K$ such that $Nx = N$.  But $Nx = N$ 
+  if ans only if $x \in N$, so $x \in K \intersect N = K \wedge N$.
+  
+  So the First Isomorphism Theorem tells us that
+  \[
+    \alpha(K) = K/\ker \alpha,
+  \]
+  and so
+  \[
+    (N \vee K)/N \isom K/(K \wedge N).
+  \]
+\end{proof}
+
+
+As you may expect, quotient groups can be used to shed some light on 
+the structure of finite groups.
+
+\begin{theorem}\label{thm:centrequotient}
+  Let $G$ be a finite group which is not Abelian, and $Z(G)$ the
+  centre of $G$.  Then $G/Z(G)$ cannot be cyclic.
+\end{theorem}
+\begin{proof}
+  We first recall that $Z(G)$ is always normal, so $G/Z(G)$ is defined.
+  If $G/Z(G)$ is cyclic, then we can find an element $t$ so that 
+  $Z(G)t$ generates $G/Z(G)$, and so every coset of $Z(G)$ is of the 
+  form $Z(G)t^{k}$ for some $k$. But then given arbitrary elements $x$ 
+  and $y \in G$, we have that $x = ut^{k}$ and $y = vt^{l}$ for some 
+  $u$ and $v \in Z(G)$.  So now, since $u$ and $v$ commute with all 
+  elements of $G$,
+  \[
+    xy = ut^{k}vt^{l} = uvt^{k}t^{l} = uvt^{l}t^{k} = vt^{l}ut^{k} = 
+    yx.
+  \]
+  So $G$ is Abelian, which is a contradiction.
+\end{proof}
+
+\begin{corollary}
+  If $p$ is a prime number and $G$ is a group with order $p^{2}$, 
+  then $G$ is Abelian.
+\end{corollary}
+\begin{proof}
+  We know from Theorem~\ref{thm:centreprimepower} that the order of
+  $Z(G)$ is either $p$ or $p^{2}$.  But if $|Z(G)| = p$, then $G$ is
+  not Abelian, and we have that $|G/Z(G)| = |G|/|Z(G)| = p^{2}/p = p$,
+  so $G/Z(G)$ must be a cyclic group of order $p$.  But the previous
+  theorem showed that this cannot happen.
+  
+  Hence $|Z(G)| = p^{2}$, and so $G$ is Abelian.
+\end{proof}
+
+This corollary allows us to slightly simplify the proof of
+Theorem~\ref{thm:groupsoforder9}, since the last paragraph can be replaced
+by a reference to this corollary. Indeed, one can generalise that theorem to
+all prime numbers.
+
+\begin{theorem}
+  If $p$ is a prime number and $G$ is a group with order $p^{2}$, 
+  then $G$ is isomorphic to one of $C_{p^{2}}$ or $C_{p} \times C_{p}$.
+\end{theorem}
+
+\begin{proof}
+  The previous corollary tells us that $G$ is Abelian.  If $G$ has an
+  element of order $p^{2}$, then $G \isom C_{p^{2}}$.
+  
+  Otherwise every element of $G$ other then the identity $e$ has order $p$. 
+  Let $a$ be such an element, and let $N = \langle a \rangle = \{1, a, a^{2},
+  \ldots, a^{p-1}\}$. Lagrange's Theorem tells us that the quotient group $G/N$
+  has order $p$, so $G/N \isom C_{p}$.  So there is some element $b$ with
+  order $p$, such that $G/N$ is generated by the coset $Nb$, so $G/N = \{N, Nb,
+  Nb^{2}, \ldots, Nb^{n-1}\}$.  Hence $G = \{a^{k}b^{l} : k, l = 0, 1, \ldots,
+  p-1\}$ with $a^{p} = e$ and $b^{p} = e$.  Hence $G$ is isomorphic to
+  $C_{p} \cross C_{p}$ via the isomorphism
+  \[
+    \alpha(u^{k},u^{l}) = a^{k}b^{l}.
+  \]
+\end{proof}
+
+
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Consider the group $D_{8}$.  The subgroup $Z(D_{8}) = \{1,
+    a^{2}\}$ is normal, since it is the centre of $D_{8}$.  Write down
+    the Cayley table of $D_{8}/Z(D_{8})$.
+    
+    Explain why $D_{8}/Z(D_{8}) \isom V$.
+  
+  \item Consider the group $D_{12}$.  The subgroup $Z(D_{12}) = \{1,
+    a^{3}\}$ is normal, since it is the centre of $D_{12}$.  Write down
+    the Cayley table of $D_{12}/Z(D_{12})$.
+    
+    Explain why $D_{12}/Z(D_{12}) \isom D_{6}$?
+  
+  \item\label{ex:D2nquotient} Generalize the above two results, and show that if $n$ is 
+    even, then $D_{2n}/Z(D_{2n}) \isom D_{n}$.
+  
+  \item Consider the normal subgroup $N = \{1, a^{2}, a^{4}\}$ of the 
+    group $D_{12}$.  Write down the Cayley table of $D_{12}/N$.  Show 
+    $D_{12}/N \isom V$.
+  
+  \item Let $G$ and $H$ be groups.  Show that the set
+    \[
+      K = \{ (g,e): g \in G \}
+    \]
+    is a normal subgroup of $G \cross H$.  Let $\pi: G \cross H \to H$
+    be defined by $\pi(g,h) = h$ (this a homomorphism by
+    Exercise~\ref{ex:directprodhoms}).  Use this homomorphism to show
+    that
+    \[
+      (G \cross H) / K \isom H.
+    \]
+  
+  \item Consider the additive group $\integers^{2}$.  Show that
+    $\alpha(x,y) = 3x+2y$ is a homomorphism from $\integers^{2} \to
+    \integers$, and $\ker \alpha = K = \{ (2k,-3k) : k \in integers \}$. 
+    Show that
+    \[
+      \integers^{2} / K \isom \integers.
+    \]
+  
+  \item Let $\alpha: G \to H$ be a homomorphism.  Use the first
+    Isomorphism Theorem to show that $|\alpha(G)|$ divides both $|G|$ and
+    $|H|$.  Show that if $|G|$ and $|H|$ have a greatest common
+    divisor of $1$, then $\alpha(x) = e$ for all $x \in G$.
+  
+  \item Let $G$ be a group.  Recall the commutator subgroup $G'$
+    defined in Exercise~\ref{ex:commutatorsubgroup} is normal.  Show
+    that $G/G'$ is Abelian.
+  
+  \item Let $G$ be a group, and $N$ be a normal subgroup of $G$ such 
+    that $G/N$ is Abelian.  Show that the commutator subgroup $G'$
+    defined in Exercise~\ref{ex:commutatorsubgroup} is a normal subgroup
+    of $N$.
+\end{exercises}
+
+
+\section{Automorphism Groups}
+
+Recall that an automorphism of a group $G$ is an isomorphism from $G$ to
+itself.  The set of all automorphisms of $G$ is denoted by $\Aut(G)$.  This
+set is never empty since at the very least the identity map defined $\id(x)
+= x$ is always an automorphism.
+
+\begin{proposition}
+  If $G$ is a group, then $(\Aut(G), \circ, \id)$ is a group, where $\circ$
+  is function composition.
+\end{proposition}
+\begin{proof}
+  Function composition of two automorphisms gives another automorphism, since
+  if $\alpha$ and $\beta \in \Aut(G)$, then $\beta \circ \alpha: G \to G$ is
+  an isomoprhism by Proposition~\ref{prop:homomorphismfacts}, so
+  $\beta \circ \alpha \in \Aut(G)$.
+  
+  We already know that function composition is associative, so that group
+  axiom holds.
+  
+  The identity map $\id$ is an identity under composition, since for any
+  $x \in G$,
+  \[
+    (\id \circ \alpha)(x) = \id(\alpha(x)) = \alpha(x) \qquad \text{and}
+    \qquad (\alpha \circ \id)(x) = \alpha(\id(x)) = \alpha(x),
+  \]
+  so we conclude that $\id \circ \alpha = \alpha \circ \id = \alpha$.
+  
+  Since $\alpha$ is an isomorphism, it has an inverse function which is also
+  an isomorphism from $G$ to $G$ by Proposition~\ref{prop:homomorphismfacts}.
+  We know that for any inverse function, $\alpha^{-1} \circ \alpha = \id =
+  \alpha \circ \alpha^{-1}$, so $\alpha^{-1}$ is an inverse for $\alpha$ in
+  the set of automorphisms.
+\end{proof}
+
+\begin{example}
+  Consider the group $C_{4}$.  Any automorphism has to preserve the order of
+  each of the elements, and since $a^{2}$ is the only element of order $2$,
+  $\alpha(a^{2}) = a^{2}$ for every automorphism $\alpha$.  However, an
+  automorphism could potentially swap $a$ and $a^{3}$.  Indeed, there are
+  two automorphisms: $\id$ and the function $\alpha(x) = x^{-1}$, or more
+  concretely,
+  \[
+    \begin{array}{c|c}
+      x & \alpha(x) \\
+      \hline
+      1 & 1\\
+      a & a^{3}\\
+      a^{2} & a^{2}\\
+      a^{3} & a
+    \end{array}
+  \]
+  Verifying that this is an isomorphism is easy, since
+  \[
+    \alpha(a^{k}a^{l}) = \alpha(a^{k+l}) = a^{-k-l} = a^{-k}a^{-l}
+    = \alpha(a^{k})\alpha(a^{l}),
+  \]
+  and it is clearly bijective.
+  
+  Since there are only two elements, $\Aut(C_{4}) \isom C_{2}$.
+\end{example}
+
+\begin{example}
+  Consider the four-group $V$.  $V$ has $3$ elements of order $2$, $a$, $b$
+  and $ab$, so an isomorphism could possibly interchange those elements.
+  In fact any permutation of these three elements gives rise to a distinct
+  automorphism.
+  
+  For example, the function $\alpha$ given by
+  \[
+    \begin{array}{c|c}
+      x & \alpha(x) \\
+      \hline
+      1 & 1\\
+      a & ab\\
+      b & b\\
+      ab & a
+    \end{array}
+  \]
+  is an automorphism: it is clearly bijective, $\alpha(xx) = 1 =
+  \alpha(x)\alpha(x)$ for any $x \in V$, since $x^{2} = 1$ for every element,
+  $\alpha(1x) = \alpha(1)\alpha(x)$ for any $x \in V$, and the remaining cases
+  are covered by
+  \begin{align*}
+      \alpha(a b) &= a = (ab)b = \alpha(a)\alpha(b)\\
+      \alpha(a (ab)) &= b = (ab)a = \alpha(a)\alpha(ab)\\
+      \alpha(b (ab)) &= ab = ba = \alpha(b)\alpha(ab).
+  \end{align*}
+  So $\alpha$ is indeed an automorphism.
+  
+  Given that every automorphism corresponds to a permutation of a set with
+  3 elements, and function composition will correspond to composition of the
+  permutations, we have that $\Aut(V) \isom S_{3}$.
+\end{example}
+
+As the previous example illustrates, finding all the automorphisms of a group
+can be potentially difficult.  However, non-Abelian groups have a collection of
+automorphisms which are easy to find.
+
+\begin{proposition}
+  If $G$ is a group, then the conjugation by x function
+  \[
+    \alpha_{x}(y) = x^{-1}yx
+  \]
+  is an automorphism.
+\end{proposition}
+\begin{proof}
+  We first note that
+  \[
+    \alpha_{x}(yz) = x^{-1}yzx = x^{-1}yxx^{-1}zx = \alpha(y)\alpha(z),
+  \]
+  so $\alpha: G \to G$ is a homomorphism.  Now $\alpha_{x}(y) = e$ if and only if
+  \[
+    x^{-1}yx = e.
+  \]
+  But this implies that $y = xx^{-1} = e$.  So $\ker \alpha = \{e\}$, and
+  so $\alpha_{x}$ is one-to-one.  Finally, $G$ is a normal subgroup of itself,
+  so $x^{-1}Gx = G$, and so $\alpha_{x}(G) = G$.
+  
+  Hence $\alpha_{x}$ is an automorphism.
+\end{proof}
+
+We call such automorphisms \defn{inner automorphism}{automorphism!inner}, and
+let $\Inn(G) = \{ \alpha_{x} : x \in G\}$ be the set of all inner automorphisms
+of $G$.  Of course, not every one of these automorphisms need be distinct,
+since if $x \in Z(G)$, then
+\[
+  \alpha_{x}(y) = x^{-1}yx = \id(y),
+\]
+for every $y$, and so $\alpha_{x} = y$.  So in particular, the collection of
+inner automorphisms is just $\{\id\}$ if $G$ is Abelian.  In fact the set of
+inner automorphisms is very closely related to the centre.
+
+\begin{theorem}
+  Let $G$ be a group.  Then $\Inn(G)$ is a subgroup of $\Aut(G)$, the function
+  $\beta: x \mapsto \alpha_{x^{-1}}$ is a homomorphism from $G$ onto $\Inn(G)$, and
+  \[
+    \Inn(G) \isom G/Z(G).
+  \]
+\end{theorem}
+\begin{proof}
+  We start by observing that the function $\beta$ is a homomorphism:
+  \[
+    \beta(xy)(z) = \alpha_{(xy)^{-1}}(z) = xyzy^{-1}x = x(\alpha_{y^{-1}}(z))x
+    = \alpha_{x^{-1}}(\alpha_{y^{-1}}(z)) = (\beta(x) \circ \beta(y))(z)
+  \]
+  for all $z \in G$, so $\beta(xy) = \beta(x) \circ \beta(y)$.
+  
+  Now the image of $G$ under $\beta$ is precisely $\Inn(G)$, so $\Inn(G)$ is
+  a subgroup.  Furthermore, $\beta(x) = \id$ if and only if
+  $\beta(x)(z) = z$ for all $z \in G$, or equivalently,
+  \[
+    xzx^{-1} = z
+  \]
+  for all $z \in G$.  So $x \in \ker \beta$ if and only if $x \in Z(G)$.
+  Therefore $\ker \beta = Z(G)$.
+  
+  The First Isomorphism Theorem then tells us that
+  \[
+    \beta(G) \isom G/\ker \beta,
+  \]
+  so
+  \[
+    \Inn(G) \isom G/Z(G).
+  \]
+\end{proof}
+\begin{corollary}
+  If $G$ is a finite group which is not Abelian, then $\Inn(G)$ is never
+  cyclic.
+\end{corollary}
+\begin{proof}
+  This follows immediately from the above theorem and
+  Theorem~\ref{thm:centrequotient}.
+\end{proof}
+
+\begin{example}
+  The group $D_{6}$ has centre $Z(D_{6}) = \{1\}$, so $\Inn(D_{6}) \isom D_{6}$.
+  In fact, since $D_{6}$ has $2$ elements of order $3$, and $3$ elements of
+  order $2$, if $\alpha \in \Aut(D_{6})$ we must have
+  \begin{align*}
+    \alpha(a) &= a \text{ or } a^{2}\\
+    \alpha(b) &= b, ab \text{ or } a^{2}b\\
+  \end{align*}
+  and since $\alpha(a^{k}b^{l}) = (\alpha(a))^{k}(\alpha(b))^{l}$, these
+  choices completely determine the automorphism.  Therefore $|\Aut(D_{6})|
+  \le 6$, and since $|\Inn(D_{6})| = |D_{6}| = 6$, every automorphism of
+  $D_{6}$ is inner.
+\end{example}
+
+\begin{example}
+  The group $D_{8}$ has centre $Z(D_{8}) = \{1, a^{2}\}$, so $|\Inn(G)| =
+  |D_{8}|/|Z(D_{8})| = 8/2 = 4$.  But we know that $D_{8}/Z(D_{8})$ cannot be
+  cyclic, so $\Inn(G) \isom V$.
+\end{example}
+
+It's worthwhile noting that if $H$ is a normal subgroup of $G$, then the
+inner automorphisms of $G$ are automorphisms of $H$ when restricted to just $H$.
+This follows because if $x \in G$, we have that
+\[
+  H = x^{-1}Hx = \alpha_{x}(H),
+\]
+so $\alpha_{x}$, regarded as a function defined on $H$, must be a bijective
+homomorphism onto $H$, ie.~an element of $\Aut(H)$.
+
+A \defn{characteristic subgroup}{subgroup!characteristic} $H$ of a group $G$
+is a subgroup which is invariant under every automorphism of $G$, in other
+words $\alpha(H) = H$ for all $\alpha \in \Aut(G)$.  Every characteristic
+subgroup is automatically normal, since if $x \in G$, so $\alpha_{x} \in
+\Inn(G)$, then
+\[
+  H = \alpha_{x}(H) = x^{-1}Hx.
+\]
+The centre of $G$ is always characteristic, since any isomorphism always
+maps the centre to the centre.  The trivial subgroups $G$ and $\{e\}$ are also
+always characteristic.
+
+\begin{example}
+  In the group $D_{6}$, the subgroup $H = \langle a \rangle$ is characteristic,
+  since any automorphism must map $1$ to $1$ and elements of order $3$ to elements
+  of order $3$, ie.~the set $\{a, a^{2}\}$ maps onto $\{a, a^{2}\}$.
+\end{example}
+
+\begin{proposition}
+  If $G$ is a group, $N$ is a normal subgroup of $G$ and $H$ is a
+  characteristic subgroup of $N$, then $H$ is a normal subgroup of $G$.
+\end{proposition}
+\begin{proof}
+  Since $\alpha_{x} \in \Inn(G)$ is an automorphism of $N$, and $H$ is
+  characteristic, then
+  \[
+    x^{-1}Hx = \alpha_{x}(H) = H.
+  \]
+\end{proof}
+
+The inner automorphisms which come from characteristic subgroups are also
+interesting.
+
+\begin{theorem}
+  Let $G$ be a group, and let $H$ be a characteristic subgroup of $G$.
+  Then the set of inner automorphisms of the form $\{\alpha_{x} : x \in H \}$
+  is a normal subgroup of $\Aut(G)$.
+\end{theorem}
+\begin{proof}
+  We first note that since $\beta(x) = \alpha_{x^{-1}}$ is a homomorphism
+  from $G$ to $\Inn(G)$, $\beta(H) = \{\alpha_{x} : x \in H \}$ is a subgroup
+  of $\Aut(G)$.
+  
+  Let $x \in H$. Given any automorphism $\alpha$, we have that for any
+  $z \in G$,
+  \begin{align*}
+    (\alpha^{-1} \circ \alpha_{x} \circ \alpha)(z)
+      &= \alpha^{-1}(\alpha_{x}(\alpha(z)))\\
+      &= \alpha^{-1}(x^{-1}\alpha(z)x)\\
+      &= \alpha^{-1}(x^{-1})\alpha^{-1}(\alpha(z))\alpha^{-1}(x)\\
+      &= (\alpha^{-1}(x))^{-1}z\alpha^{-1}(x)\\
+      &= \alpha_{\alpha^{-1}(x)}(z).
+  \end{align*}
+  But since $H$ is characteristic, $\alpha^{-1}(x) \in H$, so $\alpha^{-1}
+  \circ \alpha_{x} \circ \alpha \in \beta(H)$.  Hence $\beta(H)$ is a normal
+  subgroup of $\Aut(G)$.
+\end{proof}
+
+\begin{corollary}
+  If $G$ is a group, then $\Inn(G)$ is a normal subgroup of $\Aut(G)$.
+\end{corollary}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Find the automorphism group of $C_{5}$.  Does $C_{5}$ have 
+    any non-trivial inner automorphisms?
+  
+  \item Find the automorphism group of $C_{6}$.
+  
+  \item Find $\Aut(Q_{8})$.
+  
+  \item Show that the additive group of integers has only two
+    automorphisms: $\id$ and $\iota(x) = -x$.  Conclude that
+    $\Aut(\integers) \isom C_{2}$.
+  
+  \item Let $\integers_{m}$ be the additive group of integers modulo $m$,
+    and let $\alpha : \integers_{m} \to \integers_{m}$ be a homomorphism.
+    
+    Show that if $\alpha(1) = k$, then $\alpha(x) = kx$.
+    
+    Show that $\alpha$ is an automorphism if and only if the greatest common
+    divisor of $k$ and $m$ is $1$.
+    
+    Let $\alpha_{k}(x) = kx$ on $\integers_{m}$.  Show that $\alpha_{k} \circ
+    \alpha_{j} = \alpha_{kj}$.
+    
+    Show that $\Aut(\integers_{m})$ is isomorphic to the multiplicative
+    group $\integers_{m}^{*} = \{x : \gcd(x,m) = 1\}$.
+    
+    Show that $\Aut(\integers_{8}) \isom V$.
+    
+    Show that if $m = pq$ where $p$ and $q$ are distinct primes, then
+    $|\Aut(\integers_{m})| = (p-1)(q-1)$.
+  
+  \item Show that if $(G, +, 0)$ is any finite Abelian group (written using
+    additive notation), then the function
+    \[
+      \alpha_{k}(x) = \underbrace{x + x + x + \cdots + x}_{k\text{ times}}
+    \]
+    is a homomorphism from $G$ to $G$.  Show that if $k$ and $|G|$ have
+    a greatest common divisor of $1$, then $\alpha_{k}(x) = 0$ if and only
+    if $x = 0$.  Show that in this case, $\alpha_{k}$ is an automorphism.
+    
+    Show that $\alpha_{k} \circ \alpha_{j} = \alpha_{kj}$, so that the
+    function $\beta : \integers_{|G|}^{*} \to \Aut(G)$ defined by
+    $\beta(k) = \alpha_{k}$ is a homomorphism.
+    
+  \item Show that if $G$ is a group, the function 
+    $\iota(x) = x^{-1}$ is an automorphism if and only if $G$ is Abelian.
+  
+  \item Show that if $G \isom H$, then $\Aut(G) \isom \Aut(H)$.
+  
+  \item Show that if $n$ is odd then $\Inn(D_{2n}) \isom D_{2n}$, 
+    while if $n$ is even then $\Inn(D_{2n}) \isom D_{n}$ (Hint: you 
+    may use Exercise~\ref{ex:D2nquotient} to prove this).
+\end{exercises}
+
+
+\section{Extension: Category Theory}
+
+If you think about the basic outlines of the theory which we have developed
+so far, you should notice some similarities between the theories of groups,
+vector spaces, partial orders and lattices.  At a very abstract level we
+have:
+
+\begin{tabular}{l|l}
+  Sets & Functions \\
+  \hline
+  Groups & Homomorphisms \\
+  Vector Spaces & Linear Transformations \\
+  Partially Ordered Sets & Order-preserving Functions \\
+  Lattices & Lattice Homomorphisms
+\end{tabular}
+
+There are also similarities beyond this: in all cases there is the notion
+of ``isomorphism'' between appropriate types of sets and the notion of a ``sub-''
+object (like a subgroup or subspace), for example.
+
+The model that we should keep in mind ofr what we are about to define
+is simply a minimal set of axioms which sets and functions will satisfy:
+\begin{enumerate}
+  \item each function has a domain and codomain,
+  
+  \item if $\dom f = \cod g$ we can compose the functions,
+  
+  \item function composition is associative,
+  
+  \item for each set $X$, there is an identity function $\id_{A}: X
+    \to X$, and this identity function has the property  $f \circ 
+    \id_{A} = f$ and $\id_{A} \circ g = g$.
+\end{enumerate}
+
+Notice that group homomorphisms also satisfy all of these conditions.
+
+\begin{definition}
+  A \defn{category}{category} $\mathcal{C}$ consists of a set of
+  \defn{objects}{objects}, $\mathcal{O}$; a set of
+  \defn{arrows}{arrow} or \defn{morphisms}{morphism} $\mathcal{A}$,
+  two functions
+  \[
+    \cod: \mathcal{A} \to \mathcal{O} \qquad \text{and} \qquad \dom:
+    \mathcal{A} \to \mathcal{O}
+  \]
+  which assign to each arrow an object called, respectively, the
+  \defn{domain}{domain} and \defn{codomain}{codomain} of the arrow; 
+  a function
+  \[
+    \id: \mathcal{O} \to \mathcal{A},
+  \]
+  which assigns to each object $A$ an \defn{identity
+  arrow}{arrow!identity} $\id_{A}$; and a
+  \defn{composition}{composition} operation that assigns each to pair
+  of arrows $(\alpha,\beta)$ with $\dom \alpha = \cod \beta$ an arrow
+  $\gamma = \alpha \circ \beta$ with $\cod \gamma = \cod \alpha$ and
+  $\dom \gamma = \dom \beta$.
+  
+  We will write $f : A \to B$ to denote that an arrow $f$ has domain 
+  $A$ and codomain $B$, or diagramatically, write:
+  \[
+    A \to B
+  \]
+  
+  These have to satisfy the following axioms:
+  \begin{theoremenum}
+    \item Associativity: if $f: B \to A$, $g: C \to B$, and $h: D \to
+    C$, then $(f \circ g) \circ h = f \circ (g \circ h)$,
+    
+    \item Identity: for any $f : A \to B$, $f \circ \id_{A} = f$; and
+    for any $g: B \to A$, $\id_{A} \circ g = g$,
+  \end{theoremenum}
+\end{definition}
+
+Notice that these axioms are very similar to the definition of a 
+group, but with added complexity because of the neccessity of dealing 
+with the domains and codomains, and with no inverse axiom.
+
+Categories are very closely related to directed graphs, and we can
+often represent parts of a category graphically.  Many key facts in
+category can be represented by succinctly by \defn{commuting 
+diagrams}{commuting diagram}.  The key property of a commuting diagram 
+is that any path following the arrows through a diagram that start 
+from the same object and ends at the same object are equal.  For 
+example, the associativity axiom can be represented by the following 
+commuting diagram:
+
+XXX Picture
+
+Similarly, the following two diagrams represent the identity axioms:
+
+XXX Picture
+
+As is the case for associative binary operations, the associativity 
+axiom for categories means that it doesn't matter where we put the 
+parentheses in a composition of multiple arrows.  We can also show 
+that for each $A$, $\id_{A}$ is unique.
+
+\begin{example}
+  The following are all categories:
+  \begin{enumerate}
+    \item $\mathbf{Set}$: the category with objects being all sets 
+    contained in some universe $U$ and arrows being all functions 
+    on those sets.
+    
+    \item $\mathbf{Grp}$: the category with objects being all groups
+    contained in some universe $U$, and arrows being all group
+    homomorphisms.
+    
+    \item $\mathbf{Abl}$: the category with objects being all Abelian
+    groups contained in some universe $U$, and arrows being group
+    homomorphisms between them.
+    
+    \item $\mathbf{Vec}(\field)$: the category with objects being all
+    vector spaces over a field $\field$ (contained in some universe
+    $U$), and arrows being linear transformations between them.
+    
+    \item $\mathbf{Lat}$: the category with objects being all lattices 
+    contained in some universe $U$, and arrows being lattice 
+    homomorphisms.
+    
+    \item $\mathbf{Set_{*}}$: the category whose objects are
+    \defn{pointed sets}{set!pointed}: pairs $(X,x)$, where $X$ is a
+    set contained in some universe $U$, and $x \in X$ is some
+    distinguished point; and whose arrows are functions which map
+    distingushed points to distinguished points: if $(X, x)$ and $(Y,
+    y)$ are pointed sets, then $f:X \to Y$ is a morphism if and only
+    if $f(x) = y$.
+  \end{enumerate}
+\end{example}
+
+There are, of course, many, many other categories.  Indeed, whenever 
+you encounter a new mathematical object, particularly in algebra, you 
+should ask yourself ``what is the category that goes with this?''  If 
+you can establish this, then you can immediately get a number of basic 
+results for free.
+
+For a good theory which encompasses the fundamentals of functions on
+sets and group homomorphisms, we need to have more than just
+composition and identity.  We also need to determine analogues of
+injective functions (or group monomorphisms), surjective functions (or
+group epimorphisms), and most importantly bijection (or group
+isomorphisms).
+
+\begin{definition}
+  Let $\mathcal{C}$ be a category with objects $\mathcal{O}$ and
+  arrows $\mathcal{A}$.  An arrow $\alpha: A \to B$ is
+  \defn{invertible}{arrow!invertible} if there is an arrow
+  $\alpha^{-1}: B \to A$ such that $\alpha^{-1} \circ \alpha =
+  \id_{A}$ and $\alpha \circ \alpha^{-1} = \id_{B}$.  We say that two
+  objects $A$ and $B$ are \defn{isomorphic}{isomorphic!objects} if there is an
+  invertible arrow $\alpha: A \to B$.
+  
+  An arrow $\alpha: A \to B$ is \defn{monic}{arrow!monic} if whenever
+  there are arrows $\beta_{1}$ and $\beta_{2}: C \to A$ such that
+  $\alpha \circ \beta_{1} = \alpha \circ \beta_{2}$, then $\beta_{1} =
+  \beta_{2}$ (ie.~we can cancel $\alpha$ on the left).  An arrow
+  $\alpha: A \to B$ is \defn{epi}{arrow!epi} if whenever there are
+  arrows $\beta_{1}$ and $\beta_{2}: B \to C$ such that $\beta_{1}
+  \circ \alpha = \beta_{2} \circ \alpha$, then $\beta_{1} = \beta_{2}$
+  (ie.~we can cancel $\alpha$ on the right).
+  
+  A \defn{right inverse}{arrow!inverse!right} of an arrow $\alpha: A
+  \to B$ is an arrow $\rho: B \to A$ such that $\alpha \circ \rho =
+  \id_{B}$.  A \defn{left inverse}{arrow!inverse!left} of an arrow
+  $\alpha: A \to B$ is an arrow $\lambda: B \to A$ so that $\lambda
+  \circ \alpha = \id_{A}$.  A right inverse of $\alpha$ is also called 
+  a \defn{section}{section} of $\alpha$, while a left-inverse is 
+  called a \defn{retraction}{retraction} of $\alpha$.
+  
+  If an object $A$ has the property that for any object $B$ we have a
+  exactly one arrow $B \to A$, it is said to be
+  \defn{terminal}{object!terminal}.  If instead it has the property
+  that there is exactly one arrow from $A \to B$, then it is said to
+  be \defn{initial}{object!initial}.
+\end{definition}
+
+
+\begin{example}
+  In the categories of $\mathbf{Set}$ and $\mathbf{Grp}$, we have 
+  that following correspondence:
+  
+  \begin{tabular}{l|ll}
+     & $\mathbf{Set}$ & $\mathbf{Grp}$ \\
+     \hline
+     invertible arrow & bijective function & isomorphism \\
+     monic arrow & injective function & monomorphism \\
+     epi arrow & surjective function & epimorphism \\
+     terminal object & any set with one element & any group with one 
+     element \\
+     initial object & the empty set & any group with one element
+  \end{tabular}
+  
+\end{example}
+
+We can prove a number of facts immediately:
+
+\begin{proposition}
+  If $\mathcal{C}$ is a category, then
+  \begin{theoremenum}
+    \item if an arrow $\alpha$ has a right inverse, then it is epi, 
+
+    \item if an arrow $\alpha$ has a left inverse, then it is monic,
+    
+    \item an arrow $\alpha$ has both a left and right inverse if and
+    only if it is invertible,
+    
+    \item if an arrow is invertible, it is both epi and monic.
+
+  \end{theoremenum}
+\end{proposition}
+
+\begin{proof}
+  (i) Let $\alpha: A \to B$ and let $\rho: B \to A$ be a right inverse
+  of $\alpha$.  Then given any arrows $\beta_{1}$ and $\beta_{2}: B
+  \to C$ such that $\beta_{1} \circ \alpha = \beta_{2} \circ \alpha$,
+  we have that
+  \begin{align*}
+     \beta_{1} &= \beta_{1} \circ \id \\
+     &= \beta_{1} \circ \alpha \circ \rho\\
+     &= \beta_{2} \circ \alpha \circ \rho \\
+     &= \beta_{2} \circ \id\\
+     &= \beta_{2}.
+  \end{align*}
+  So $\alpha$ is epi.
+  
+  (ii) The proof of this is left as an exercise.
+  
+  (iii) If $\alpha$ is invertible, then the inverse is both a left 
+  and right inverse, so $\alpha$ has both a left and right inverse.
+  
+  On the other hand, if $\alpha: A \to B$ and $\rho: B \to A$ and
+  $\lambda: B \to A$ be right and left inverses of $\alpha$,
+  respectively, then
+  \begin{align*}
+    \rho &= \id \circ \rho \\
+         &= \lambda \circ \alpha \circ \rho \\
+&= \lambda \circ \id \\
+&= \lambda
+  \end{align*}
+  So $\rho = \lambda$ is an inverse for $\alpha$.
+  
+  (iv) This follows immediately from the first three parts.
+  
+\end{proof}
+
+In the previous chapter, key results came from looking at an object in
+another category which corresponded to the group, such as looking at
+the subgroup lattice of a group in the category of lattices.  These
+sorts of correspondences between categories were first recognised in
+the study of algebraic topology, and are extremely powerful.  Indeed,
+in some sense they are what justifies the study of categories as a
+distinct topic.
+
+\begin{definition}
+  Let $\mathcal{C}_{1}$ and $\mathcal{C}_{2}$ be two categories with
+  object sets $\mathcal{O}_{1}$ and $\mathcal{O}_{2}$, and arrow sets
+  $\mathcal{A}_{1}$ and $\mathcal{A}_{2}$, respectively.  A 
+  \defn{functor}{functor} $\mathcal{F} : \mathcal{C}_{1} \to 
+  \mathcal{C}_{2}$ is a pair of functions $\mathcal{F_{O}} : 
+  \mathcal{O}_{1} \to \mathcal{O}_{2}$ and $\mathcal{F_{A}} : 
+  \mathcal{A}_{1} \to \mathcal{A}_{2}$ such that if $A \in 
+  \mathcal{O_{1}}$, $\alpha$ and $\beta \in \mathcal{A_{1}}$, then
+  \begin{alignat*}{2}
+    \dom \mathcal{F_{A}}(\alpha) &= \mathcal{F_{O}}(\dom \alpha) & \cod
+    \mathcal{F_{A}}(\alpha) &= \mathcal{F_{O}}(\cod \alpha)\\
+    \mathcal{F_{A}}(\alpha \circ \beta) &= (\mathcal{F_{A}}(\alpha)
+    \circ \mathcal{F_{A}}(\beta) \qquad & \mathcal{F_{A}}(\id_{A}) &=
+    \id_{\mathcal{F_{O}}}(A)
+  \end{alignat*}
+  whenever $\alpha \circ \beta$ is defined.
+\end{definition}
+
+We usually don't distinguish between the functor, and the functions 
+on the sets of objects and arrows, simply representing each of them 
+by a single symbol $\mathcal{F}$.
+
+\begin{example}\label{eg:funtorgrplat}
+  Let $\mathbf{Grp}$ and $\mathbf{Lat}$ be the categories of groups
+  and lattices defined earlier.  Then we know that the function
+  $\mathcal{F_{O}}$ defined by $\mathcal{F_{O}}(G) = \Sub(G)$ is a
+  function from the objects of $\mathbf{Grp}$ to the objects of
+  $\mathbf{Lat}$.  Corollary~\ref{cor:grouphomtolathom} tells us that
+  if we have a group homomorphism $\alpha: G \to H$, then we have a
+  corresponding lattice homomorphism $\overline{\alpha} : \Sub(G) \to
+  \Sub(H)$.  So we define $\mathcal{F_{A}}(\alpha) =
+  \overline{\alpha}$.  This gives the first two of the four conditions
+  that we need for $\mathcal{F}$ to be a functor.
+  
+  It is easily verified that $\mathcal{F_{A}}(\id_{G}) =
+  \id_{\mathcal{F_{O}}(G)}$, while it is a little more work to check
+  the remaining composition condition.  They do hold, however, so we 
+  have a functor between the categories.
+  
+  This is not the only possible functor between these two categories,
+  since we could also consider a functor which maps a group $G$ to the
+  lattice consisting of the power set $\mathcal{P}(G)$ with meet and
+  join being intersection and union.
+\end{example}
+
+\begin{example}
+  The maps $\mathcal{F}(G) = G$ and $\mathcal{F}(\alpha) = \alpha$ 
+  give a functor $\mathcal{F} : \mathbf{Grp} \to \mathbf{Set}$.
+\end{example}
+
+Functors such as the one in the last example are called
+\defn{forgetful functors}{functor!forgetful} because we are forgetting
+about all the extra structure that a group has and treating it just as
+a set, and regarding homomoprhisms simply as functions.  Whenever we
+have a category whose objects and arrows are specializations of
+another categories objects and arrows we get a forgetful functor which
+strips this additional structure away.
+
+\begin{example}
+  There is a forgetful functor $\mathcal{F} : \mathbf{Abl} \to
+  \mathbf{Grp}$, since Abelian groups are simply groups with an
+  additional requirement of commutativity, and homomorphisms between
+  Abelian groups are still homomoprhisms.
+\end{example}
+
+When looking at the question of whether or not two objects within a
+category are isomorphic or not, functors can help us say that that the two
+objects are not isomorphic.
+
+\begin{proposition}
+  Let $\mathcal{C}$ be a category, and let $A$ and $B$ be two objects in
+  $\mathcal{C}$.  If there is another category $\mathcal{D}$ and a functor
+  $\mathcal{F}: \mathcal{C} \to \mathcal{D}$ such that $\mathcal{F}(A)$ and
+  $\mathcal{F}(B)$ are not isomorphic in $\mathcal{D}$, then $A$ and $B$ are
+  not isomorphic in $\mathcal{C}$.
+\end{proposition}
+\begin{proof}
+  If $A$ and $B$ are isomorphic, then we have an invertible arrow $\alpha : A
+  \to B$ and its inverse $\alpha^{-1} : B \to A$.  If $\mathcal{F}: \mathcal{C}
+  \to \mathcal{D}$ is any functor, then
+  \[
+    \mathcal{F}(\alpha) \circ \mathcal{F}(\alpha^{-1}) = \mathcal{F}(\alpha
+    \circ \alpha^{-1}) = \mathcal{F}(\id_{B}) = \id_{\mathcal{F}(B)}.
+  \]
+  Similarly $\mathcal{F}(\alpha^{-1}) \circ \mathcal{F}(\alpha) =
+  \id_{\mathcal{F}(A)}$, and so $\mathcal{F}(\alpha) : \mathcal{F}(A) \to
+  \mathcal{F}(B)$ has an inverse arrow $\mathcal{F}(\alpha^{-1})$, and hence
+  $\mathcal{F}(A)$ is isomorphic to $\mathcal{F}(B)$.
+  
+  Hence if $\mathcal{F}(A)$ is not isomorphic to $\mathcal{F}(B)$, then $A$ and
+  $B$ are not isomorphic.
+\end{proof}
+
+This very general result is at the core of many of the techniques we have
+for distinguishing groups which are not isomorphic.  For example, the fact
+that two groups with different subgroup lattices are not isomorphic is an
+immediate corollary of this proposition, together with the functor of
+Example~\ref{eg:funtorgrplat}.  The fact that two groups of different orders
+are not isomorphic is an immediate corollary of this proposition, using the
+forgetful functor from $\mathbf{Grp}$ to $\mathbf{Set}$.
+
+Unfortunately, this doesn't help us in showing when two groups are
+isomorphic, since there are many functors available, so checking every
+possible functor is impossible.
+
+The category of groups is not the only category of interest in mathematics,
+of course, so it is useful to observe that in every category we find many
+naturally occurring groups:
+
+\begin{proposition}
+  Let $\mathcal{C}$ be a category, and $A$ an object in $\mathcal{C}$.  Then
+  the triple $(\Aut(A), \circ, \id_{A})$, where $\Aut(A)$ is the set of
+  invertible arrows from $A$ to $A$, is a group.  We call this the
+  \defn{automorphism group}{group!automorphism!of an object} of $A$.
+\end{proposition}
+\begin{proof}
+  From the definition of a category, when $\circ$ is restricted to $\Aut(A)$,
+  it is an associative binary operation, and $\id_{A}$ is an identity.  So the
+  only thing that needs to be checked is that there is an inverse for every
+  element, but this is guaranteed by the assumption that our arrows are all
+  invertible.
+\end{proof}
+
+\begin{example}
+  In the category $\mathrm{Grp}$, $\Aut(G)$ is precisely the automorphism
+  group of $G$, as discussed earlier.
+\end{example}
+
+\begin{example}
+  In the category of finite dimensional real vector spaces and linear
+  transformations, we have that $\Aut(V)$ is the set of all invertible
+  linear transformations from $V$ to $V$.  If $V$ has dimension $n$, then
+  this group is isomorphic to $GL_{n}(\reals)$.
+\end{example}
+
+\begin{example}
+  In the category $\mathrm{Set}$, the group $\Aut(X)$ consists of all
+  bijections of $X$ onto itself, or in other words, the group of all
+  permutations of $X$.  If $|X| = n$, then $\Aut(X) \isom S_{n}$.
+\end{example}
+
+\begin{example}\label{eg:symmetrycategory}
+  One can consider a category whose objects are all subsets of $\reals^{n}$,
+  and whose arrows are isometries which map one subset onto another.
+  
+  In this category, the automorphism group of an object is the set of all
+  symmetries of the object.
+\end{example}
+
+As the above examples illustrate, the concept of an automorphism group
+generalises the concept of symmetries that we first introduced in Chapter 1.
+Whenever you see a new type of mathematical object being introduced, there
+is usually a category associated with it, and hence there is some sort of
+automorphism group associated with each object.  Given the wide variety of categories
+that are of interest in mathematics, this underlines the importance of group
+theory.
+
+\begin{proposition}
+  Let $\mathcal{C}$ be a category, and $A$ and $B$ two objects in
+  $\mathcal{C}$.  If $A$ and $B$ are isomorphic, then $\Aut(A)$ and
+  $\Aut(B)$ are isomorphic.
+\end{proposition}
+\begin{proof}
+  Let $\alpha: A \to B$ be an invertible arrow.  Then we define a function
+  $\overline{\alpha} : \Aut(A) \to \Aut(B)$ by
+  \[
+    \overline{\alpha}(\beta) = \alpha \circ \beta \circ \alpha^{-1}.
+  \]
+  One can easily verify that $\overline{\alpha}(\beta)$ is an
+  invertible arrow, and hence the function is indeed into $\Aut(B)$, and
+  furthermore
+  \[
+    \overline{\alpha}(\beta) \circ \overline{\alpha}(\gamma) = \alpha \circ \beta \circ
+      \alpha^{-1} \circ \alpha \circ \gamma \circ \alpha^{-1} = \alpha \circ \beta
+      \circ \gamma \circ \alpha^{-1} = \overline{\alpha}(\beta \circ \gamma),
+  \]
+  so $\overline{\alpha}$ is a homomorphism.  Similarly,
+  $\overline{\alpha^{-1}} : \Aut(B) \to \Aut(A)$ is a homomorphism, and
+  furthermore $\overline{\alpha} \circ \overline{\alpha^{-1}} =
+  \id_{\Aut(B)}$ and $\overline{\alpha^{-1}} \circ \overline{\alpha} =
+  \id_{\Aut(A)}$, so $\overline{\alpha}$ is an isomorphism.
+\end{proof}
+
+This means that in any time you have a category, you can use the automoprhism
+groups to distinguish non-isomoprhic objects in the category via the
+contrapositive of this result: if the automorphism groups are not
+isomorphic, the objects are not isomorphic.
+
+\begin{definition}
+  If $\mathcal{C}$ is a category, and $A$ is an object in $\mathcal{C}$,
+  then an \defn{action}{action} of a group $G$ on $A$ is a homomorphism
+  $\alpha: G \to \Aut(A)$.
+\end{definition}
+
+For most categories of interest the objects of the category are
+sets with additional structure and the arrows are functions with additional
+conditions that they must satisfy. This means that $\alpha(g)$ is a
+function of some sort from $A$ to $A$.  To avoid confusion, it is common to
+write $\alpha(g) = \alpha_{g}$, so that we can use the less confusing
+notation $\alpha_{g}(x)$ instead of $(\alpha(g))(x)$ to represent the image
+of an element of $A$ under this automorphism.  In this case we have that
+$\alpha_{gh} = \alpha_{g} \circ \alpha_{h}$.
+
+\begin{example}\label{eg:inneraction}
+  Given a group $G$, the map $\alpha: G \to \Aut(G)$ defined by $\alpha(g) =
+  \alpha_{g}$, where $\alpha_{g}(x) = g^{-1}xg$ is an action of $G$ on
+  itself.  The image of the homomorphism is $\Inn(G)$, and the kernel is
+  $Z(G)$.
+\end{example}
+
+\begin{example}
+  Given a group $G$ then for each $g \in G$ we have bijective functions
+  $\lambda_{g}(x) = g^{-1}x$ and $\rho_{g}(x) = xg$.  Since $\lambda_{gh} =
+  \lambda_{g} \circ \lambda_{h}$, and $\rho_{gh} = \rho_{g} \circ \rho_{h}$,
+  the functions $\lambda: g \mapsto \lambda_{g}$ and $\rho: g \mapsto
+  \rho_{g}$ are actions of $G$ on itself, when we consider it as an object
+  in the category $\mathrm{Set}$.  We call these the
+  \defn{left}{action!left} and \defn{right actions}{action!right} of $G$ on
+  itself, respectively.
+\end{example}
+
+In a category in which the objects are sets with additional structure, and the
+arrows are functions which satisfy some additional conditions, we define the
+\defn{orbit}{orbit} of an element $x$ under an action of a group $G$ to be
+the set
+\[
+  O(x) = \{ \alpha_{g}(x) : g \in G\}.
+\]
+We can define an equivalence relation using an action by $x \sim y$ if and
+only if $y = \alpha_{g}(x)$ for some $g \in G$.  It is easy to verify that
+this is indeed an equivalence relation, since the facts that $x =
+\alpha_{e}(x)$; that if $x = \alpha_{g}(y)$ then $y = \alpha_{g^{-1}}(x)$; and
+that if $x = \alpha_{g}(y)$ and $y = \alpha_{g}(z)$, then
+\[
+  x = \alpha_{g}(y) = \alpha_{g}(\alpha_{h}(z)) = \alpha_{gh}(z)
+\]
+give reflexivity, symmetry and transitivity, respectively.  We then have
+that the orbit of $x$ is simply the equivalence class of $x$, ie.
+\[
+  O(x) = [x]_{\sim}.
+\]
+
+\begin{example}
+  The orbit of an element $x \in G$ under the action of
+  Example~\ref{eg:inneraction} is the conjugacy class of $x$, ie.~$O(x) =
+  C(x)$.
+\end{example}
+
+\begin{example}
+  The orbit of an element $x \in G$ under the left action of $G$ is $G$.
+  
+  However if we restrict the left action to some subgroup $H$ of $G$, so
+  we only consider functions of the form $\lambda_{h}$ for $h \in H$, then
+  $\lambda$ is an action of $H$ on $G$, and then $O(x)$ is the right coset
+  $Hx$.
+\end{example}
+
+\begin{example}
+  In the category of Example~\ref{eg:symmetrycategory}, consider closed disc
+  of radius 1 with centre at the origin as the object $A$.  The
+  automorphism group of this object consists of
+  rotations $R_{\theta}$ and reflections $H_{\psi}$ of the disc, as discussed
+  in Example~\ref{eg:circlesymmetry}.  There is an action of the additive
+  group of real numbers $\alpha: \reals \to \Aut(A)$ given by $\alpha_{x} = R_{y}$,
+  where $x = 2\pi k + y$, with $k \in \integers$ and $y \in [0,2\pi)$.
+  
+  In this case the orbit of the point $(1,0)$ is the unit circle, since we
+  can find a rotation that maps that point to any other on the unit circle,
+  and every rotation is in the image of the action.
+  
+  Indeed, the orbit of any point in the disc will be a circle.
+\end{example}
+
+The previous example should help you understand why an orbit is called an
+orbit.
+
+\section{Semidirect Products}
+
+Group automorphisms and the actions of groups allow us to generalise the
+notion of the direct product introduced in Chapter 2.  Let $G$ and $H$ be
+groups, and let $\alpha$ be an action of $H$ on $G$.  We supply a binary
+operation $\ast$ for the set
+\[
+  G \cross H = \{ (g,h) : g \in G, h \in H \}
+\]
+by
+\[
+  (g_{1}, h_{1}) \ast (g_{2}, h_{2}) = (\alpha_{h_{2}}(g_{1})g_{2}, h_{1}h_{2}).
+\]
+
+\begin{proposition}
+  Let $G$ and $H$ be groups, and let $\alpha$ be an action of $H$ on $G$.
+  The binary operation $\ast$ defined above makes $(G \cross H,
+  \ast, (e,e))$ a group.  We call this group a \defn{semidirect product}{product!semidirect}
+  of $G$ and $H$, and denote it symbolically by $G \rtimes_{\alpha} H$.
+  If $H$ is a subgroup of $\Aut(G)$ acting in the obvious way, then we call
+  this group the \defn{extension}{group extension} of $G$ by $H$.
+  
+  Moreover
+  \begin{theoremenum}
+    \item the subset $G' = \{(g,e): g \in G\}$ is a characteristic
+    subgroup of the semidirect product which is isomorphic to $G$;
+    
+    \item $(G \rtimes_{\alpha} H) / G' \isom H$;
+    
+    \item the subset $H' = \{(e,h) : h \in H\}$ is a subgroup of the semidirect
+    product which is isomorphic to $H$;
+    
+    \item the conjugate of an element $(g,e)$ of $G'$ by an element $(e,h)$
+    of $H'$ is the element $(\alpha_{h}(g), e)$ of $G'$.  In other words,
+    conjugation by elements of $H'$ is equivalent to the action $\alpha$ on $G$.
+  \end{theoremenum}
+\end{proposition}
+\begin{proof}
+  Showing that the semidirect product is a group is left as an easy exercise.
+  It is also left as an exercise to show that $G' \isom G$ and $H' \isom H$.
+    
+  We note that the inverse of the element $(g,h)$ is the element
+  $(\alpha_{h^{-1}}(g^{-1}), h^{-1})$.
+  
+  The function $\beta(g,h) = h$ from $G \rtimes_{\alpha} H$ to $H$ is a
+  homomorphism, since
+  \begin{align*}
+    \beta((g_{1}, h_{1}) \ast (g_{2}, h_{2})) &= \beta(\alpha_{h_{2}}(g_{1})g_{2}, h_{1}h_{2}) \\
+    &= h_{1}h_{2}\\
+    &= \beta(g_{1}, h_{1})\beta(g_{2}, h_{2})).
+  \end{align*}
+  Now
+  \[
+    \ker \beta = \{ (g, h) : \beta(g,h) = h = e\} = \{ (g,e) : g \in G \} = G',
+  \]
+  so $G'$ is a normal subgroup, and furthermore the
+  First Isomorphism Theorem says that since $\beta$ is onto,
+  \[
+    H \isom (G \rtimes_{\alpha} H)/\ker \beta = (G \rtimes_{\alpha} H)/G'
+  \]
+  
+  Finally, by calculation,
+  \begin{align*}
+    (e,h)^{-1} \ast (g, e) \ast (e,h) &= (e,h^{-1}) \ast (g, e) \ast (e,h) \\
+    &= (\alpha_{e}(e)g, h^{-1}e) \ast (e,h) \\
+    &= (g, h^{-1}) \ast (e,h) \\
+    &= (\alpha_{h}(g)e, h^{-1}h) \\
+    &= (\alpha_{h}(g), e).
+  \end{align*}
+\end{proof}
+
+\begin{example}
+  For any $G$ and $H$, there is always the trivial action $\alpha_{h}(g) = g$.
+  Under this action, the semidirect product $G \rtimes_{\alpha} H$ has product
+  \[
+    (g_{1}, h_{1}) \ast (g_{2}, h_{2}) =
+      (\alpha_{h_{2}}(g_{1})g_{2}, h_{1}h_{2})
+      = (g_{1}g_{2}, h_{1}h_{2}).
+  \]
+  In other words, this is simply the direct product of the two groups.
+\end{example}
+
+\begin{example}
+  If $G$ is any Abelian group, there is an action of the multiplicative
+  group $\{1, -1\} \isom C_{2}$ given by $\alpha_{1}(g) = g$ and
+  $\alpha_{-1}(g) = g^{-1}$.  It is trivial that $\alpha_{1}$ is a
+  homomorphism, and $\alpha_{-1}(gh) = (gh)^{-1} = h^{-1}g^{-1} =
+  g^{-1}h^{-1} = \alpha_{-1}(g)\alpha_{-1}(h)$, since $G$ is Abelian.
+  
+  The semidirect product of $G$ and this group with this action is a group
+  of order $2|G|$, and if $G$ has any element of order greater than $2$, this
+  is distinct from the direct product.  Indeed, if it is distinct from
+  the direct product, the semidirect product is not Abelian, since if $g_{1}$
+  is an element of order greater than $2$, we have
+  \[
+    (g_{1}, 1) \ast (e, -1) = (g_{1}^{-1}, -1),
+  \]
+  but
+  \[
+    (e, -1) \ast (g_{1}, 1) = (g_{1}, -1),
+  \]
+  and these are only equal if $g_{1}^{-1} = g_{1}$, which implies that
+  $g_{1}$ has order $2$.  So these elements do not commute.
+  
+  One can show that as a particular example of this action giving a semidirect
+  product, we have $D_{2n} \isom C_{n} \rtimes_{\alpha} C_{2}$, where the
+  generators $a$ and $b$ of $D_{2n}$ correspond to the elements $(u,1)$ and
+  $(1,-1)$, respectively.
+\end{example}
+
+
+\newpage
+\section*{Assignment 5}
+
+The following exercises are due on day of final.
+
+\begin{description}
+  \item[4.1] Exercises 1, 2, 4, 5, 7.
+  \item[4.2] Exercises 1, 4, 5, 8, 9.
+\end{description}

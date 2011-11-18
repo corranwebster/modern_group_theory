@@ -1,0 +1,2529 @@
+\chapter{Groups}
+
+Algebra concerns the abstraction of simple arithmetic operations to
+situations where the quantities involved are unknown.  In this endeavour,
+we discover that there are certain rules which always apply,
+such as the commutative and associative laws of addition and multiplication,
+and that these laws allow us to manipulate and simplify algebraic
+expressions. As we learn more mathematics, we see similar rules appear over
+and over again.
+
+In abstract algebra, instead of concentrating on specific algebraic
+settings (such as algebra with numbers, vectors or, now, permutations or
+symmetries) we instead look
+at the \emph{rules} of algebra and ask what we can infer from reasonable
+collections of such rules.  We can then apply the knowledge so gained to a
+surprisingly wide collection of concrete situations which happen to satisfy
+such rules.
+
+You may have already seen such an approach in linear algebra, where one
+eventually considers abstract vector spaces (as opposed to concrete ones, such
+as $\reals^{n}$).  One then finds that, for example, that differentiable
+functions form a vector space, and that differentiation and integration are
+linear transformations, giving new (and quite important) insight into calculus.
+
+Our starting point,
+then will be the \defn{group}{group}, an object which encapsulates a reasonable set
+of rules for a single algebraic operation.
+
+\section{Binary Operations}
+
+A \defn{binary operation}{binary operation} is a type of function that we shall be
+using regularly.  A binary operation $\ast$ is simply a function
+\begin{align*}
+  \ast : A \cross B &\to C\\
+         (x,y) &\mapsto x \ast y.
+\end{align*}
+The distinction lies in that instead of using ``function-style'' notation
+$\ast(x,y)$, it is traditional to write binary operations ``in-line'' as
+$x \ast y$.  Often $A$, $B$ and $C$ are the same set, in which case we say
+that a binary operation $\ast : A \cross A \to A$ is a \defn{binary
+operation on $A$}{binary operation!on a set}.
+
+A binary operation on $A$ is \defn{commutative}{commutative} if
+\[
+  x \ast y = y \ast x
+\]
+for all $x$, $y \in A$.
+It is \defn{associative}{associative} if
+\[
+  (x \ast y) \ast z = x \ast (y \ast z) = x \ast y \ast z.
+\]
+for all $x$, $y$ and $z \in A$.
+
+\begin{lemma}
+  Let $\ast : A \cross A \to A$ be an associative binary operation. Then no
+  matter where you put parentheses in the product
+  $x_{1} \ast x_{2} \ast \cdots \ast x_{n}$, you get the same result.
+\end{lemma}
+\begin{proof}
+  We prove this by induction.  Since the operation is associative, it is
+  true for $n \le 3$ automatically.
+  
+  Now assume that this is true for all $n < k$.  We need to show that for
+  any choice of $i$ and $j$ with $1 \le i < j < k$, we have
+  \[
+    (x_{1} \ast \cdots \ast x_{i}) \ast (x_{i+1} \ast \cdots \ast x_{k})
+    = (x_{1} \ast \cdots \ast x_{j}) \ast (x_{j+1} \ast \cdots \ast x_{k})
+  \]
+  (we do not need to worry about where the parentheses go inside each factor,
+  since they are products of less than $k$ terms).  Now we know that
+  \[
+    (x_{1} \ast \cdots \ast x_{i}) \ast (x_{i+1} \ast \cdots \ast x_{k})
+    = (x_{1} \ast \cdots \ast x_{i}) \ast
+    ((x_{i+1} \ast \cdots \ast x_{j}) \ast (x_{j+1} \ast \cdots \ast x_{k}))
+  \]
+  since the second term is a product of less than $k$ terms.  Similarly
+  \[
+    (x_{1} \ast \cdots \ast x_{j}) \ast (x_{j+1} \ast \cdots \ast x_{k})
+    = ((x_{1} \ast \cdots \ast x_{i}) \ast
+    (x_{i+1} \ast \cdots \ast x_{j})) \ast (x_{j+1} \ast \cdots \ast x_{k}).
+  \]
+  But $\ast$ is associative, so
+  \begin{align*}
+    (x_{1} \ast \cdots \ast x_{i}) &\ast
+    ((x_{i+1} \ast \cdots \ast x_{j}) \ast (x_{j+1} \ast \cdots \ast x_{k}))\\
+    &= y_{1} \ast (y_{2} \ast y_{3}) \\
+    &= (y_{1} \ast y_{2}) \ast y_{3} \\
+    &= ((x_{1} \ast \cdots \ast x_{i}) \ast
+    (x_{i+1} \ast \cdots \ast x_{j})) \ast (x_{j+1} \ast \cdots \ast x_{k}),
+  \end{align*}
+  and we have proven equality of the two expressions.
+  
+  By induction, the result follows for any $k$.
+\end{proof}
+
+An element $e$ of $A$ is an \defn{identity}{identity} for the binary operation if
+\[
+  e \ast x = x \qquad \text{and} \qquad x \ast e = x
+\]
+for every $x \in A$.  More generally, one can have a \defn{left identity}{identity!left}
+$e$ which merely satisfies
+\[
+  e \ast x = x
+\]
+for every $x$.  A \defn{right identity}{identity!right} is defined analagously.
+
+\begin{lemma}
+  If $\ast: A \cross A \to A$ is a binary operation, and $e$ is an identity for
+  $\ast$, then it is the only identity element.
+\end{lemma}
+\begin{proof}
+  Assume that there is another element $e'$ so that $e' \ast x = x \ast e' =
+x$.  Then in particular, if we let $x = e$, we have $e' \ast e = e$.  But by
+assumption, $e$ is an identity, and so $e' \ast e = e'$.  Hence $e = e'$.
+\end{proof}
+
+Notationally, if $\ast$ behaves in a ``multiplication-like'' fashion, or it
+is clear from context which binary operation we are using, we will often simply
+write $xy$ for $x \ast y$.
+
+\begin{example}
+The addition operation is a binary operation in the integers
+\begin{align*}
+  + : \integers \cross \integers &\to \integers\\
+         (x,y) &\mapsto x + y.
+\end{align*}
+In this case we could write $+(2,3) = 2 + 3 = 5$.  Addition is, of course,
+both associative and commutative.  $0$ is an identity for addition.  In fact
+addition is also an associative and commutative binary operation on any of the
+standard number systems, and if $0$ is in the number system, then $0$ is an
+identity.
+\end{example}
+
+\begin{example}
+Multiplication is a binary operation on the set $\reals$, and it is associative
+and commutative, and $1$ is an identity.  Again, like addition,
+multiplication is communtative and associative on any of the
+standard number systems, and if $1$ is in the number system, then $1$ is an
+identity.
+\end{example}
+
+\begin{example}
+If we consider the set $M_{n}(\reals)$ of $n \times n$ real-valued matrices,
+then matrix addition and matrix multiplication are binary operations.  Both
+operations are associative, but only matrix addition is commutative.  The
+zero matrix is an identity for addition, the identity matrix $I_{n}$ (the
+matrix with $1$ down the diagonal and $0$ elsewhere) is an identity for matrix
+multiplication.
+
+We also have scalar multiplication as a binary operation $\reals \cross
+M_{n}(\reals) \to M_{n}(\reals)$.  This cannot be commutative or
+associative, but it does have $1$ as a left identity.
+\end{example}
+
+\begin{example}
+More generally, the inner or dot product on $\reals^{n}$ is a binary
+operation $\cdot: \reals^{n} \cross \reals^{n} \to \reals$ which is
+commutative, but cannot be associative (since the codomain is $\reals$, and
+one cannot take a dot product of an element of $\reals$ and an element of
+$\reals^{n}$).  Similarly, there is no identity element of any sort.
+\end{example}
+
+\begin{example}
+One can define arbitrary binary products which are of little or no interest.
+For example, $x \ast y = e^{x}(x + \sin(y))$ is a binary product.  But it is
+neither associative, commutative, nor has an identity.  So clearly simple
+binary operations are not enough to encapsulate the sorts of rules that we
+expect algebraic operations to have.
+\end{example}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Let $\ast: A \cross A \to A$ be a commutative binary operation.  If
+$e$ is a left identity, show that it also a right identity (and hence simply
+an identity).
+
+  \item Let $X$ be any set, and let $\powerset(X)$ be the power set of
+$X$ (ie. the set of all subsets of $X$).  Show that $\union : \powerset(X)
+\cross \powerset(X) \to \powerset(X)$ is an associative, commutative binary
+operation, and that $\emptyset$ is an identity for this operation.
+
+  Similarly, show that $\intersect : \powerset(X) \cross \powerset(X) \to
+\powerset(X)$ is an associative, commutative binary operation, and that
+$X$ is an identity for this operation.
+
+  \item Let $\ast: A \cross A \to A$ be an associative and commutative binary
+    operation.  Show that for any product of $n$ elements $x_{1}$, $x_{2},
+    \ldots, x_{n} \in A$, no matter what the order of elements in the product
+    \[
+      x_{1} \ast x_{2} \ast \cdots \ast x_{n}
+    \]
+    the result is the same.
+
+\end{exercises}
+
+\section{Groups}
+
+If you look at the discussion of symmetries and permutations, you
+will note that not only was there a binary operation, but there was an inverse.
+We should have some model for this additional operation.
+
+A \defn{group}{group}, $\mathbf{G} = (G, \ast, e)$, consists of a set $G$, a binary
+operation $\ast: G \cross G \to G$, and an element $e \in G$
+satisfying the following three conditions:
+\begin{theoremenum}
+  \item $\ast$ is associative
+  \item $e$ is an identity for $\ast$
+  \item every element $x \in G$ has an \defn{inverse element}{inverse element} $x^{-1} \in G$
+such that $x \ast x^{-1} = x^{-1} \ast x = e$.
+\end{theoremenum}
+We call $\ast$ the \defn{group operation}{group operation}.
+
+Note that there is no requirement that the group operation is commutative. 
+If it does happen to be commutative, then we say that the group is an
+\defn{commutative}{group!commutative} or \defn{Abelian group}{group!Abelian}.
+
+This means that in general $x \ast y$ and $y \ast x$ are distinct elements,
+but sometimes they are not.  If
+\[
+  x \ast y = y \ast x
+\]
+for a particular $x$ and $y \in G$, we say that $x$ and $y$ \defn{commute}{commuting elements}.
+
+A number of different notations are used when working with groups elements. 
+Most commonly we will omit the group operation entirely and simply write $xy$
+for $x \ast y$, just as is done for multiplication.  In this case we use the
+following clear notation for repeated applications of the group operations:
+\[
+  x^{k} = \underbrace{x x x \cdots x}_{k\text{ times}}
+\]
+for any natural number $k$.  To make this notation mesh nicely with the
+expected behaviour of power laws, we define
+\[
+  x^{-k} = (x^{-1})^{k} \qquad \text{and} \qquad x^{0} = e.
+\]
+When then have the standard power laws
+\[
+  x^{m}x^{k} = x^{m+k} \qquad \text{and} \qquad (x^{m})^{k} = x^{mk},
+\]
+for any integers $m$ and $k$.  Its also not hard to see that $(x^{k})^{-1} =
+x^{-k}$.  However, we have that
+\[
+  (xy)^{k} \ne x^{k}y^{k}
+\]
+in general.  In the case that $x$ and $y$ commute, then we do have equality.
+
+In the case of Abelian groups, we will sometimes instead use an additive
+notation.  We use $+$ for the group operation, and we customarily write the
+identity element as $0$, and the inverse element of $x$ as $-x$. We then use
+the notation
+\[
+  kx = \underbrace{x + x + \cdots + x}_{k\text{ times}}
+\]
+for any natural number $k$, and
+\[
+  -kx = k(-x) \qquad \text{and}  \qquad 0x = 0.
+\]
+We then have the natural rules that
+\[
+  kx + mx = (k + m)x, \qquad k(mx) = (km)x \qquad \text{and} \qquad kx + ky
+= k(x+y)
+\]
+for any integers $k$ and $m$.
+
+If the set $G$ has a finite number of elements, we say that the
+\defn{order}{order!of a group} of the group is the number of elements of $G$. 
+If $G$ is an infinite set, we say that the group has infinite order.  We denote
+the order of the group by $|G|$.
+
+\begin{example}[Addition and Multiplication]
+  Since a principle motivation for the definition of groups are standard
+  algebraic operations, it should be no surprise that the following are all
+  Abelian groups:
+  \begin{itemize}
+    \item the additive group of real numbers $(\reals, +, 0)$
+    \item the additive group of complex numbers $(\complex, +, 0)$
+    \item the additive group of rational numbers $(\rationals, +, 0)$
+    \item the additive group of integers $(\integers, +, 0)$
+    \item the multiplicative group of real numbers $(\reals \setminus \{0\}, \times, 1)$
+    \item the multiplicative group of complex numbers $(\complex \setminus \{0\}, \times, 1)$
+    \item the multiplicative group of rational numbers $(\rationals \setminus \{0\}, \times, 1)$
+    \item the multiplicative group of integers $(\integers \setminus \{0\}, \times, 1)$
+    \item the multiplicative group of natural numbers $(\naturals, \times, 1)$
+  \end{itemize}
+  Note that for the multiplicative groups, we need to exclude $0$, since $0$
+  has no multiplicative inverse.
+  
+  All of these groups have infinite order.
+\end{example}
+
+\begin{example}[Modulo Addition]
+  If $m$ is any natural number, the additive group of integers modulo $m$ is
+  the group $\integers_{m} = (\{0, 1, 2, \ldots, m-1\}, +, 0)$, where addition
+  is performed modulo $m$.  To confirm that it is a group, we need to check
+  that the axioms hold.
+  
+  Associativity follows from the fact that regular addition is associative and commutative.
+  Given $x$, $y$ and $z$, we have $x + y = a + km$ for some $a$ and $k$, so
+  $(x + y) + z \equiv a + z \pmod{m}$.  But $y = a - x + km$, so $y + z
+  \equiv a - x + z \pmod{m}$, and hence $x + (y + z) \equiv x + a - x + z \equiv a
+  + z \pmod{m}$.
+  
+  The fact that $0$ is an identity is trivial: $0 + x = x$, so $0 + x \equiv x \pmod{m}$
+  follows immediately.
+  
+  If $x \in \{1, 2, \ldots, m-1\}$, we know that $-x \equiv m-x \pmod{m}$, and so
+  $(m - x) + x \equiv 0 \pmod{m}$ and $x + (m - x) \equiv 0 \pmod{m}$.  Also
+  $0$ is its own inverse. So every element has an inverse.
+  
+  These groups are also clearly Abelian, since regular addition is commutative.
+  
+  The order of $\integers_{m}$ is $m$.
+\end{example}
+
+The previous example shows that there are groups of all orders except $0$.
+
+\begin{example}
+  Multiplication modulo $m$ does not, in general, give a group structure.
+  Multiplication modulo $m$ is associative, and $1$ is an identity.
+  We have to exclude $0$ from the group, because it clearly does not
+  have a multiplicative inverse, but even with this restriction, some other
+  elements may not have multiplicative inverses.
+  
+  If you consider multiplication modulo $6$, as in Example~\ref{eg:mod6},
+  you can see that there are no inverses for $2$, $3$, and $4$, since none
+  of them have a number which you can multiply them by to give $1$.  Indeed,
+  there is a somewhat deeper problem in that some products give $0$, which
+  cannot be an element of the group.
+  
+  Multiplication modulo $m$ {\em does} sometimes give you a group, however.
+  The multiplication table (omitting $0$) for multiplication modulo $5$ is
+  as follows:
+  \[
+    \begin{array}{c|cccc}
+      \times & 1 & 2 & 3 & 4 \\
+      \hline
+      1 & 1 & 2 & 3 & 4 \\
+      2 & 2 & 4 & 1 & 3 \\
+      3 & 3 & 1 & 4 & 2 \\
+      4 & 4 & 3 & 2 & 1
+    \end{array}
+  \]
+  A quick check shows that every element has an inverse.  Hence
+  $(\{1, 2, 3, 4\}, \times, 1)$ is a group, where $\times$ is multiplication
+  modulo $5$.
+\end{example}
+
+\begin{example}[Symmetries of a Set]
+  If $\Omega \subseteq \reals^{n}$, then $(\Sym(\Omega), \circ, I)$ is a
+  group.  The proof of this is the essential content of
+  Proposition~\ref{prop:symmetryfacts}.
+\end{example}
+
+\begin{example}[Symmetric Group]
+  The \defn{symmetric group}{group!symmetric} is the group $S_{n} = (S_{n},
+  \cdot, e)$ of all permutations, with the multiplication of permutations
+  being the group operation, and $e(k) = k$ being the identity
+  permutation.  That this is a group is largely the content of
+  Proposition~\ref{prop:permgroup}.  The only thing that needs to be checked
+  is that the identity permutation is in fact a group identity, and that is
+  fairly straightforward: if $p$ is any permutation in $S_{n}$,
+  \[
+    (pe)(k) = e(p(k)) = p(k) \qquad \text{and} \qquad (ep)(k) = p(e(k)) = p(k),
+  \]
+  for all $k$, so $ep = pe = p$, and $e$ is therefore the identity for this
+  group operation.
+\end{example}
+
+\begin{example}[Alternating Group]
+  Let $A_{n}$ be the set of all even permutations.
+  The \defn{alternating group}{group!alternating} is the group $A_{n} = 
+  (A_{n}, \cdot, e)$ of all even permutations, with the multiplication of
+  permutations being the group operation, and $e(k) = k$ being the identity
+  permutation.  We know that the product of two even permutations is 
+  an even permutation, and the product is associative, and from the 
+  previous example we know that $e$ is an identity.  What remains to 
+  be checked is that if $p$ is an even permutation, so is $p^{-1}$.
+  We note that since $\parity(p) = 1$,
+  \[
+    \parity(p^{-1}) = \parity(p)\parity(p^{-1}) = \parity(pp^{-1}) =
+    \parity(e) = 1.
+  \]
+  Hence $p^{-1}$ is an even permutation.
+  
+  The group $A_{n}$ has order $n!/2$.
+\end{example}
+
+\begin{example}[Matrix Groups]
+  Recall that a matrix $A$ is invertible if and only if $\det(A) \ne 0$.
+  If we are going to find groups of matrices with matrix multiplication as
+  the group operation, then they must be invertible at least.
+  
+  The following are all groups:
+  \begin{itemize}
+    \item the \defn{general linear group}{group!general linear} of $n \times n$ 
+    matrices $(GL_{n}(\reals), \times, I_{n})$, where
+    \[
+      GL_{n}(\reals) = \{ A \in M_{n}(\reals) : \det(A) \ne 0\}.
+    \]
+    
+    \item the \defn{orthogonal group}{group!orthogonal} of $n \times n$ 
+    matrices $(O_{n}(\reals), \times, I_{n})$, where $O_{n}(\reals)$
+    is the set of orthogonal matrices (ie.\ matrices whose columns form an
+    orthonormal basis or, equivalently, which satisfy $A^{-1} = A^{t}$).
+    
+    \item the \defn{special linear group}{group!special linear} of $n \times
+    n$ matrices $(SL_{n}(\reals), \times, I_{n})$, where
+    \[
+      SL_{n}(\reals) = \{ A \in M_{n}(\reals) : \det(A) = 1\}.
+    \]
+    
+    \item the \defn{special orthogonal group}{group!special orthogonal} of
+    $n \times n$ matrices $(SO_{n}(\reals), \times, I_{n})$, where $SO_{n}(\reals)$
+    is the set of orthogonal matrices with determinant 1.
+  \end{itemize}
+  
+  There isn't anything particularly special about $\reals$-valued matrices
+  in the above.  Once can define $GL_{n}(\field)$,  $SL_{n}(\field)$, 
+  $O_{n}(\field)$, and $SO_{n}(\field)$ for any field $\field$ (such as
+  the complex numbers $\complex$, or the rational numbers $\rationals$).
+  
+  A \defn{unitary matrix}{matrix!unitary} is a complex-valued matrix which
+  satisfies $A^{-1} = A^{*}$, where $A^{*}$ is the conjugate transpose matrix
+  of $A$.  More precisely, if $A = [a_{i,j}]_{i,j=1}^{n}$, then
+  \[
+    A^{*} = [\overline{a_{i,j}}]^{t}.
+  \]
+  We then have two additional complex matrix groups
+  \begin{itemize}
+   \item the \defn{unitary group}{group!unitary} of $n \times n$ 
+    matrices $(U_{n}(\complex), \times, I_{n})$, where $U_{n}$
+    is the set of unitary matrices.
+    
+    \item the \defn{special unitary group}{group!special unitary} of
+    $n \times n$ matrices $(SU_{n}(\complex), \times, I_{n})$, where $SU_{n}(\complex)$
+    is the set of unitary matrices with determinant 1.
+  \end{itemize}
+  
+  In all these cases, we know that matrix multiplication is associative, the
+  identity matrix is an element of each group, and in each case there is a
+  matrix inverse of each matrix.  What we need to check in each case is that
+  the product of two elements is an element of the group, and that the inverse
+  of an element is an element of the group.
+  
+  In each case it is fairly easy to verify these two facts.  The key
+  identities that we use are as follows:
+  \begin{theoremenum}
+    \item $|AB| = |A||B|$. So if $|A|$ and $|B| \ne 0$, then $|AB| \ne 0$.
+      Hence if $A$ and $B \in GL_{n}(\reals)$, then so is $AB$.
+      
+      Similarly if $|A|$ and $|B| = 1$, then $|AB| = |A||B| = 1$, so
+      if $A$ and $B \in SL_{n}(\reals)$, then so is $AB$.
+    
+    \item $(A^{-1})^{-1} = A$, so if $A \in GL_{n}(\reals)$, then so is
+      $A^{-1}$.
+    
+    \item $|A^{-1}| = |A|^{-1}$, so if $|A| = 1$, $|A^{-1}| = 1^{-1} = 1$.
+      Hence if $A \in SL_{n}(\reals)$, then so is $A^{-1}$.
+    
+    \item if $A$ and $B \in O_{n}(\reals)$, then $(AB)^{t} = B^{t}A^{t} =
+      B^{-1}A^{-1} = (AB)^{-1}$.  Also $(A^{-1})^{t} = (A^{t})^{t} = A =
+      (A^{-1})^{-1}$, so $A^{-1} \in O_{n}(\reals)$.
+      
+      This, combined with (1) and (2) also shows that $SO_{n}(\reals)$ is a
+      group.
+    
+    \item similarly, if $A$ and $B \in U_{n}(\complex)$, then $(AB)^{*} = B^{*}A^{*} =
+      B^{-1}A^{-1} = (AB)^{-1}$.  Also $(A^{-1})^{*} = (A^{*})^{*} = A =
+      (A^{-1})^{-1}$, so $A^{-1} \in U_{n}(\complex)$.
+      
+      This, combined with (1) and (2) also shows that $SU_{n}(\complex)$ is a
+      group.
+  \end{theoremenum}
+\end{example}
+
+\begin{example}
+  The set of matrices
+  \[
+    G = \left\{
+      \begin{bmatrix}
+        1 & 0 \\
+        0 & 1
+      \end{bmatrix},
+      \begin{bmatrix}
+        0 & 1 \\
+        1 & 0
+      \end{bmatrix},
+      \begin{bmatrix}
+        -1 & 0 \\
+        0 & -1
+      \end{bmatrix},
+      \begin{bmatrix}
+        0 & -1 \\
+        -1 & 0
+      \end{bmatrix}
+    \right\}
+  \]
+  is a group when given the standard matrix operations, and the identity is
+  the identity matrix.  The easiest way to verify this is simply to show that
+  the group is closed under matrix multiplication and matrix inverse.
+  
+  Letting
+  \[
+    I = \begin{bmatrix}
+        1 & 0 \\
+        0 & 1
+      \end{bmatrix}, \qquad
+    A = \begin{bmatrix}
+        0 & 1 \\
+        1 & 0
+      \end{bmatrix}, \qquad
+    B = \begin{bmatrix}
+        -1 & 0 \\
+        0 & -1
+      \end{bmatrix},
+    C = \begin{bmatrix}
+        0 & -1 \\
+        -1 & 0
+      \end{bmatrix},
+  \]
+  we have that $I^{-1} = I$, $A^{-1} = A$, $B^{-1} = B$ abd $C^{-1} = C$, and
+  if we draw up the Cayley table for matrix multiplication of these matrices,
+  we get
+  \[
+    \begin{array}{c|cccc}
+        & I & A & B & C \\
+      \hline
+      I & I & A & B & C \\
+      A & A & I & C & B \\
+      B & B & C & I & A \\
+      C & C & B & A & I \\
+    \end{array}
+  \]
+  
+  Note that the Cayley table and inverses of this group correspond to the
+  Cayley table and inverses of the symmetries of the \textsf{H}-shaped set
+  of Example~\ref{eg:symmetryofH}, with $I \leftrightarrow I$, $A \leftrightarrow H$,
+  $B \leftrightarrow V$, and $C \leftrightarrow R$.
+\end{example}
+
+\begin{example}[Free Groups]
+  Let $a$ and $b$ two symbols, and $a^{-1}$ and $b^{-1}$ be the inverse
+  of these two symbols.  A \defn{word}{word} in the \defn{letters}{letters}
+  $a$, $b$, $a^{-1}$ and $b^{-1}$
+  is simply a list $w = w_{1}w_{2}\cdots w_{n}$, where each $w_{k}$ is one
+  of the 4 letters.  A \defn{reduced word}{word!reduced} is a word where
+  we have repeatedly cancelled any adjacent occurrences of a letter and its
+  inverse.
+  
+  For example $w = aba^{-1}ab^{-1}b^{-1}ab^{-1}ba$ is a word.  The corresponding
+  reduced word can be found by cancelling: $w = aba^{-1}ab^{-1}b^{-1}ab^{-1}ba =
+  abb^{-1}b^{-1}aa = ab^{-1}aa$.
+  
+  The empty word $e$ is the word with no letters.  The product of two words
+  $v = v_{1}v_{2}\cdots v_{m}$ and $w = w_{1}w_{2}\cdots w_{n}$ is simply
+  the concatenation of the two words:
+  \[
+    vw = v_{1}v_{2}\cdots v_{m}w_{1}w_{2}\cdots w_{n}
+  \]
+  
+  The \defn{free group}{group!free} on $2$ symbols, $F_{2}$, is the set of
+  all reduced words in $a$, $b$, $a^{-1}$ and
+  $b^{-1}$, where the group operation is to multiply two words, and then reduce
+  the product, and the identity is the empty word.  The inverse of a word
+  $w = w_{1}w_{2}\cdots w_{n}$ is the word $w^{-1} = w_{n}^{-1}w_{n-1}^{-1}\cdots
+  w_{1}^{-1}$.
+  
+  In a similar manner, one can construct the free group $F_{n}$ on $n$ symbols.
+\end{example}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Let $(G, \ast, e)$ be a group, and let $x$ and $y$ be two elements
+    of $G$ which commute.  Prove that for any $k \in \integers$, $(xy)^{k} =
+    x^{k}y^{k}$.
+
+  \item Give an example of a group and two elements of that group such that
+    \[
+      (xy)^{2} \ne x^{2}y^{2}.
+    \]
+    Provide concrete calculations to demonstrate this fact for your example.
+  
+  \item Show that in each of the following cases, $(G, \ast, e)$ is a group.
+    \begin{theoremenum}
+      \item $G = \reals^{2}$, $(x,y) \ast (x',y') = (x + x', y + y')$, $e = (0,0)$.
+
+      \item $G = \{(x,y) : x,y \in \reals, x \ne 0\}$, $(x,y) \ast (x',y') = (xx', x'y + y')$, $e = (1,0)$.
+
+      \item $G = \{x : x \in \reals, x \ne -1\}$, $x \ast y = x + y + xy$, $e = 0$.
+
+      \item $\displaystyle G = SL_{2}(\integers) = \left\{
+        \begin{bmatrix}
+          a & b \\ c & d
+        \end{bmatrix}
+        : a, b, c, d \in \integers, ad - bc = 1
+        \right\}$, $\ast$ is matrix multiplication, and $e$ is the identity
+        matrix.
+
+      \item $\displaystyle G = \left\{
+        \begin{bmatrix}
+          a & b \\ 0 & a
+        \end{bmatrix}
+        : a, b \in \reals, a \ne 0
+        \right\}$, $\ast$ is matrix multiplication, and $e$ is the identity
+        matrix.
+      
+      \item $G = \powerset(X)$, the power set of some set $X$, $\ast = \symdiff$,
+        and $e = \emptyset$.
+    \end{theoremenum}
+    
+    \item Let $m \ge 2$ be a natural number, and
+      \[
+        G = \{k \in \integers_{m}: k \ne 0, \text{ $k$ and $m$ are
+        coprime}\}.
+      \]
+      Show that $(G, \times, 1)$
+      is a group where $\times$ is performed modulo $m$.  Conclude that
+      $(\integers_{p} \setminus \{0\}, \times, 1)$ is a group if and only if
+      $p$ is prime.
+      
+      Hint: Use Exercise~\ref{ex:zerodivisor}.
+      
+    \item Explain why $(\naturals, \times, 1)$ is not a group.
+    
+    \item (*) Prove that $SL_{n}(\integers)$ is a group.
+\end{exercises}
+
+\section{Working With Abstract Groups}
+
+A lot of the content of group theory involves proving general facts about
+groups.  The point of this section is to make you familiar with the sorts of
+techniques and proof methods involved.  Unfortunately, even the most ``obvious''
+and basic facts need careful checking, since we have stripped away most of the
+standard rules of algebra.
+
+Consider the \defn{cancellation law}{cancellation law}:
+
+\begin{proposition}[Cancellation Law]\label{prop:cancellation}
+  Let $(G, \ast, e)$ be a group, and $x$, $y$, and $z \in G$.  If
+  $x \ast z = y \ast z$, then $x = y$.  Similarly, if $z \ast x = 
+  z \ast y$, then $x = y$.
+\end{proposition}
+
+Normally you would cancel like this in algebra without too much thought: the
+case $z = 0$ for multiplication is really the only exceptional case in
+standard algebra.  However we need to carefully justify that cancellation in
+fact works for groups.
+
+\begin{proof}
+  We have
+  \begin{alignat*}{4}
+    x &= x \ast e &\qquad &\text{(identity axiom)} \\
+      &= x \ast (z \ast z^{-1}) &&\text{(inverse axiom)} \\
+      &= (x \ast z) \ast z^{-1} &&\text{(associativity)} \\
+      &= (y \ast z) \ast z^{-1} &&\text{(hypothesis)} \\
+      &= y \ast (z \ast z^{-1}) &&\text{(associativity)} \\
+      &= y \ast e &&\text{(inverse axiom)} \\
+      &= y. &&\text{(identity axiom)}
+  \end{alignat*}
+  
+  The second part is left as an exercise.
+\end{proof}
+
+Notice how each step is justified in terms of the axioms of a group. 
+Needless to say, once you get more familiar with the way that group
+operations work, you will not need to justify each step, and you may
+be able to skip certain trivial steps.  In the short term, however,
+you should be careful that you justify each step in any calculation.
+
+Here is another example: it should be fairly obvious that there can only be
+one inverse of any particular element.  Nevertheless, we need to prove this
+result.
+
+\begin{proposition}[The Inverse is Unique]\label{prop:uniqueinverse}
+  Let $(G, \ast, e)$ be a group, and $x$, $y \in G$.  Then if $x \ast y = e$,
+  $y = x^{-1}$.  Similarly, if $y \ast x = e$, $y = x^{-1}$.
+\end{proposition}
+\begin{proof}
+  We have
+  \begin{alignat*}{4}
+    y &= e \ast y &\qquad &\text{(identity axiom)} \\
+      &= (x^{-1} \ast x) \ast y &&\text{(inverse axiom)}\\
+      &= x^{-1} \ast (x \ast y) &&\text{(associativity)}\\
+      &= x^{-1} \ast e &&\text{(hypothesis)}\\
+      &= x^{-1}. &&\text{(identity axiom)}\\
+  \end{alignat*}
+  
+  The second part is left as an exercise.
+\end{proof}
+
+Once we have basic facts like this, we can use them to simplify the proofs
+of other facts.
+
+\begin{proposition}
+  Let $(G, \ast, e)$ be a group, and $x$, $y \in G$.  Then $(x \ast y)^{-1} =
+  y^{-1} \ast x^{-1}$.
+\end{proposition}
+\begin{proof}
+  By Proposition~\ref{prop:uniqueinverse}, we need only show that
+  $(x \ast y) \ast (y^{-1} \ast x^{-1}) = e$.
+  \begin{alignat*}{4}
+    (x \ast y) \ast (y^{-1} \ast x^{-1})
+      &= (x \ast (y \ast y^{-1})) \ast x^{-1} &\qquad &\text{(associativity)} \\
+      &= (x \ast e) \ast x^{-1} &\qquad &\text{(inverse axiom)} \\
+      &= x \ast x^{-1} &\qquad &\text{(identity axiom)} \\
+      &= e. &\qquad &\text{(inverse axiom)}
+  \end{alignat*}
+  Hence $(x \ast y)^{-1} = y^{-1} \ast x^{-1}$.
+\end{proof}
+
+Notice in this example that the order of the product is reversed in the
+inverse.  This is necessary if the elements do not commute.
+
+Here is another basic fact that needs to be verified.
+
+\begin{proposition}[Double Inverse]
+  Let $(G, \ast, e)$ be a group, and $x \in G$.  Then $(x^{-1})^{-1} = x$.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+As mentioned in the previous section, if we use power-style notation, most of
+the usual power laws hold.
+
+\begin{proposition}[Power Laws for Groups]
+  Let $(G, \ast, e)$ be a group, and $x \in G$.  Then
+  \begin{theoremenum}
+    \item $x^{m}x^{n} = x^{m+n}$,
+    \item $(x^{m})^{n} = x^{mn}$,
+    \item if $y \in G$ and $x \ast y = y \ast x$, then $(x \ast y)^{n} = 
+    x^{n} \ast y^{n}$.
+  \end{theoremenum}
+    
+  Let $(G, +, 0)$ is an Abelian group, and $x$, $y \in G$.  Then
+  \begin{theoremenum}
+    \item $mx + nx = (m+n)x$,
+    \item $m(nx) = (mn)x$,
+    \item $n(x+y) = nx + ny$.
+  \end{theoremenum}
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Prove the parts of the proofs from this section that were left as
+    exercises.
+
+  \item Some texts define groups slightly differently (and slightly more
+    efficiently) as follows:
+    
+    A \defn{group}{group}, $\mathbf{G} = (G, \ast, e)$, consists of a set $G$,
+    a binary operation $\ast: G \cross G \to G$, and an element $e \in G$
+    satisfying the following three conditions:
+    \begin{theoremenum}
+      \item $\ast$ is associative
+      \item $e$ is a (left) identity for $\ast$, ie.\ $e \ast x = x$,
+      \item every element $x \in G$ has an \defn{inverse element}{inverse element} $x^{-1} \in G$
+        such that $x^{-1} \ast x = e$.
+   \end{theoremenum}
+   
+   Show that if you use these axioms, you can prove that $e$ is also a right
+   inverse, and $x \ast x^{-1} = e$, giving you the axioms of our definition
+   of a group.
+   
+   This means that the two definitions are equivalent, so you can use either
+   one.
+   
+  \item Let $(G, \ast, e)$ be a group, and $x$, $y \in G$.  Show that if
+  $y^{-1}xy = x^{k}$, then $y^{-n}x^{m}y^{n} = x^{mk^{n}}$.
+  
+  \item Let $(G, \ast, e)$ be a group.  Show that $e^{-1} = e$.
+
+\end{exercises}
+
+\section{Cayley Tables}
+
+As we have seen, there are quite a number of groups around.  We would like
+to develop some way that we can present groups abstractly, without worrying
+about any potential context.
+
+For finite groups, one way of doing this is by giving a Cayley table for the
+group.
+
+\begin{definition}
+  Let $(G, \ast, e)$ be a finite group of order $n$, with some particular
+  ordering $x_{1}$, $x_{2}, \ldots, x_{n}$ chosen for the elements of $G$.
+  Then a Cayley table of the group is an array where $x_{i} \ast x_{j}$ is
+  in the $i$th row and $j$th column.
+\end{definition}
+
+We do not need to specify the inverse as a separate table, since we can find
+the inverse of $x_{i}$ by looking for the $j$ such that the $j$th entry of the
+$i$th row is $e$, so that $x_{i} \ast x_{j} = e$, and hence $x_{j} = x_{i}^{-1}$
+by Proposition~\ref{prop:uniqueinverse}.
+
+We have already seen a number of Cayley tables for binary operations which
+turned out to be groups.  Indeed, in a number of situations, the Cayley tables
+turned out to be essentially the same.
+
+\begin{example}
+  Consider the Cayley tables of $(\integers_{2}, +, 0)$ and $(\integers_{3}
+  \setminus \{0\}, \times, 1)$.
+  \[
+    \begin{array}{c|cc}
+      + & 0 & 1 \\
+      \hline
+      0 & 0 & 1 \\
+      1 & 1 & 0
+    \end{array}
+    \qquad
+    \begin{array}{c|cc}
+      \times & 1 & 2 \\
+      \hline
+      1 & 1 & 2 \\
+      2 & 2 & 1
+    \end{array}
+  \]
+  
+  These are the same table is you replace $+$ by $\times$, $0$ by $1$ and $1$
+  by $2$.
+\end{example}
+
+In situations like this, we can agree that the two groups in question are
+essentially the same.
+
+\begin{definition}
+  Two finite groups $(G, \ast, e)$ and $(H, \circ, i)$ are
+  \defn{isomorphic}{isomorphic} if a Cayley table of $H$ can be obtained
+  from a Cayley table of $G$ be replacing all occurrences of each symbol
+  in $G$ by a corresponding symbol of $H$, and each $\ast$ by $\circ$.
+  
+  We write $G \isom H$ when $G$ and $H$ are isomorphic.
+\end{definition}
+
+The correspondence between any two isomorphic groups always has the two
+identities corresponding, and always has the inverse of a symbol in $G$
+corresponding to the inverse of the corresponding symbol in $H$.
+
+Isomorphism is clearly a transitive relation between groups.  If $G$ and $H$
+are isomorphic, and $H$ and $F$ are isomorphic, than $G$ and $F$ must also be
+isomorphic.
+
+This is not the final version of the definition of ``isomorphic'', but it will
+do for now.
+
+\begin{example}
+  The groups $S_{3}$ and $\Sym(\Omega)$, where $\Omega$ is an equilateral
+  triangle, are isomorphic.
+\end{example}
+
+\begin{example}\label{eg:groupsoforder4}
+  Consider the Cayley tables of $\integers_{4}$ and the group of symmetries
+  of the \textsf{H}-shaped set of Example~\ref{eg:symmetryofH}:
+  \[
+    \begin{array}{c|cccc}
+      + & 0 & 1 & 2 & 3\\
+      \hline
+      0 & 0 & 1 & 2 & 3 \\
+      1 & 1 & 2 & 3 & 0 \\
+      2 & 2 & 3 & 0 & 1 \\
+      3 & 3 & 0 & 1 & 2 \\
+    \end{array}
+    \qquad
+    \begin{array}{c|cccc}
+    \circ & I & H & V & R \\
+    \hline
+      I & I & H & V & R \\
+      H & H & I & R & V \\
+      V & V & R & I & H \\
+      R & R & V & H & I \\
+    \end{array}
+  \]
+  
+  These two groups are not isomorphic, since $I$ must correspond to $0$, and
+  one of $H$, $V$ or $R$ must correspond to $1$, and $1 + 1 = 2$, but we have
+  $H \circ H = I$, $V \circ V = I$,  $R \circ R = I$, so their products cannot
+  correspond to the sum, and so there is no element that can correspond to $1$.
+\end{example}
+
+It is immediate that for two groups to be isomorphic, they must have the same
+order, since otherwise the Cayley tables are different sizes, and so the cannot
+correspond.
+
+Similarly if two groups are isomorphic, either both are Abelian, or 
+both fail to be Abelian, since there is no way the Cayley tables can 
+correspond if one is Abelian and the other not.
+
+\begin{lemma}
+  If $G$ and $H$ are finite groups, and $G \isom H$, then:
+  \begin{theoremenum}
+      \item $|G| = |H|$,
+      
+      \item $G$ is Abelian if and only if $H$ is Abelian.
+  \end{theoremenum}
+\end{lemma}
+
+This leads to the following:
+
+\begin{question}
+  How many different (ie.\ non-isomorphic) classes of groups are there for
+  any given order?
+\end{question}
+
+This question is one which we will spend a fair amount of time considering.
+
+Cayley tables can be used to answer this question, at least for groups of
+small order, but we need a few facts about Cayley tables first.
+
+\begin{proposition}
+  If $(G, \ast, e)$ is a finite group, then every element of $G$ occurs exactly once
+  in each row and in each column of a Cayley table for $G$.
+\end{proposition}
+\begin{proof}
+  Let $G = \{x_{1}, x_{2}, \ldots, x_{n}\}$.  Assume that $x$ occurs twice in
+  the $i$th row, so that $x = x_{i} \ast x_{j}$ and $x = x_{i} \ast x_{k}$
+  for some $j \ne k$.  But then we have $x_{i} \ast x_{j} = x_{i} \ast x_{k}$,
+  and the cancellation law tells us that $x_{j} = x_{k}$, so $j = k$, which is
+  a contradiction.  Hence $x$ can occur at most once.
+  
+  If $x$ does not occur at all in the $i$th row, then there must be some other
+  element which occurs 2 or more times by the pidgeonhole principle, which
+  is impossible.  Hence $x$ must occur exactly once.
+  
+  A similar argument proves the result for columns.
+\end{proof}
+
+Another way of saying this is that a Cayley table is a \defn{Latin square}{Latin
+square}: a Latin square is an array of symbols in which every symbol occurs
+exactly once in each row and in each column.  Latin squares are significant
+in experimental design and statistics.  However, not every Latin square is a 
+Cayley table for a group.
+
+\begin{example}
+  The following binary operation does not give a group:
+  \[
+    \begin{array}{c|ccccc}
+      \ast & 1 & a & b & c & d \\
+      \hline
+      1 & 1 & a & b & c & d \\
+      a & a & 1 & d & b & c \\
+      b & b & c & 1 & d & a \\
+      c & c & d & a & 1 & b \\
+      d & d & b & c & a & 1 \\
+    \end{array}
+  \]
+  The problem is that the operation it determines is not associative:
+  $(a \ast b) \ast c = d \ast c = a$, while $a \ast (b \ast c) = a \ast d = c$.
+  However, this table clearly has the Latin square property.
+\end{example}
+
+\begin{theorem}
+  Let $n = 1$, $2$, or $3$.  Then every group of order $n$ is isomorphic to
+  $(\integers_{n}, +, 0)$.
+\end{theorem}
+\begin{proof}
+  Case $n=1$: the group has one element which must be the identity,
+  so $G = \{e\}$.  The only possible Cayley table is trivial
+  \[
+    \begin{array}{c|c}
+      \ast & e \\
+       \hline
+     e & e
+    \end{array}
+  \]
+  and this clearly is isomorphic to the Cayley table of $\integers_{1}$
+  \[
+    \begin{array}{c|c}
+      + & 0 \\
+      \hline
+      0 & 0
+    \end{array}
+  \]
+
+  Case $n=2$: the group has two elements, one of which must be the identity,
+  so $G = \{e, a\}$.  Entering in the elements which are products of the
+  identity element we get
+  \[
+    \begin{array}{c|cc}
+      \ast & e & a \\
+      \hline
+      e & e & a \\
+      a & a &  
+    \end{array}
+  \]
+  and clearly the only way to complete this table while keeping the Latin
+  square property is to put an $e$ in the bottom right entry:
+  \[
+    \begin{array}{c|cc}
+      \ast & e & a \\
+      \hline
+      e & e & a \\
+      a & a & e 
+    \end{array}
+  \]
+  Again, this is clearly isomorphic to $\integers_{2}$ when you look at the
+  Cayley table
+  \[
+    \begin{array}{c|cc}
+      + & 0 & 1 \\
+      \hline
+      0 & 0 & 1 \\
+      1 & 1 & 0 
+    \end{array}
+  \]
+
+  Case $n=3$: the group has three elements, one of which must be the identity,
+  so $G = \{e, a, b\}$.  Entering in the elements which are products of the
+  identity element we get
+  \[
+    \begin{array}{c|ccc}
+      \ast & e & a & b \\
+      \hline
+      e & e & a & b \\
+      a & a &  \\
+      b & b &  
+    \end{array}
+  \]
+  To preserve the Latin square property, the second entry of the second
+  column must be $b$, otherwise the second entry of the third column would be
+  $b$, which would break the Latin square property for the third column.
+  This then implies that the last entries of the second row and second
+  column must be $e$, and the final entry of the array must be $a$.
+  \[
+    \begin{array}{c|ccc}
+      \ast & e & a & b \\
+      \hline
+      e & e & a & b \\
+      a & a & b & e \\
+      b & b & e & a
+    \end{array}
+  \]
+  Again, the correspondence with the Cayley table for $\integers_{3}$ is clear:
+  \[
+    \begin{array}{c|ccc}
+      + & 0 & 1 & 2\\
+      \hline
+      0 & 0 & 1 & 2\\
+      1 & 1 & 2 & 0 \\
+      2 & 2 & 0 & 1 
+    \end{array}
+  \]
+\end{proof}
+
+We know that there are at least two non-isomorphic groups of order 4.  It will
+turn out that these are the only two possibilities.  We could prove this
+by finding all possible Cayley tables of groups of order 4, but as we will
+see, there are slicker ways to do this.
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Find another example of a Latin square which is not the Cayley table
+    of a group.
+  
+  \item Show that any group of order 4 is isomorphic to one of the two groups
+    in Example~\ref{eg:groupsoforder4}.
+\end{exercises}
+
+\section{Generators}
+
+While Cayley tables have their uses, there are clear limitations to their use
+once the groups get large, and for infinite groups they at best give a tiny
+snapshot of the group.  Another way of presenting groups is required, which
+can deal with these larger groups.
+
+\begin{definition}
+  Let $(G, \ast, e)$ be a group.  We say that a subset $X = \{x_{1}, x_{2}, \ldots,
+  x_{n}\}$ of $G$ \defn{generates}{set!generating} $G$ if every element of $G$ can be
+  written as a product of powers of elements of set $X$ (possibly with
+  repetition).  We say that the elements of $X$ are generators of $G$.
+  
+  More generally, given a subset $X = \{x_{1}, x_{2}, \ldots, x_{n}\}$ of $G$, the
+  set of elements that can be written as a product of powers of elements of $X$
+  (possibly with repetition) is the set \defn{generated}{generated} by $X$,
+  and we denote it by $\langle x_{1}, x_{2}, \ldots, x_{n} \rangle$ or
+  $\langle X \rangle$.
+\end{definition}
+
+\begin{example}
+  The group $S_{3}$ is generated by the permutations $a = (1,2,3)$ and
+  $b = (1,2)$.  One can easily verify that the identity permutation is $a^{0}$,
+  $a^{2} = (1,3,2)$, $ab = (2,3)$ and $a^{2}b = (1,3)$.  We could write
+  $S_{3} = \langle (1,2,3), (1,2) \rangle$.
+  
+  The group $S_{3}$ is also generated by $x = (1,2)$ and $y = (2,3)$.  This
+  requires a little bit more checking, but $x^{0} = e$, $yx = (1,2,3)$,
+  $xy = (1,3,2)$, and $xyx = (1,3)$, so we also have $S_{3} = \langle (1,2),
+  (2,3) \rangle$.
+  
+  On the other hand, the permutation $a = (1,2,3)$ does not generate the
+  whole group. The only elements we can get using just powers of $a$ are
+  $e$, $a$, and $a^{2}$, since $a^{3} = e$.
+  Hence $\langle (1,2,3) \rangle = \{ e, (1,2,3), (1,3,2) \}$.
+\end{example}
+
+\begin{example}
+  The group $(\integers_{4}, +, 0)$ is generated by $1$, since $1+1 = 2$,
+  $1 + 1 + 1 = 3$ and $1 + 1 + 1 + 1 = 0$.  It is also generated by $-1$.
+  
+  However the set generated by $2$ is simply $\{0, 2\}$.
+\end{example}
+
+We note that the identity element is always in the set generated by any
+collection of elements.
+
+Generators help us understand the structure of a group by allowing us to
+represent general elements in terms of fewer symbols.
+
+\begin{example}
+  If $x = (1,2)$ and $y = (2,3)$, then $S_{3} = \{e, x, y, xy, yx, xyx\}$.
+  In addition, we can see that $x^{2} = e$, $y^{2} = e$ and $yxy = xyx$.
+  For example, you could calculate the product of $xyx$ and $yx$ using these
+  facts as follows:
+  \begin{alignat*}{4}
+    (xyx)(yx) &= x(yxy)x &\qquad& \text{(associativity)}\\
+              &= x(xyx)x && \text{($yxy = xyx$)}\\
+              &= (xx)y(xx) && \text{(associativity)}\\
+              &= eye && \text{($x^{2} = e$)}\\
+              &= y && \text{(identity axiom)}
+  \end{alignat*}
+  We can use this information to write the Cayley table of $S_{3}$ in terms
+  of $x$ and $y$ as follows:
+  \[
+    \begin{array}{c|cccccc}
+      \cdot & e &   x &   y &  xy &  yx & xyx \\
+      \hline
+        e &   e &   x &   y &  xy &  yx & xyx \\
+        x &   x &   e &  xy &   y & xyx &  yx \\
+        y &   y &  yx &   e & xyx &   x &  xy \\
+       xy &  xy & xyx &   x &  yx &   e &   y \\
+       yx &  yx &   y & xyx &   e &  xy &   x \\
+      xyx & xyx &  xy &  yx &   x &   y &   e
+    \end{array}
+  \]
+\end{example}
+
+Notice how in the above example the identities $x^{2} = e$, $y^{2} = e$ and
+$yxy = xyx$ help us calculate.  Such identities are called
+\defn{relations}{relations}.  In fact, given the generators $x$ and $y$
+and these three relations, we can recover the Cayley table for $S_{3}$.
+This leads us to another way to present a group, which we will make more
+formal in a later section.  In the mean-time we can use it informally as
+follows:
+
+\begin{example}[Cyclic Groups]
+  The group $C_{n}$ consists of the set $C_{n} = \{1, a, a^{2}, \ldots, a^{n-1}\}$
+  and the group operation is determined by the relation $a^{n} = 1$.
+  
+  The group $(C_{4}, \cdot, 1)$, then has the Cayley table
+  \[
+    \begin{array}{c|cccc}
+      \cdot &     1 &     a & a^{2} & a^{3} \\
+      \hline
+          1 &     1 &     a & a^{2} & a^{3} \\
+          a &     a & a^{2} & a^{3} &     1 \\
+      a^{2} & a^{2} & a^{3} &     1 &     a \\
+      a^{3} & a^{3} &     1 &     a & a^{2} 
+    \end{array}
+  \]
+  Clearly $C_{4}$ and $\integers_{4}$ are isomorphic.
+\end{example}
+
+\begin{example}[Dihedral Groups]
+  The group $D_{2n}$ consists of the set
+  \[
+    D_{2n} = \{1, a, a^{2}, \ldots, a^{n-1}, b, ab, a^{2}b, \ldots, a^{n-1}b \}
+  \]
+  and the group operation is determined by the relations $a^{n} = 1$,
+  $b^{2} = 1$ and $ba = a^{n-1}b$.  Note that $a^{n-1}a = a^{n} = 1$, so
+  $a^{n-1} = a^{-1}$, and we could write the third relation as $ba = a^{-1}b$.
+  
+  For example, we can use these relations to show that
+  \[
+    ba^{k} = a^{-1}ba^{k-1} = a^{-1}a^{-1}ba^{k-2} = \cdots = a^{-k}b.
+  \]
+  
+  The group $(D_{8}, \cdot, 1)$, then has the Cayley table
+  \[
+    \begin{array}{c|cccccccc}
+      \cdot &      1 &      a &  a^{2} &  a^{3} &      b &     ab & a^{2}b & a^{3}b \\
+      \hline
+          1 &      1 &      a &  a^{2} &  a^{3} &      b &     ab & a^{2}b & a^{3}b \\
+          a &      a &  a^{2} &  a^{3} &      1 &     ab & a^{2}b & a^{3}b &      b \\
+      a^{2} &  a^{2} &  a^{3} &      1 &      a & a^{2}b & a^{3}b &      b &     ab \\
+      a^{3} &  a^{3} &      1 &      a &  a^{2} & a^{3}b &      b &     ab & a^{2}b \\
+          b &      b & a^{3}b & a^{2}b &     ab &      1 &  a^{3} &  a^{2} &      a \\
+         ab &     ab &      b & a^{3}b & a^{2}b &      a &      1 &  a^{3} &  a^{2} \\
+     a^{2}b & a^{2}b &     ab &      b & a^{3}b &  a^{2} &      a &      1 &  a^{3} \\
+     a^{3}b & a^{3}b & a^{2}b &     ab &      b &  a^{3} &  a^{2} &      a &      1
+    \end{array}
+  \]
+  If you were to write out the symmetry group of a square you would find that
+  it is isomorphic to $D_{8}$.
+  
+  In fact we will prove later that the symmetry group of a regular $n$-gon
+  is isomorphic to $D_{2n}$.
+\end{example}
+
+\begin{definition}
+  Let $(G, \ast, e)$ be a group, and left $x \in G$.  The
+  \defn{order}{order!of an element} $o(x)$ is the cardinality of the set it
+  generates, $o(x) = |\langle x \rangle|$.
+  
+  If $G = \langle x \rangle$ for any $x \in G$, we say that $G$ is a
+  \defn{cyclic group}{group!cyclic}.
+\end{definition}
+
+\begin{example}
+  In $S_{3}$, $e$ has order $1$, $(1,2)$, $(2,3)$ and $(1,3)$ have order $2$,
+  and the elements $(1,2,3)$ and $(1,3,2)$ have order $3$.
+  
+  In $\integers_{4}$, $0$ has order $1$, $2$ has order $2$, and $1$ and $-1$
+  have order $4$.  Since $\integers_{4} = \langle 1 \rangle$, it is a cyclic
+  group.
+\end{example}
+
+\begin{example}
+  For every $n \in \naturals$, $(\integers_{n}, +, 0)$ is a cyclic group,
+  since $\integers_{n} = \langle 1 \rangle$.
+\end{example}
+
+The orders of elements of a group can be used as a comparatively 
+simple check to see if two groups may not be isomorphic.  It is clear 
+that if $G$ and $H$ are isomorphic groups, and $x \in G$ corresponds to 
+$y \in H$, then $o(x) = o(y)$.  Turning this idea around, we get the 
+following theorem
+
+\begin{theorem}
+    If $G$ and $H$ are two groups, then if there is some $n$ such that
+    the number of elements of order $n$ in $G$ is different from the
+    number of elements of order $n$ in $H$, ie.
+    \[
+      |\{x \in G : o(x) = n\}| \ne |\{y \in H : o(y) = n\}|
+    \]
+    then $G$ and $H$ are not isomorphic.
+\end{theorem}
+\begin{proof}
+    Without loss of generality, we may assume that $|\{x \in G : o(x) = 
+    n\}| > |\{y \in H : o(y) = n\}|$.  If $G$ and $H$ are isomorphic, 
+    then there must be some $x$ which corresponds to an element of $H$ 
+    which does not have order $y$, because there are not enough 
+    elements of order $n$ in $H$.  But this cannot happen if the 
+    groups are isomorphic, giving a contradiction.
+\end{proof}
+
+We will eventually see that the converse of this theorem is not true, 
+so this does not give a good test for isomorphism of groups.
+
+The following simplified version of the theorem is often enough to 
+prove that two groups are not isomorphic.
+
+\begin{corollary}
+    If $G$ and $H$ are two groups, and there is some $x \in G$ such 
+    that $o(x) > o(y)$ for every $y \in H$, then $G$ and $H$ are not 
+    isomorphic.
+\end{corollary}
+
+This allows us to see that a couple of groups are not isomorphic very 
+quickly:
+
+\begin{example}
+    If we look at $C_{4} = \{1, a, a^{2}, a^{3}\}$, we see that 
+    $o(a) = 4$.  On the other hand, $D_{4} = \{1, a, b, ab\}$ has 
+    $o(1) = 1$, and $o(a) = o(b) = o(ab) = 2$.  So by the corollary, 
+    $C_{4} \not\isom D_{4}$.
+\end{example}
+
+\begin{example}
+    If we look at $C_{6} = \{1, a, a^{2}, a^{3}, a^{4}, a^{5}\}$, we see that 
+    $o(a) = 6$.  On the other hand, $D_{6} = \{1, a, b, ab, a^{2}, 
+    a^{2}b\}$ has $o(1) = 1$, $o(b) = o(ab) = o(a^{2}b) = 2$, and 
+    $o(a) = o(a)^{2} = 3$.
+    So by the corollary, $C_{6} \not\isom D_{6}$.
+    
+    One could also show this by simply observing that $C_{6}$ is 
+    Abelian, but $D_{6}$ is not.
+\end{example}
+
+Related to the above discussion is the following theorem.
+
+\begin{theorem}\label{thm:cyclicgroups}
+    If $G$ is a group of order $n$ and there is some element $x \in G$ 
+    of order $n$, then $G$ is a cyclic group.
+\end{theorem}
+\begin{proof}
+    We have that $\langle x \rangle \subseteq G$, and $|\langle x 
+    \rangle| = o(x) = n = |G|$.  Hence, since $G$ is finite, $\langle x 
+    \rangle = G$
+\end{proof}
+
+The following theorem is fairly obvious, but needs to be stated and 
+proved.
+
+\begin{theorem}
+  If $G$ and $H$ are cyclic groups of the same order, then they are
+  isomorphic.
+\end{theorem}
+\begin{proof}
+  We have that $G = \langle a \rangle = \{1 = a^{n}, a, a^{2}, \ldots a^{n-1}\}$ and
+  $H = \langle b \rangle = \{1 = b^{n}, b, b^{2}, \ldots, b^{n-1}\}$, and a typical
+  entry in their Cayley tables looks like
+  \[
+    \begin{array}{c|ccc}
+            & \quad & a^{k} & \quad \\
+      \hline
+      \\
+      a^{l} & & a^{k+l} \\
+      & \\
+    \end{array}
+    \qquad
+    \begin{array}{c|ccc}
+            & \quad & b^{k} & \quad \\
+      \hline
+      \\
+      b^{l} & & b^{k+l} \\
+      &
+    \end{array}
+  \]
+  remembering that $a^{n} = 1$ and $b^{n} = 1$.  In any case, it is clear that
+  we can get from one Cayley table to the other by simply replacing powers of $a$
+  with corresponding powers of $b$.
+\end{proof}
+
+\begin{corollary}
+  Every group of order $1$, $2$, or $3$ is a cyclic group.
+\end{corollary}
+
+We give one last example, mainly to introduce a name.
+
+\begin{example}
+  The group $V$ consisting of the elements $\{1, a, b, ab\}$ with the
+  relations $a^{2} = 1$, $b^{2} = 1$ and $ba = ab$ is called the
+  \defn{four-group}{four-group} or \defn{vierergruppe}{vierergruppe} (which
+  is German for ``four-group'').
+  
+  The Cayley table of this group is
+  \[
+    \begin{array}{c|cccc}
+      \cdot &  1 &  a &  b & ab \\
+      \hline
+         1 &  1 &  a &  b & ab \\
+         a &  a &  1 & ab &  b \\
+         b &  b & ab &  1 &  a \\
+        ab & ab &  b &  a &  1
+    \end{array}
+  \]
+  Given the Cayley table, you can see that this is isomorphic to the group of
+  symmetries of the letter \textsl{H}, via the correspondences:
+  $1 \leftrightarrow I$, $a \leftrightarrow H$, $b \leftrightarrow V$, and
+  $ab \leftrightarrow R$.
+  
+  Also, since $a^{2} = 1$ implies $a = a^{-1}$, we could have used the relation
+  $ba = a^{-1}b$ instead of $ba = ab$.  Hence $V$ is the same group as $D_{4}$.
+\end{example}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Show that $(1,2)$ and $(1,3)$ generate $S_{3}$.
+  
+  \item Let $(G, \ast, e)$ be a group, and let $x$, $y \in G$.  Show that
+    \begin{theoremenum}
+      \item $o(x^{-1}) = o(x)$,
+
+      \item $o(xy) = o(yx)$,
+
+      \item if $o(x) = 1$, then $x = e$,
+      
+      \item if $o(x) = n$, then $x^{m} = e$ if and only if $n$ divides $m$,
+      
+      \item if $o(x) = n$, then $n$ is the smallest natural number such that $x^{n} = e$.
+    \end{theoremenum}
+  
+  \item Show that $a^{k}$ generates the cyclic group $C_{n} = \{1, a^{1},
+    a^{2}, \ldots, a^{n-1}\}$ if and only if $k$ and $n$ are coprime.
+    
+    Show that the order of $a^{k}$ in $C_{n}$ is $k/\gcd(k,n)$.
+   
+  \item Let $(G, \ast, e)$ be a group, and $x$, $y \in G$.  Show that if $x$,
+    $y$ and $xy$ all have order 2, then $x$ and $y$ commute.
+  
+  \item Show that $D_{6}$ and $S_{3}$ are isomorphic groups.
+  
+  \item Show that if $\Omega$ is a regular $n$-sided polygon in 
+    $\reals^{2}$, then $\Sym(\Omega) \isom D_{6}$.
+  
+  \item Let $G = \{1, a, b, ab, a^{2}, a^{2}b\}$ with the relations $a^{3} = 1$,
+    $b^{2} = 1$, and $ab = ba$.  Write out the Cayley table of this group, and
+    show that $G$ is isomorphic to $C_{6}$.
+  
+  \item Show that $(\integers, + 0)$ is generated by the elements $2$ 
+    and $3$.
+    
+    (*) Show that it is generated by any pair of coprime numbers.  
+    (Hint: show that you can get $1$ as a sum of multiples of the 
+    numbers.)
+\end{exercises}
+
+\section{Excursion: Introduction to Categories}
+
+You may have noticed some similarities between the theory of groups as it has
+been presented to this point, and the theory of abstract vector spaces.  In
+both cases the objects were defined in terms of axioms which must hold for
+various binary operations.  In both cases we have a concept called isomorphism
+which tells us when two groups or two vector spaces are essentially the same.
+
+Indeed, if you think about it, the concept of generating sets and
+spanning sets are somewhat analogous: a set generates $G$ if you can get every
+element of $G$ by applying the group operations to the elements of the generating
+set; while a set spans a vector space $V$ if you can get every element of $V$
+by applying linear operations (vector addition and scalar multiplication) to
+the elements of the spanning set.
+
+Clearly we should be careful not to take such analogies too far, since groups
+and vector spaces \emph{are} different, but the analogies are useful for putting
+the next few sections into context.
+
+In the theory of vector spaces, there are three concepts we have not yet seen
+in the context of groups:
+\begin{itemize}
+  \item direct sums of vector spaces: if $V$ and $W$ are vector spaces, we
+    have the direct sum $V \oplus W$ which is the set $V \cross W$ together
+    with appropriate vector space operations.
+  
+  \item subspaces: a subspace of a vector space is a subset which is also a
+    vector space.
+  
+  \item linear transformations: a linear transformation is a function between
+    vector spaces which preserves the vector space operations.
+\end{itemize}
+
+As you study more algebra you will notice that there are many similarities
+like these between the theories of various types of algebraic objects.  Indeed,
+we even get such similarities in other areas of pure mathematics, such as
+analysis, topology and geometry.  In many cases the proofs of basic facts
+in these theories are almost identical, but with appropriate change of
+terminology.
+
+Whenever you have similarities and patterns like this in mathematics, there
+must be something going on. Category theory is the theory which deals with
+and formalizes these similarities.  There are a handful of useful results
+which have come out of category theory, but its primary significance is that
+it provides a framework for much of modern mathematical theory.
+
+We'll consider categories in more depth later.
+
+\section{Direct Products}
+
+You may recall the definition of a direct sum from linear algebra, if you
+have two vector spaces $V$ and $W$ over the same scalar field, the direct
+product is the set $V \cross W$ with vector addition
+\[
+  (v_{1}, w_{1}) + (v_{2}, w_{2}) = (v_{1} + v_{2}, w_{1} + w_{2}),
+\]
+scalar multiplication
+\[
+  \lambda (v, w) = (\lambda v, \lambda w)
+\]
+and zero vector $(0,0)$.  Note that the vector space operations are defined
+simply by applying the appropriate vector space operation to each component.
+
+\begin{theorem}
+  Let $(G, \ast, e)$ and $(H, \circ, 1)$ be two groups.  If we define a
+  binary operation $\bullet$ on $G \cross H$ by
+  \[
+    (g_{1}, h_{1}) \bullet (g_{2}, h_{2}) = (g_{1} \ast g_{2}, h_{1} \circ h_{2}),
+  \]
+  then $G \cross H = (G \cross H, \bullet, (e,1))$ is a group, and the inverse
+  of $(g,h)$ is $(g^{-1}, h^{-1})$.
+\end{theorem}
+\begin{proof}
+  The binary operation $\bullet$ is obviously well defined, so we only
+  need to check that the three axioms hold.
+  
+  Associativity follows directly from the associativity of $G$ and $H$:
+  \begin{align*}
+    ((g_{1}, h_{1}) \bullet (g_{2}, h_{2})) \bullet (g_{3}, h_{3})
+    &= (g_{1} \ast g_{2}, h_{1} \circ h_{2}) \bullet (g_{3}, h_{3}) \\
+    &= ((g_{1} \ast g_{2}) \ast g_{3}, (h_{1} \circ h_{2}) \circ h_{3}) \\
+    &= (g_{1} \ast (g_{2} \ast g_{3}), h_{1} \circ (h_{2} \circ h_{3})) \\
+    &= (g_{1}, h_{1}) \bullet (g_{2} \ast g_{3}, h_{2} \circ h_{3}) \\
+    &= (g_{1}, h_{1}) \bullet ((g_{2}, h_{2}) \bullet (g_{3}, h_{3}))
+  \end{align*}
+  
+  It's straightforward to see that $(e,1)$ is an identity:
+  \[
+    (g, h) \bullet (e, 1) = (g \ast e, h \circ 1) = (g, h)
+  \]
+  and
+  \[
+    (e, 1) \bullet (g, h) = (e \ast g, e \circ h) = (g, h).
+  \]
+  
+  Finally, we observe that
+  \[
+    (g^{-1}, h^{-1}) \bullet (g, h) = (g^{-1} \ast g, h^{-1} \circ h) = (e,1),
+  \]
+  so by Proposition~\ref{prop:uniqueinverse}, $(g,h)^{-1} = (g^{-1}, h^{-1})$,
+  and so every element of $G \cross H$ has an inverse.
+  
+  So $G \cross H$ is a group.
+\end{proof}
+
+If $G$ and $H$ are finite groups, the multiplication principle tells us
+that $G \cross H$ is a finite group, and the order of $G \cross H$ is
+$|G||H|$.
+
+Consider the following examples:
+
+\begin{example}
+  The group $C_{2} \cross C_{2}$ has $4$ elements: $(1,1)$, $(a,1)$, $(1,a)$
+  and $(a,a)$.  We can draw up the Cayley table:
+  \[
+    \begin{array}{c|cccc}
+      \bullet & (1,1) & (a,1) & (1,a) & (a,a) \\
+      \hline
+        (1,1) & (1,1) & (a,1) & (1,a) & (a,a) \\
+        (a,1) & (a,1) & (1,1) & (a,a) & (1,a) \\
+        (1,a) & (1,a) & (a,a) & (1,1) & (a,1) \\
+        (a,a) & (a,a) & (1,a) & (a,1) & (1,1)
+    \end{array}
+  \]
+  Hopefully you can immediately see that this group is isomorphic to the
+  {\it vierergruppe} $V$ via the correspondence
+  $(1,1) \leftrightarrow 1$, $(a,1) \leftrightarrow a$, $(1,a) \leftrightarrow b$, 
+  and $(a,a) \leftrightarrow ab$.  Hence it is also isomorphic to the
+  group of symmetries of the letter \textsl{H}.
+\end{example}
+
+\begin{example}
+  The group $C_{2} \cross C_{3}$ has $6$ elements: $(1,1)$, $(a,1)$, $(1,b)$
+  $(a,b)$, $(1, b^{2})$ and $(a,b^{2})$.  We note that
+  \begin{align*}
+    (a,b)^{2} &= (1,b^{2})\\
+    (a,b)^{3} &= (a,1)\\
+    (a,b)^{4} &= (1,b)\\
+    (a,b)^{5} &= (a,b^{2})\\
+    (a,b)^{6} &= (1,1)
+  \end{align*}
+  So $C_{2} \cross C_{3} = \langle (a,b) \rangle$, and so it is a cyclic group.
+  Hence $C_{2} \cross C_{3}$ is isomorphic to the cyclic group of order $6$,
+  $C_{6}$.
+\end{example}
+
+You may notice that in these example the groups are all Abelian.  This is a
+consequence of the following proposition.
+
+\begin{proposition}
+  If $G$ and $H$ are Abelian groups, then so is $G \cross H$.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+The converse to this proposition is also true, but it requires a lot more
+theory to get it in its nicest form.
+
+If we have several groups $G_{1}$, $G_{2}, \ldots, G_{n}$, we can define
+the direct product $G_{1} \cross G_{2} \cross \cdots G_{n}$ in the obvious
+way.  There is a fairly clear isomorphism between
+$(G_{1} \cross G_{2}) \cross G_{3}$, $G_{1} \cross (G_{2} \cross G_{3})$, and
+$G_{1} \cross G_{2} \cross G_{3}$ given by the correspondence
+\[
+  ((g_{1}, g_{2}), g_{3}) \leftrightarrow (g_{1}, (g_{2}, g_{3})) 
+  \leftrightarrow (g_{1}, g_{2}, g_{3}).
+\]
+So just as we consider the vector spaces $(V_{1} \oplus V_{2}) \cross V_{3}$,
+$V_{1} \oplus (V_{2} \cross V_{3})$ and  $V_{1} \oplus V_{2} \cross V_{3}$ as
+being the same vector space, we blur the distinction between the above
+direct products of groups and regard all three as the same group.
+With this in mind, the direct product is then associative.  We will also
+write
+\[
+  G^{n} = \underbrace{G \cross G \cross \cdots \cross G}_{\text{$n$ times}}.
+\]
+
+The following theorem will prove useful when we try to classify all the
+groups of a given order.  It generalizes the isomorphism between $V$ and
+$C_{2} \cross C_{2}$.
+
+\begin{theorem}\label{thm:order2group}
+  Let $G$ be a finite group such that $x^{2} = 1$ for every element $x \in G$,
+  and $|G| \ge 2$.
+  Then $G$ is isomorphic to $C_{2} \cross C_{2} \cross \cdots \cross C_{2}$.
+\end{theorem}
+\begin{proof}
+  We first observe that $G$ must be Abelian.  Given any $x$ and $y \in G$,
+  we have
+  \[
+    xyxy = (xy)^{2} = 1.
+  \]
+  But then
+  \[
+    x = x1 = x(xyxy) = x^{2}yxyx = yxy,
+  \]
+  and so
+  \[
+    yx = y(yxy) = y^{2}xy = xy.
+  \]
+  
+  We now find elements $a_{k} \in G$ by the following inductive construction:
+  \begin{theoremenum}
+    \item Since $|G| \ge 2$, we can find some element $a_{1} \ne 1$.  So
+      $\langle a_{1} \rangle = \{1, a_{1}\}$, since $a_{1}^{2} = 1$.
+    
+    \item Assume that we have found elements $a_{1}$, $a_{2}, \ldots, a_{r}$,
+      such that $a_{k}$ is not in $\langle a_{1}, \ldots, a_{k-1} \rangle$ for
+      all $k = 2, \ldots, r$.
+      
+      Then one of two things must be true: either
+      $G = \langle a_{1}, \ldots, a_{r} \rangle$, or there is some $a_{r+1}$
+      which is not in $\langle a_{1}, \ldots, a_{r} \rangle$. 
+      But then the elements $a_{1}$, $a_{2}, \ldots, a_{r}, a_{r+1}$ satisfy
+      the condition for $r+1$.
+    
+    \item Proceeding inductively, we must eventually exhaust all the elements
+      of $G$.
+  \end{theoremenum}
+  
+  So we have that $G = \langle a_{1}, a_{2}, \ldots, a_{n} \rangle$ for elements
+  $a_{1}$, $a_{2}, \ldots, a_{n}$ such that $a_{k}$ is not in $\langle a_{1}, \ldots, a_{k-1} \rangle$ for
+  all $k = 2, \ldots, n$.  So any element $x \in G$ can be written as a product
+  of powers of the elements $a_{1}$, $a_{2}, \ldots, a_{n}$, and since $G$
+  is Abelian, we can move all the powers of $a_{1}$ to the front of the
+  product, $a_{2}$ to the next term, and so on.  So in general
+  \[
+    x = a_{1}^{p(1)}a_{2}^{p(2)}\cdots a_{n}^{p(n)},
+  \]
+  where $p(k)$ must be either $0$ or $1$.  Moreover, this is the only way that
+  the element $x$ can be written, since if we also have
+  \[
+    x = a_{1}^{r(1)}a_{2}^{r(2)}\cdots a_{n}^{r(n)},
+  \]
+  then
+  \begin{align*}
+    1 &= a_{1}^{p(1)}a_{2}^{p(2)}\cdots a_{n}^{p(n)}(a_{1}^{r(1)}a_{2}^{r(2)}\cdots a_{n}^{r(n)})^{-1}\\
+      &= a_{1}^{p(1) - r(1)}a_{2}^{p(2) - r(2)}\cdots a_{n}^{p(n) - r(n)}.
+  \end{align*}
+  But this implies that
+  \[
+    a_{n}^{p(n) - r(n)} = a_{1}^{r(1) - p(1)}a_{2}^{r(2) - p(2)}\cdots a_{n-1}^{r(n-1) - p(n-1)},
+  \]
+  and so $p(n) - r(n) = 0$, since if $p(n) - r(n) = 1$, then $a_{n}$ would be
+  generated by $a_{1}$, $a_{2}, \ldots, a_{n-1}$, which contradicts our
+  construction.  So
+  \[
+    1 = a_{1}^{p(1) - r(1)}a_{2}^{p(2) - r(2)}\cdots a_{n}^{p(n-1) - r(n-1)},
+  \]
+  and the same argument as for $n$ shows that $p(n-1) - r(n-1) = 0$.
+  
+  Proceeding inductively, we have that $p(k) - r(k) = 0$ for all $k$.  Hence
+  $p(k) = r(k)$ for all $k$, and so there is only one such way to write $x$
+  as a product of powers of $a_{1}$, $a_{2}, \ldots, a_{n}$ in that order.
+  
+  Now we can think of $C_{2} = \{1, a\}$, and so
+  \[
+    \underbrace{C_{2} \cross C_{2} \cross \cdots \cross C_{2}}_{\text{$n$ times}}
+    = \{ (a^{p(1)}, a^{p(2)}, \ldots, a^{p(n)}) : p(k) \in \{0, 1\}\}.
+  \]
+  But we have a correspondence
+  \[
+    a_{1}^{p(1)}a_{2}^{p(2)}\cdots a_{n}^{p(n)} \leftrightarrow
+    (a^{p(1)}, a^{p(2)}, \ldots, a^{p(n)}),
+  \]
+  and if you compare typical entries of the Cayley table you get
+  \[
+    \begin{array}{c|ccc}
+      & \quad & a_{1}^{r(1)}a_{2}^{r(2)}\cdots a_{n}^{r(n)} & \quad \\
+      \hline
+      \\
+    a_{1}^{p(1)}a_{2}^{p(2)}\cdots a_{n}^{p(n)} &&
+       a_{1}^{p(1) + r(1)}a_{2}^{p(2) + r(2)}\cdots a_{n}^{p(n) + r(n)} \\
+       &
+    \end{array}
+  \]
+  and
+  \[
+    \begin{array}{c|ccc}
+      & \quad & (a^{r(1)}, a^{r(2)}, \ldots, a^{r(n)}) & \quad \\
+      \hline
+      \\
+    (a^{p(1)}, a^{p(2)}, \ldots, a^{p(n)}) &&
+       (a^{p(1)+r(1)}, a^{p(2)+r(2)}, \ldots, a^{p(n)+r(n)}) \\
+       &
+    \end{array}
+  \]
+  and so the Cayley tables correspond.
+  
+  Hence $G \isom C_{2}^{n}$.
+\end{proof}
+\begin{corollary}
+  Let $G$ be a finite group such that $x^{2} = 1$ for every element $x \in G$,
+  and $|G| \ge 2$.
+  Then $|G| = 2^{n}$ for some $n$.
+\end{corollary}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Show that $D_{2n}$ and $C_{2} \cross C_{n}$ are not isomorphic for
+    $n > 2$.
+  
+  \item Write down the Cayley tables of $C_{2} \cross C_{2} \cross C_{2}$
+    and $C_{2} \cross C_{4}$.  Show that these two groups are not isomorphic.
+  
+    Show that $D_{8}$ and $C_{2} \cross C_{2} \cross C_{2}$ are not isomporhic.
+  
+  \item Let $p$ and $q$ be prime numbers.  Show that $C_{p} \cross C_{q} \isom
+    C_{pq}$.
+    
+    More generally, show that if $p$ and $q$ are coprime, $C_{p} \cross C_{q} \isom
+    C_{pq}$.
+
+  \item Let $G$ be an Abelian group where $x^{3} = 1$ for every $x \in G$.
+    Show that $G \isom C_{3} \cross C_{3} \cross \cdots \cross C_{3}$.
+  
+  \item (*) Find a group $G$ such that $x^{3} = 1$ for every $x \in
+    G$, but $G \not\isom C_{3} \cross C_{3} \cross \cdots \cross C_{3}$
+\end{exercises}
+
+\section{Subgroups}
+
+Groups often contain other groups.  You should be at least intuitively aware
+of this fact, since the various additive groups of numbers are contained in
+one another:
+\[
+  \integers \subset \rationals \subset \reals \subset \complex.
+\]
+Knowing the groups which are contained within a particular group can tell you
+a lot about the group.
+
+\begin{definition}
+  Let $(G, \ast, e)$ be a group, and $H \subseteq G$.  We say $H$ is a
+  \defn{subgroup}{subgroup} of $G$ if $(H, \ast, e)$ is a group (where
+  $\ast$ is restricted to $H$).
+  
+  We denote this relationship by writing $H \le G$.  If $H \subset G$, 
+  then we may write $H < G$.
+\end{definition}
+
+In general, we do not expect an arbitrary subset of a group to be a 
+group.  In particular, we have to at least have $e \in H$.  
+Furthermore, for $\ast$ to be a binary operation when restricted to 
+$H$, it needs to be closed on $H$.  In other words, the product of 
+elements of $H$ must again be an element of $H$.  Finally, we need 
+that the inverse of every element of $H$ is an element of $H$.  But 
+the good news is that we don't need to check associativity: that is 
+guaranteed by the associativity of $\ast$ as an operation on $G$.  To 
+summarize:
+
+\begin{theorem}\label{thm:subgrouptest}
+  Let $G = (G, \ast e)$ be a group, and $H \subseteq G$. If for every $x$ 
+  and $y \in H$ we have
+  \begin{theoremenum}
+    \item $x \ast y \in H$, and
+    
+    \item $x^{-1} \in H$,
+  \end{theoremenum}
+  then $H$ is a subgroup.
+\end{theorem}
+\begin{proof}
+  Condition (i) tells us that $\ast: H \cross H \to H$, so $\ast$ is a 
+  binary operation on $H$.  Associativity is simple since $\ast$ is 
+  associative on $G$, so the axiom still holds for a subset.  Since 
+  $x^{-1} \in H$, we have both the inverse axiom, and the identity 
+  being an element of $H$, since $e = x^{-1} \ast x \in H$ by (i).
+  And $e$ is still an identity for $\ast$ on $H$, since it satisfies 
+  the identity axiom for all elements of $G$, including those in $H$.
+\end{proof}
+
+In fact, we can make this theorem even slicker by combining the two conditions
+into one:
+\begin{corollary}\label{cor:subgrouptest}
+  Let $G = (G, \ast e)$ be a group, and $H \subseteq G$. If for every $x$ 
+  and $y \in H$ we have $xy^{-1} \in H$, then $H$ is a subgroup.
+\end{corollary}
+\begin{proof}
+  We note that if $x \in H$, then $xx^{-1} = e \in H$, and hence $x^{-1} = ex^{-1}
+  \in H$, giving condition (i) of the theorem.
+  
+  Additionally, since $y^{-1} \in H$, $xy = x(y^{-1})^{-1} \in H$, giving
+  condition (ii) of the theorem.
+  
+  Hence $H$ is a subgroup.
+\end{proof}
+
+Note that if we use additive notation for a group, the conditions of
+Theorem~\ref{thm:subgrouptest} become
+\begin{theoremenum}
+  \item $x + y \in H$, and
+  \item $-x \in H$,
+\end{theoremenum}
+while the condition for Corollary~\ref{cor:subgrouptest} becomes $x - y \in H$.
+
+We immediately note that a group $G$ is always a subgroup of itself, and the
+set containing just the identity $\{e\}$ is always a group.  These two subgroups
+are called the \defn{trivial subgroups}{subgroup!trivial} of $G$.  If $H$ is a
+subgroup of $G$ which not trivial, we say that $H$ is a
+\defn{proper subgroup}{subgroup!proper}.
+
+For finite groups, the Cayley table of a subgroup is simply the Cayley table
+of the whole group with every row and column corresponding to elements not in
+the subgroup being removed.
+
+\begin{example}
+  The cyclic group of order $3$
+  $C_{3} = \{1, a, a^{2}\}$ has the subgroups $\{1\}$, and $\{1, a,
+  a^{2}\}$.  It has no proper subgroups.
+  
+  You can see that other subsets are not subgroups be inspection.
+  For example, the set $\{1, a^{2}\}$ is not a subgroup because
+  $a^{2}a^{2} = a^{4} = a$, and $a$ is not an element of the set.
+\end{example}
+
+\begin{example}\label{eg:C4subgroups}
+  The cyclic group of order $4$ $C_{4} = \{1,
+  a, a^{2}, a^{3}\}$ has the subgroups $\{1\}$, $\langle a^{2} \rangle
+  = \{1, a^{2}\}$ and $\{1, a, a^{2}, a^{3}\}$.
+  
+  You can verify that $\{1, a^{2}\}$ is a subgroup by calculating every
+  possible value of $xy^{-1}$ for $x$ and $y \in \{1, a^{2}\}$:
+  \begin{alignat*}{2}
+    1 \cdot 1^{-1} &= 1 \qquad & 1 \cdot (a^{2})^{-1} &= a^{-2} = a^{2}\\
+    a^{2} \cdot 1^{-1} &= a^{2} & a^{2} \cdot (a^{2})^{-1} &= 1.
+  \end{alignat*}
+  In fact, we really only need to look at products where neither $x$ nor $y$
+  is $1$, since those always leave the other term alone. We will see shortly
+  that the fact that this is a set generated by an element guarantees that
+  it is a subgroup.
+  
+  These subgroups are isomorphic to $C_{1}$, $C_{2}$ and $C_{4}$ 
+  respectively.
+\end{example}
+
+\begin{example}\label{eg:4groupsubgroups}
+  The vierergruppe $V = \{1, a, b, ab\}$ has the subgroups $\{1\}$,
+  $\langle a \rangle = \{1, a\}$, $\langle b \rangle = \{1, b\}$,
+  $\langle ab \rangle = \{1, ab\}$ and $\{1, a, b, ab\}$.
+  
+  These subgroups are isomorphic to $C_{1}$, $C_{2}$, $C_{2}$, $C_{2}$,
+  and $V$ respectively.
+\end{example}
+
+\begin{example}\label{eg:C6subgroups}
+  The cyclic group or order $6$, $C_{6} = \{1, a, a^{2}, a^{3}, a^{4}, a^{5}\}$
+  has the subgroups $\{1\}$,
+  $\langle a^{3} \rangle = \{1, a^{3}\}$,
+  $\langle a^{2} \rangle = \{1, a^{2}, a^{4}\}$,
+  and $C_{6}$.
+  
+  These subgroups are isomorphic to $C_{1}$, $C_{2}$, $C_{3}$, $C_{6}$,
+  and $V$ respectively.
+\end{example}
+
+\begin{example}\label{eg:Cpsubgroups}
+  Let $p$ be a prime number, and $C_{p}$ the cyclic group of order $p$.
+  Since $a^{k}$ generates $C_{p}$ for all $k \ne 0$, any subgroup which
+  contains any element other than $1$ must automatically contain all of
+  $C_{p}$.  Hence $C_{p}$ only has the trivial subgroups $\{1\}$ and $C_{p}$.
+\end{example}
+
+\begin{example}
+  If $s \in \reals$, then the set $\{sn : n \in \integers\}$ is a subgroup
+  of the additive group of real numbers $(\reals, +, 0)$.  This follows
+  because if we take two typical elements $ns$ and $ms$, then
+  \[
+    ns - ms = (n-m)s,
+  \]
+  and this is an element of the set $\{sn : n \in \integers\}$.
+\end{example}
+
+\begin{example}
+  We have that $SL_{n}(\reals)$, $O_{n}(\reals)$ and $SO_{n}(\reals)$ are all
+  proper subgroups of $GL_{n}(\reals)$.  In fact $SO_{n}(\reals)$ is also a
+  proper subgroup of both $SL_{n}(\reals)$ and $O_{n}(\reals)$.
+  
+  We know that these are subgroups, since we showed that they were groups
+  under matrix multiplication in an earlier example.
+\end{example}
+
+\begin{example}
+  The alternating group $A_{n}$ is a subgroup of the corresponding symmetric
+  group $S_{n}$.
+\end{example}
+
+\begin{example}
+  If $G$ and $H$ are groups, then the subset $\{(x, e): x \in G\}$ of $G \cross H$
+  is a subgroup of $G \cross H$.  Similarly, $\{(e, y): y \in H\}$ is a
+  subgroup of $G \cross H$.
+\end{example}
+
+\begin{example}
+  If $G$ is any finite group and $x \in G$, the set $\langle x \rangle$ is
+  always a subgroup.  This follows since $x^{n}(x^{m})^{-1} = x^{n-m}$, which
+  is a power of $x$ and so is an element of $\langle x \rangle$, and
+  Corollary~\ref{cor:subgrouptest} tells us $\langle x \rangle$ is a subgroup.
+\end{example}
+
+In fact, we can extend the last example to the set generated by any set of
+generators.
+
+\begin{theorem}\label{thm:subgroupgenbyset}
+  \sidebar{Finding Subgroups}{To find all the subgroups of a finite
+  group, look at the subgroups generated by each element, then look at
+  the subgroups generated by pairs of elements, then triples of
+  elements, and so on.  This procedure works because of
+  Theorem~\ref{thm:subgroupgenbyset}.\\ \medskip You can cut down the
+  number of generating sets you need to check by noticing that if an
+  element is in a subgroup, adding it to the set of generators of that
+  subgroup gives nothing new.}
+  Let $(G, \ast, e)$ be a group, and $X \subseteq G$.  Then $\langle X
+  \rangle$ is the smallest subgroup of $G$ which contains $X$.
+\end{theorem}
+\begin{proof}
+  First we must show that $\langle X \rangle$ is a subgroup.  This set
+  consists of all products of powers of elements of $X$.  If we have
+  \[
+    x = x_{1}^{p_{1}}x_{2}^{p_{2}}\cdots x_{n}^{p_{n}} \qquad \text{and}
+    \qquad y = y_{1}^{q_{1}}y_{2}^{q_{2}}\cdots y_{m}^{q_{m}},
+  \]
+  where $x_{k}$ and $y_{l} \in X$, $p_{k}$ and $q_{l} \in \integers$, then
+  we have that
+  \begin{align*}
+    (x_{n}^{-p_{n}}x_{n-1}^{-p_{n-1}}\cdots x_{1}^{-p_{1}})x
+     &= x_{n}^{-p_{n}}x_{n-1}^{-p_{n-1}}\cdots x_{1}^{-p_{1}}x_{1}^{p_{1}}x_{2}^{p_{2}}\cdots x_{n}^{p_{n}}\\
+     &= x_{n}^{-p_{n}}x_{n-1}^{-p_{n-1}}\cdots x_{2}^{-p_{2}}x_{2}^{p_{2}}\cdots x_{n}^{p_{n}} \\
+     &\vdots \\
+     & = x_{n}^{-p_{n}}x_{n}^{p_{n}} = e,
+  \end{align*}
+  so $x^{-1} = x_{n}^{-p_{n}}x_{n-1}^{-p_{n-1}}\cdots x_{1}^{-p_{1}}$, which
+  is a product of powers of elements of $X$, so $x^{-1} \in \langle X \rangle$.
+  Similarly
+  \[
+    xy = x_{1}^{p_{1}}x_{2}^{p_{2}}\cdots x_{n}^{p_{n}}y_{1}^{q_{1}}y_{2}^{q_{2}}\cdots y_{m}^{q_{m}}
+  \]
+  is a product of powers of elements of $X$, so $xy \in \langle X \rangle$.
+  
+  So $\langle X \rangle$ satisfies conditions (i) and (ii) of Theorem~\ref{thm:subgrouptest},
+  so it is a subgroup of $G$.
+  
+  Now assume that there is some subgroup $H$ of $G$ with $X \subseteq H \subset \langle X \rangle$.
+  Then we can find some $x \in \langle X \rangle \setminus H$, so
+  \[
+    x = x_{1}^{p_{1}}x_{2}^{p_{2}}\cdots x_{n}^{p_{n}}
+  \]
+  where $x_{k} \in X$, $p_{k} \in \integers$.  A simple induction argument
+  shows that $x_{k}^{p_{k}} \in H$ for all $k$, no matter what power we have
+  of $p_{k}$.  But this means that $x_{1}^{p_{1}}x_{2}^{p_{2}} \in H$, since
+  it is a product of elements of the subgroup $H$, and similarly
+  $x_{1}^{p_{1}}x_{2}^{p_{2}}x_{3}^{p_{3}} \in H$.  Proceeding inductively, we
+  have $x_{1}^{p_{1}}x_{2}^{p_{2}}\cdots x_{n}^{p_{n}} \in H$, and so $x \in H$.
+  This is a contradiction, and hence there is no subgroup $H$.
+  
+  Therefore $\langle X \rangle$ is the smallest subgroup of $G$ containing $X$.
+\end{proof}
+
+It is worth noting that some texts actually define $\langle X \rangle$
+to be the smallest subgroup of $G$ containing $X$.
+
+\begin{example}\label{eg:D8subgroups}
+  The dihedral group\index{group!dihedral} of order $8$, $D_{8} = \{1,
+  a, a^{2}, a^{3}, b, ab, a^{2}, a^{3}\}$ has subgroups
+  \begin{alignat*}{2}
+    \langle 1 \rangle &= \{1\} \isom C_{1},
+    &\langle a^{2} \rangle &= \{1, a^{2}\} \isom C_{2},\\
+    \langle b \rangle &= \{1, b\} \isom C_{2},
+    &\langle ab \rangle &= \{1, ab\} \isom C_{2},\\
+    \langle a^{2}b \rangle &= \{1, a^{2}b\} \isom C_{2},
+    &\langle a^{3}b \rangle &= \{1, a^{3}b\} \isom C_{2},\\
+    \langle a \rangle &= \{1, a, a^{2}, a^{3}\} \isom C_{4},
+    &\langle a^{2}, b \rangle &= \{1, a^{2}, b, a^{2}b\} \isom V,\\
+    \langle a^{2}, ab \rangle &= \{1, a^{2}, ab, a^{3}b\} \isom V,
+    \qquad &\langle a, b \rangle &= D_{8}.
+  \end{alignat*}
+\end{example}
+
+\begin{example}
+  Consider $S_{3} = \{e, (1,2,3), (1,3,2), (1,2), (2,3), (1,3)\}$.  We can
+  find all the subgroups of this group by looking at the sets generated by
+  each element:
+  \begin{align*}
+    \langle e \rangle &= e\\
+    \langle (1,2,3) \rangle = \langle (1,3,2) \rangle &= \{e, (1,2,3), (1,3,2)\}\\
+    \langle (1,2) \rangle &= \{e, (1,2)\}\\
+    \langle (2,3) \rangle &= \{e, (2,3)\}\\
+    \langle (1,3) \rangle &= \{e, (1,3)\}
+  \end{align*}
+  Now we need to consider the sets generated by pairs of elements.  For example,
+  the set $\langle (1,2,3), (1,2) \rangle$ contains the elements $e$, $(1,2,3)$,
+  $(1,3,2)$ and $(1,2)$ as well as
+  \[
+    (2,3) = (1,2,3)(1,2) \qquad (1,3) = (1,2)(1,2,3).
+  \]
+  So $\langle (1,2,3), (1,2) \rangle = S_{3}$. In fact, when we look at all
+  possible pairings, we discover that
+  \[
+    \langle (1,2,3), (1,2) \rangle = \langle (1,2,3), (2,3) \rangle = \langle (1,2,3), (1,3) \rangle = S_{3}
+  \]
+  and
+  \[
+    \langle (1,2), (2,3) \rangle = \langle (1,2), (1,3) \rangle = \langle (2,3), (1,3) \rangle = S_{3}.
+  \]
+  So $S_{3}$ is the only other subgroup.
+\end{example}
+
+Notice in all the above examples of finite groups, the order of any
+subgroup divides the order of the group.  This is always true, but we
+need some new ideas before we can prove it.
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Let $X$ be a subset of a group.  Show that any one of the 
+    following is sufficient to show that $X$ is not a subgroup:
+    \begin{theoremenum}
+      \item $e \notin X$,
+      
+      \item there is an $x \in X$ with $x^{-1} \notin X$,
+      
+      \item there is an $x$ and $y \in X$ with $xy \notin X$,
+      
+      \item there is an $x$ and $y \in X$ with $xy^{-1} \notin X$.
+    \end{theoremenum}
+  
+  \item For each of the following groups, find all its subgroups.  
+    For each subgroup, determine if it is isomorphic to a known group.
+    \begin{theoremenum}
+      \item $D_{6}$
+      
+      \item $C_{8}$
+    
+      \item $C_{2} \cross C_{4}$
+      
+      \item $C_{2} \cross C_{2} \cross C_{2}$
+      
+      \item $D_{10}$
+
+      \item $D_{12}$
+      
+      \item $A_{4}$
+    \end{theoremenum}
+    
+  \item Let $s \in \reals$.  Show that $\{ n + ms : n, m \in \integers\}$
+    is a subgroup of $\reals$.
+  
+  \item Show that $\naturals$ is not a subgroup of $(\integers, +, 0)$.
+  
+  \item Show that every subgroup of a cyclic group is a cyclic
+    group\index{group!cyclic}.
+  
+    Show that every subgroup of an Abelian group is an Abelian
+    group\index{group!Abelian}.
+    
+  \item Show that every group has a cyclic subgroup.
+\end{exercises}
+
+\section{Homomorphisms}\index{homomorphism|(}\index{-morphism!homo-|(}
+
+Recall from abstract linear algebra that a linear transformation is a 
+function from one vector space to another which preserves vector 
+addition and scalar multiplication, ie.\ $T: V \to W$ is a linear 
+transformation if and only if
+\[
+  T(v+w) = T(v) + T(w) \qquad \text{and} \qquad T(\lambda v) = 
+  \lambda T(v),
+\]
+for all $v$, $w \in V$ and $\lambda \in \field$.
+
+The analogue for groups should, then, be a function which preserves 
+the group operation.
+
+\begin{definition}
+  Let $(G, \ast, e)$ and $(H, \star, 1)$ be groups.  A function
+  $\alpha: G \to H$ is a \defn{(group)
+  homomorphism}{homomorphism}\index{-morphism!homo-|emph} if
+  \[
+    \alpha(x \ast y) = \alpha(x) \star \alpha(y)
+  \]
+  for all $x$, $y \in X$.
+\end{definition}
+  
+When using the multiplicative notation for groups, we will often 
+simply write this condition as
+\[
+  \alpha(xy) = \alpha(x)\alpha(y).
+\]
+
+It is immediate from this definition that group homomorphisms preserve 
+the identity and inverse.
+
+\begin{proposition}
+  Let $G$ and $H$ be groups and $\alpha: G \to H$ a homomorphism. 
+  Then
+  \begin{theoremenum}
+    \item $\alpha(e_{G}) = e_{H}$,
+
+    \item $\alpha(x^{-1}) = (\alpha(x))^{-1}$ for all $x \in X$.
+  \end{theoremenum}
+\end{proposition}
+\begin{proof}
+  (i) Let $y = \alpha(x)$ for some $x \in G$, so that
+  \[
+    y \alpha(e_{G}) = \alpha(x)\alpha(e_{G}) = 
+    \alpha(xe_{G}) = \alpha(x) = y = y e_{H}.
+  \]
+  The cancellation law then tells us that $\alpha(e_{G}) = e_{H}$.
+    
+  (ii) Given any $x \in G$, we have that
+  \[
+    \alpha(x^{-1})\alpha(x) = \alpha(x^{-1}x) = \alpha(e_{G}) = e_{H}.
+  \]
+  So $\alpha(x^{-1}) = \alpha(x)^{-1}$.
+\end{proof}
+
+Using this proposition we can show, using induction if needed, that
+\[
+  \alpha(x^{n}) = \alpha(x)^{n}
+\]
+for any $n \in \integers$.
+
+\begin{example}\label{eg:4grouphom}
+  Let $V = \{1, a, b, ab\}$ be the four-group, and $C_{4} = \{1, a,
+  a^{2}, a^{3}\}$ be the cyclic group of order $4$.  Consider the
+  function $\alpha: V \to C_{4}$ definied by the following table:
+  \[
+    \begin{array}{c|c}
+      x & \alpha(x) \\
+      \hline
+      1 & 1 \\
+      a & a^{2} \\
+      b & a^{2} \\
+      ab & 1 \\
+    \end{array}
+  \]
+  Checking by hand, we can verify that this is indeed a 
+  homomorphism.  For example $a^{2} = 1$ in $V$ so $\alpha(a^{2}) = 
+  \alpha(1) = 1$, and $\alpha(a)\alpha(a) = a^{2}a^{2} = 1$.
+\end{example}
+
+\begin{example}
+  If we look at the groups $\integers_{3}$, where the group operation
+  is addition modulo $3$, and the group $C_{6} = \{1, a, a^{2}, a^{3},
+  a^{4}, a^{5}\}$, then we have the following homomorphisms from
+  $\integers_{3} \to C_{6}$:
+  \begin{align*}
+    \alpha(x) &= 1\\
+    \beta(x) &= a^{2x}\\
+    \gamma(x) &= a^{-2x}
+  \end{align*}
+  To verify that $\beta$ is a homomoprhism, for example, we need to
+  check that $\beta(x+y) = \beta(x)\beta(y)$\sidebar{Note}{Observe
+  here that $\integers_{3}$ uses additive notation, while $C_{6}$ uses
+  multiplicative notation, and we need to use the appropriate form of
+  notation when verifying that we have a homomorphism.}:
+  \begin{align*}
+    \beta(x+y \pmod{3}) &= a^{2(x+y \pmod{3})} = a^{2x+2y \pmod{6}}\\
+    \beta(x)\beta(y) &= a^{2x}a^{2y} = a^{2x+2y \pmod{6}},
+  \end{align*}
+  noting that in $C_{6}$, $a^{x}a^{y} = a^{x+y \pmod{6}}$.
+  So $\beta$ is a homomorphism.  You could also verify this fact by 
+  case-by-case checking of results.
+  
+  On the other hand, the function $\delta: \integers_{3} \to C_{6}$ 
+  defined by $\delta(x) = a^{x}$ is not a homomorphism, because
+  \[
+    \delta(1 + 2 \pmod{3}) = \delta(0) = a^{0} = 1,
+  \]
+  but
+  \[
+    \delta(1)\delta(2) = a^{1}a^{2} = a^{3} \ne 1.
+  \]
+\end{example}
+
+\begin{example}
+  Let $GL_{n}(\reals)$ be the group of all invertible real-valued 
+  matrices, and consider the determinant function $\det: 
+  GL_{n}(\reals) \to R^{\cross}$ given by
+  \[
+    \det(A) = |A|.
+  \]
+  Since
+  \[
+    \det(AB) = |AB| = |A||B| = \det(A)\det(B),
+  \]
+  this is a homomorphism.
+\end{example}
+
+If we once again consider the analogy with abstract linear algebra, you may
+recall that the image of a linear subspace under a linear transformation is
+a subspace of the range.  If the analogy with linear algebra is to hold, the
+same thing ought to be true for subgroups.
+
+\begin{proposition}\label{prop:homsubgroup}
+  If $G$ and $H$ are groups, $\alpha : G \to H$ is a homomorphism, and
+  $K$ is a subgroup of $G$, then $\alpha(K)$ is a subgroup of $H$.
+\end{proposition}
+\begin{proof}
+  Let $x$, $y \in \alpha(K)$, so that there are some $u$ and $v \in K$ such
+  that $x = \alpha(u)$ and $y = \alpha(v)$.  Then, noting that $uv^{-1} \in K$,
+  \[
+    xy^{-1} = \alpha(u)(\alpha(v))^{-1} = \alpha(uv^{-1}) \in \alpha(K).
+  \]
+  So by Corollary~\ref{cor:subgrouptest}, $\alpha(K) \le H$.
+\end{proof}
+
+\begin{example}
+  We know from
+  Example~\ref{eg:4groupsubgroups} that the subgroups of $V$ are $\{1\}$,
+  $\{1,a\}$, $\{1,b\}$, $\{1, ab\}$ and the whole group $V$.  The images of
+  these sets under the homomorphism $\alpha$ of Example~\ref{eg:4grouphom}
+  are $\{1\}$, $\{1,a^{2}\}$, $\{1,a^{2}\}$, $\{1\}$ and $\{1, a^{2}\}$,
+  respectively.
+\end{example}
+
+Since $G \le G$, the following is an immediate corollary of the proposition.
+
+\begin{corollary}
+  If $G$ and $H$ are groups, and $\alpha : G \to H$ is a homomorphism,
+  then $\alpha(G)$ is a subgroup of $H$.
+\end{corollary}
+
+In other words, the image of a homomorphism is a subgroup of the codomain.
+
+We have a similar result for inverse images of subgroups.
+
+\begin{proposition}\label{prop:inversehomsubgroup}
+  If $G$ and $H$ are groups, $\alpha : G \to H$ is a homomorphism, and
+  $K$ is a subgroup of $H$, then $\alpha^{-1}(K)$ is a subgroup of
+  $G$.
+\end{proposition}
+\begin{proof}
+  Let $x$, $y \in \alpha^{-1}(K)$, so that there are some $u$ and $v \in K$ such
+  that $u = \alpha(x)$ and $v = \alpha(y)$.  Then,
+  \[
+    \alpha(xy^{-1}) = \alpha(x)(\alpha(y))^{-1} = uv^{-1} \in K,
+  \]
+  so $xy^{-1} \in \alpha^{-1}(K)$.
+  Therefore by Corollary~\ref{cor:subgrouptest}, $\alpha^{-1}(K) \le G$.
+\end{proof}
+
+You may also recall from linear algebra that the kernel of a linear
+transformation is a subspace of the domain.  This leads us to the
+following definition and corollary.
+
+\begin{definition}
+  If $G$ and $H$ are groups, and $\alpha: G \to H$ is a homomorphism, 
+  then the \defn{kernel}{kernel} of $\alpha$ is the set
+  \[
+    \ker \alpha = \{ x \in X : \alpha(x) = e_{H} \}
+  \]
+  of all elements of the group $G$ whose image is the identity.
+\end{definition}
+
+\begin{corollary}
+  If $G$ and $H$ are groups, and $\alpha: G \to H$ is a homomorphism, 
+  then $\ker \alpha$ is a subgroup of $G$.
+\end{corollary}
+\begin{proof}
+  Notice that $\ker \alpha = \alpha^{-1}(\{e_{H}\})$, and $\{e_{H}\} \le H$, so
+  by Proposition~\ref{prop:inversehomsubgroup}, $\ker \alpha \le G$.
+\end{proof}
+
+\begin{example}
+  In Example~\ref{eg:4grouphom}, the kernel of the homomorphism is $\{1, ab\}$,
+  which is a subgroup of $V$, and the image of the homomorphism is $\{1, a^{2}\}$,
+  which is a subgroup of $C_{4}$.
+\end{example}
+
+\begin{example}
+  The kernel of the determinant map from the previous example is the set
+  of all matrices whose determinant is $1$, ie.
+  \[
+    \ker \det = SL_{n}(\reals).
+  \]
+  
+  On the other hand, there are matrices whose determinant is any number you
+  choose, so the image of $GL_{n}(\reals)$ under $\det$ is all of $\reals 
+  \setminus \{0\}$.
+\end{example}
+
+\begin{example}
+  Parity can be regarded as a function that takes permutations to elements
+  of the multiplicative group of integers $\integers \setminus \{0\}$.
+  Theorem~\ref{thm:parityproduct} tells us that this is a homomorphism.
+  
+  The kernel of $\parity$ is the subgroup $A_{n}$ of all permutations
+  whose parity is $1$, ie.
+  \[
+    \ker \parity = A_{n}.
+  \]
+  
+  On the other hand, the image of $S_{n}$ under the $\parity$ homomorphism
+  is simply the set $\{1, -1\}$, which is a subgroup of the multiplicative
+  group of integers.
+\end{example}
+
+Just as we are particularly interested in functions which are one-to-one,
+onto, or bijective, we are interested in homomorphisms which are one-to-one,
+onto, or bijective.
+
+\begin{definition}
+  Let $G$ and $H$ be groups, and $\alpha : G \to H$ a homomorphism.  If
+  $\alpha$ is one-to-one (or injective), then we say that it is a
+  \defn{monomorphism}{monomorphism}\index{-morphism!mono-|emph}.  If $\alpha$ is onto (or sujective),
+  then we say that it is an \defn{epimorphism}{epimorphism}\index{-morphism!epi-|emph}.  If $\alpha$
+  is a bijection, then we say that it is an \defn{isomorphism}{isomorphism}\index{-morphism!iso-|emph}.
+  
+  If $\alpha: G \to G$ is an isomorphism, then we call $\alpha$ an
+  \defn{automorphism}{automorphism}\index{-morphism!auto-|emph}.  The set of all automorphisms of $G$
+  is denoted $\Aut(G)$.
+\end{definition}
+
+This definition of isomorphism agrees with the definition that we have been
+using, but can also be applied to infinite groups.  The concept of
+``correspondence'' of elements that we have been informally using to translate
+between the two Cayley tables is, formally, a bijection; while the fact that
+the Cayley tables correspond means that the group operation is preserved by
+the bijection, giving us a homomorphism.  If there is an isomorphism between
+two groups $G$ and $H$, then we say that the groups are \defn{isomorphic}{isomorphic}
+and write $G \isom H$ as usual.
+
+\begin{example}
+  Consider the additive group of reals numbers, $(\reals, +, 0)$, and the
+  multiplicative group of positive real numbers, $(\reals^{+}, \times, 1)$.
+  The exponential function
+  \[
+    \exp : x \mapsto e^{x}
+  \]
+  is a homomorphism between these two groups, since
+  \[
+    \exp(x+y) = e^{x+y} = e^{x}e^{y} = \exp(x)\exp(y).
+  \]
+  Furthermore, the exponential function is one-to-one (a fact you should be
+  familiar with from elementary calculus), and the range of the exponential
+  function is all positive real numbers.  Hence $\exp$ is an isomorphism, and
+  the two groups are isomorphic.
+  
+  In fact, this isomorphism is not the only possible choice.  Any function
+  of the form
+  \[
+    x \mapsto a^{x}
+  \]
+  for $a > 0$ is an isomorphism.  Going in the reverse direction, the
+  corresponding logarithms
+  \[
+    x \mapsto \log_{a} x,
+  \]
+  regarded as functions from $\reals^{+}$ to $\reals$, are also isomorphisms.
+\end{example}
+
+The following proposition collects some useful facts about 
+homomorphisms.
+
+\begin{proposition}\label{prop:homomorphismfacts}
+  Let $G$, $H$ and $K$ be groups, and let $\alpha: G \to H$ and 
+  $\beta: H \to K$ be homomorphisms.
+  \begin{theoremenum}
+    \item $\beta \circ \alpha: G \to K$ is a homomorphism,
+    
+    \item if $\alpha$ and $\beta$ are monomorphisms, so is $\beta \circ 
+      \alpha$,
+    
+    \item if $\alpha$ and $\beta$ are epimorphisms, so is $\beta \circ 
+      \alpha$,
+    
+    \item if $\alpha$ and $\beta$ are isomorphisms, so is $\beta \circ 
+      \alpha$,
+    
+    \item if $\alpha$ is an isomorphism, so is the inverse function 
+      $\alpha^{-1}$,
+    
+    \item $\alpha$ is a monomorphism if and only if $\ker \alpha = 
+      \{e\}$,
+  \end{theoremenum}
+\end{proposition}
+\begin{proof}
+  (i) We observe that
+    \[
+      \beta(\alpha(xy)) = \beta(\alpha(x)\alpha(y)) = 
+      \beta(\alpha(x))\beta(\alpha(y)),
+    \]
+    so $\beta \circ \alpha$ is a homomorphism.
+  
+  (ii--iv) These follow immediately from (i) which tells us that the 
+    composition is a homomorphism, and parts (ii--iv) of
+    Proposition~\ref{prop:functionfacts} which tell us that the 
+    composition is, respectively, one-to-one, onto, and bijective.
+  
+  (vi) If $\alpha$ is an isomorphism, then for any $x$, $y \in H$, we 
+    have $u$ and $v \in G$ such that $\alpha(u) = x$ and $\alpha(v) = 
+    y$, so
+    \[
+      xy = \alpha(u)\alpha(v) = \alpha(uv).
+    \]
+    But $u = \alpha^{-1}(x)$ and $v = \alpha^{-1}(y)$, so
+    \[
+      \alpha^{-1}(xy) = \alpha^{-1}(\alpha(uv)) = uv = 
+      \alpha^{-1}(x)\alpha^{-1}(y).
+    \]
+    Hence $\alpha^{-1}$ is a homomorphism.
+    
+    Furthermore, parts (v) of Proposition~\ref{prop:functionfacts} 
+    tells us that $\alpha^{-1}$ is a bijection, so $\alpha^{-1}$ is an 
+    isomorphism.
+  
+  (v) If $\alpha$ is a monomorphism and $\alpha(x) = e$, then 
+    $\alpha(x) = \alpha(e)$, and since $\alpha$ is injective, $x = e$.
+    So $\ker \alpha = \{ e \}$.
+  
+    On the other hand, if $\ker \alpha = \{e\}$, then if we have $x$
+    and $y \in G$ such that $\alpha(x) = \alpha(y)$, then
+    \[
+      \alpha(xy^{-1}) = \alpha(x)\alpha(y)^{-1} = 
+      \alpha(x)\alpha(x)^{-1} = e,
+    \]
+    so $xy^{-1} \in \ker \alpha$, and hence $xy^{-1} = e$.  But then
+    \[
+      x = xy^{-1}y = ey = y,
+    \]
+    so $\alpha$ is injective and hence a monomorphism.
+\end{proof}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Find all the homomorphisms from $C_{2}$ to $V$.  Describe the 
+    kernel and image of each.
+  
+  \item Let $\integers$ be the additive group of integers.  Show that 
+  for each $m \in \integers$, the function $\alpha_{m} : \integers 
+  \to \integers$, given by
+  \[
+    \alpha_{m}(x) = mx
+  \]
+  is a homomorphism.  Show that if $m \ne 0$ then $\alpha_{m}$ is a 
+  monomorphism.  Show that it is an epimorphism if and only if $m = 
+  \pm 1$.
+  
+  \item Let $\rationals$ be the additive group of rational numbers.  Show that 
+  for each $r \in \rationals$, the function $\alpha_{r}: \rationals 
+  \to \rationals$ given by
+  \[
+    \alpha_{r}(x) = rx
+  \]
+  is a homomorphism.  Show that if $r \ne 0$ then $\alpha_{r}$ is an 
+  automorphism.
+  
+  \item Consider the group $(G, \ast, e)$, where $G = \{(x,y) : x,y
+    \in \reals, x \ne 0\}$, $(x,y) \ast (x',y') = (xx', xy' + y)$ and $e =
+    (1,0)$, and the group $(H, \cdot, I_{2})$, where
+    \[
+      H = \left\{\begin{bmatrix}
+        a & b \\
+0 & 1
+      \end{bmatrix} : a, b \in \reals, a \ne 0 \right\},
+    \]
+    $\cdot$ is matrix multiplication, and $I_{2}$ is the 2 by 2 
+    identity matrix.  Show that $G$ and $H$ are isomorphic.
+  
+  \item Show that every isomorphism $\alpha : (\reals, +, 0) \to 
+    (\reals^{+}, \times, 1)$ satisfies
+    \[
+      \alpha(x) = a^{x}
+    \]
+    for some number $a > 0$.
+    
+    Show that every isomorphism $\alpha : (\reals^{+}, \times, 1) \to 
+    (\reals, +, 0)$ satisfies
+    \[
+      \alpha(x) = \log_{a} x
+    \]
+    for some number $a > 0$.
+  
+  \item\label{ex:directprodhoms} Let $G$ and $H$ be two groups. 
+    Show that each of the following is a homomorphism:
+    \begin{theoremenum}
+      \item $\alpha: G \to G \cross H$, where $\alpha(g) = (g,1)$,
+
+      \item $\alpha: H \to G \cross H$, where $\alpha(h) = (1,h)$,
+
+      \item $\alpha: G \cross H \to G$, where $\alpha(g,h) = g$,
+
+      \item $\alpha: G \cross H \to H$, where $\alpha(g,h) = h$,
+
+      \item $\alpha: G \cross H \to H \cross G$, where 
+        $\alpha(g,h) = (h,g)$,
+
+      \item $\alpha: G \to G \cross G$, where $\alpha(g) = (g,g)$.
+    \end{theoremenum}
+    Which of these are monomorphisms, which are epimorphisms, and 
+    which are isomorphisms?
+  
+  \item Find all the automorphisms of $V$.
+  
+  \item Let $G$ be a group.  Show that $(\Aut(G), \circ, \id)$ is a 
+    group, where $\circ$ is composition and $\id: G \to G$ is the 
+    identity function $\id(x) = x$ for all $x \in G$.
+\end{exercises}
+\index{homomorphism|)}\index{-morphism!homo-|)}
+
+
+\newpage
+\section*{Assignment 2}
+
+The following exercises are due Friday, March 5th.
+
+\begin{description}
+  \item[2.1] Exercises 1, 2.
+  \item[2.2] Exercises 2, 3, 5.
+  \item[2.3] Exercises 2, 3, 4.
+  \item[2.4] Exercises 1.
+\end{description}
+
+\section*{Assignment 3}
+
+The following exercises are due Friday, March 12th.
+
+\begin{description}
+  \item[2.5] Exercises 1, 2, 7.
+  \item[2.7] Exercises 1, 4.
+  \item[2.8] Exercises 2, 3.
+  \item[2.9] Exercises 1, 2, 4, 7.
+\end{description}

@@ -1,0 +1,35 @@
+
+\subsection*{Extension: Less Than A Group}
+
+
+It turns out that there are algebraic objects which are not quite 
+groups, but which are still of interest.
+
+\begin{definition}
+  A \defn{semigroup}{semigroup} is a set with an associative binary 
+  operation.
+  
+  A \defn{monoid}{monoid} is a semigroup with an identity element $e$.
+\end{definition}
+
+As one can see, the bar for being a semigroup is extremely low, and 
+one is not asking that much more to get a monoid.
+
+\begin{proposition}\label{prop:semigroup2group}
+  A semigroup $(G, \ast)$ is a group if and only if there is a left 
+  identity $e \in G$, and for every element $x \in G$ there is an 
+  element $x^{-1} \in G$ which is a left-inverse (ie.\ $x^{-1}x = e$).
+\end{proposition}
+
+\begin{proposition}\label{prop:semigroup2group2}
+    A semigroup $(G,\ast)$ is a group if and only if for all $a$, $b 
+    \in G$, one can find elements $x$ and $y \in G$ such that $ax = 
+    b$ and $ya = b$.
+\end{proposition}
+
+\begin{enumerate}
+    \item Prove Proposition~\ref{prop:semigroup2group}.
+    
+    \item Prove Proposition~\ref{prop:semigroup2group2}.
+\end{enumerate}
+

@@ -1,0 +1,1659 @@
+\chapter{Introduction}
+
+\pagestyle{draft}
+
+Algebraic structures of various types occur naturally in many different areas
+of mathematics.  The most straightforward examples arise in arithmetic, but
+there are numerous other examples which are not as obvious.  In this chapter
+we start our study of group theory by looking at a number of concrete
+situations where an algebraic structure arises naturally.  We will see that all
+these algebraic structures share common features, and these common features
+will lead us to the definition of a group in Chapter 2.
+
+\section{Symmetry}
+\label{section:symmetry}
+
+You are familiar, at least in an informal way, with the idea of symmetry from
+Euclidean geometry and calculus.  For example, the letter ``\textsf{A}'' has
+reflective symmetry in its vertical axis, ``\textsf{E}'' has reflective
+symmetry in its horizontal axis, ``\textsf{N}'' has rotational symmetry of
+$\pi$ radians about its centre, ``\textsf{H}'' has all three types of
+symmetry, and the letter ``\textsf{F}'' has none of these symmetries.
+
+Symmetry is also important in understanding real world phenomena.  As some
+examples:
+\begin{itemize}
+  \item The symmetries of molecules can affect possible chemical reactions.
+    For example, many proteins and amino acids (the basic building blocks of
+    life) have ``left-handed'' and ``right-handed'' versions which are
+    reflections of one-another.  Life on earth uses the ``left-handed''
+    versions almost exclusively.
+    
+  \item Crystals have very strong symmetries, largely determined by the
+    symmetries of the atoms or molecules of which the crystal is built.
+    
+  \item Most animals and plants have some sort of symmetry in their
+    body-shapes, although they are never perfectly symmetrical.  Most
+    animals have bilateral symmetry, while plants often have five-fold
+    or six-fold rotational symmetry.
+  
+  \item In art and design, symmetrical patterns are often found to be more
+    pleasing to the eye than asymmetrical patterns, or simply more practical.
+    
+  \item Waves in fluids, and the vibrations of a drumhead or string are often
+    symmetrical, or built out of symmetric components.  These symmetries
+    are usually inherent in the underlying equations that we use to model
+    such systems, and understanding the symmetry can be crucial in finding
+    solutions to these equations.
+\end{itemize}
+
+But what, precisely, do we mean by symmetry?
+
+\begin{definition}
+  Let $\Omega$ be a subset of $\reals^{n}$.  A \defn{symmetry}{symmetry} of
+  $\Omega$ is a function $T: \reals^{n} \to \reals^{n}$ such that
+  \begin{theoremenum}
+    \item $\{ T(x) : x \in \Omega \} = \Omega$, and
+    \item $T$ preserves distances between points: if $d(x,y)$ is the 
+    distance between the points $x$ and $y$, then $d(T(x),T(y)) = 
+    d(x,y)$.
+  \end{theoremenum}
+  We denote the set of all symmetries of $\Omega$ by $\Sym(\Omega)$.  Every
+  set $\Omega$ has at least one symmetry, the \defn{identity
+  symmetry}{symmetry!identity} $I(x) = x$.
+
+  Functions which preserve distance are called
+  \defn{isometries}{isometries}, so every symmetry is an isometry.
+\end{definition}
+
+\begin{proposition}\label{prop:symmetryfacts}
+  Let $\Omega$ be a subset of $\reals^{n}$, and let $S$ and $T$ be
+  symmetries of $\Omega$.  Then
+  \begin{theoremenum}
+    \item $T$ is one-to-one and onto.
+    
+    \item the inverse function $T^{-1}$ is a symmetry of $\Omega$
+    
+    \item the composition $T \circ S$ is a symmetry of $\Omega$
+
+    \item the compositions $T \circ T^{-1}$ and $T^{-1} \circ T$ always
+       equal the identity symmetry $I$.
+  \end{theoremenum}
+\end{proposition}
+\begin{proof}
+  (i) This follows immediately from the technical result that every
+  isometry from $\reals^{n}$ to $\reals^{n}$ is one-to-one and onto
+  (this is proved in Lemma~\ref{lemma:isometrybijective} at the end of
+  this chapter).
+  
+  (ii) Since $T$ is one-to-one and onto, it has an inverse function
+  $T^{-1}$.  We observe that $T^{-1}(\Omega) = T^{-1}(T(\Omega)) =
+  \Omega$, and also that $d(T^{-1}(x), T^{-1}(y)) = d(T(T^{-1}(x)),
+  T(T^{-1}(y))) = d(x,y)$.  Hence $T^{-1}$ is a symmetry of $\Omega$.
+
+  Parts (iii) and (iv) are left as a simple exercise.
+\end{proof}
+
+We\sidebar{Notation}{Many algebra texts write $ST$ for $T \circ S$, because
+$S$ is applied first, then $T$.  In these notes, however, we will remain
+consistent with the traditional function composition order, but you must
+keep this clear in your head to avoid confusion.\\
+\indent Another commonly used convention in algebra is to apply functions
+on the right, so $T(x)$ is written as $xT$, so that $S(T(x))$ would be
+written as $xTS$.}
+will usually write the composed symmetry $T \circ S$ as simply $TS$.  Remember
+that because function composition works from right to left, $TS$ means that the
+symmetry $S$ is applied first, followed by the symmetry $T$.
+
+You should also recall that composition of functions is associative
+(see Proposition~\ref{prop:functionfacts}) so composition of
+symmetries is always associative.  In other words if $S$, $T$ and $U
+\in \Sym(\Omega)$, then $S(TU) = (ST)U$.  However, composition of
+functions is not usually commutative, so without additional evidence,
+we cannot conclude that $ST = TS$.
+
+\begin{figure}\label{fig:symmetryofH}
+  \centering
+  \begin{picture}(7,7)(-1,-1)
+    \thicklines
+    \put(1,1){\line(1,0){1}}
+    \put(2,1){\line(0,1){1}}
+    \put(2,2){\line(1,0){1}}
+    \put(3,2){\line(0,-1){1}}
+    \put(3,1){\line(1,0){1}}
+    \put(4,1){\line(0,1){3}}
+    \put(4,4){\line(-1,0){1}}
+    \put(3,4){\line(0,-1){1}}
+    \put(3,3){\line(-1,0){1}}
+    \put(2,3){\line(0,1){1}}
+    \put(2,4){\line(-1,0){1}}
+    \put(1,4){\line(0,-1){3}}
+    
+    \thinlines
+    \put(-1,2.5){\vector(1,0){7}}
+    \put(2.5,-1){\vector(0,1){7}}
+  \end{picture}
+  \caption{The set $\Omega$ of Example~\ref{eg:symmetryofH}}
+\end{figure}
+
+\begin{example}\label{eg:symmetryofH}
+  Let $\Omega \subseteq \reals^{2}$ be the H-shaped set illustrated in
+  Figure~\ref{fig:symmetryofH}.  Then $\Omega$ has percisely the following
+  symmetries:
+  \begin{alignat*}{4}
+    I(x,y) &= (x,y) &\qquad& \text{(Identity)} \\
+    H(x,y) &= (x,-y) && \text{(Reflection in the $x$-axis)} \\
+    V(x,y) &= (-x,y) && \text{(Reflection in the $y$-axis)} \\
+    R(x,y) &= (-x,-y) && \text{(Rotation by $\pi$ radians about the origin)}
+  \end{alignat*}
+  
+  We can confirm by direct calculation that $I^{-1} = I$, $H^{-1} = H$, $V^{-1}
+  = V$ and $R^{-1} = R$.  In other words, each of these transformations is its
+  own inverse.  These symmetries compose in the following ways:
+  \begin{alignat*}{6}
+    H \circ H &= I & \qquad & H \circ V &= R & \qquad & H \circ R &= V\\
+    V \circ H &= R && V \circ V &= I && V \circ R &= H\\
+    R \circ H &= V && R \circ V &= H && R \circ R &= I
+  \end{alignat*}
+  In fact we can summarize this using a ``multiplication table'':
+  \[
+    \begin{array}{c|cccc}
+      \circ & I & H & V & R \\
+      \hline
+          I & I & H & V & R \\
+          H & H & I & R & V \\
+          V & V & R & I & H \\
+          R & R & V & H & I 
+    \end{array}
+  \]
+  This sort of ``multiplication table'' is called a \defn{Cayley table}{Cayley
+  table} for the operation.
+  
+  The composition of symmetries in this example is commutative.  You can verify
+  this by simply checking every possible product.  For example, from the Cayley
+  table we have $HR = V$, and $RH = V$, so $HR = RH$.
+\end{example}
+
+There is nothing really special about the set $\Omega$ in the previous
+example, other than the fact that composition is commutative for this set.
+As the following example shows, we should not expect composition of
+symmetries to be commutative in every case.
+
+\begin{figure}\label{fig:symmtriangle}
+  \centering
+  \begin{picture}(7,7)(-3.5,-3.5)
+    \thicklines
+    \qbezier(2,0)(0,1.155)(-1,1.732)
+    \qbezier(2,0)(0,-1.155)(-1,-1.732)
+    \qbezier(-1,1.732)(-1,0)(-1,-1.732)
+
+    \thinlines
+    \put(-3.5,0){\vector(1,0){7}}
+    \put(0,-3.5){\vector(0,1){7}}
+    
+    \put(2,0){\makebox(0,0)[tl]{1}}
+    \put(0,2){\makebox(0,0)[l]{1}}
+    \put(-2,0){\makebox(0,0)[t]{-1}}
+    \put(0,-2){\makebox(0,0)[l]{-1}}
+  \end{picture}
+  \caption{The equilateral triangle of Example~\ref{eg:symmtriangle}}
+\end{figure}
+
+\begin{example}\label{eg:symmtriangle}
+  Let $\Omega \subseteq \reals^{2}$ be an equilateral triangle with veritces
+  $(1,0)$, $(-1/2, \sqrt{3}/2)$ and $(-1/2, -\sqrt{3}/2)$.  Then $\Omega$ has
+  the following symmetries:
+
+  \begin{tabular}{lp{3.5in}}
+    $I$ & Identity \\
+    $R_{1}$ & Rotation by $2\pi/3$ radians clockwise \\
+    $R_{2}$ & Rotation by $2\pi/3$ radians anticlockwise \\
+    $H_{0}$ & Reflection in the $x$-axis \\
+    $H_{1}$ & Reflection in the line through $(0,0)$ and $(-1/2,\sqrt{3}/2)$ \\
+    $H_{2}$ & Reflection in the line through $(0,0)$ and $(-1/2,-\sqrt{3}/2)$
+  \end{tabular}
+  
+  The precise formulas for these symmetries are an exercise.  A little thought
+  tells us that $I^{-1} = I$, $R_{1}^{-1} = R_{2}$, $R_{2}^{-1} = R_{1}$,
+  $H_{1}^{-1} = H_{1}$, $H_{2}^{-1} = H_{2}$, and $H_{3}^{-1} = H_{3}$.
+  The Cayley table for these symmetries is:
+    
+  \medskip
+  \hspace{1in}\begin{tabular}{c|cccccc}
+    $\circ$ & $I$ & $R_{1}$ & $R_{2}$ & $H_{0}$ & $H_{1}$ & $H_{2}$ \\
+    \hline
+    $I$ & $I$ & $R_{1}$ & $R_{2}$ & $H_{0}$ & $H_{1}$ & $H_{2}$ \\
+    $R_{1}$ & $R_{1}$ & $R_{2}$ & $I$ & $H_{1}$ & $H_{2}$ & $H_{0}$ \\
+    $R_{2}$ & $R_{2}$ & $I$ & $R_{1}$ & $H_{2}$ & $H_{0}$ & $H_{1}$ \\
+    $H_{0}$ & $H_{0}$ & $H_{2}$ & $H_{1}$ & $I$ & $R_{2}$ & $R_{1}$ \\
+    $H_{1}$ & $H_{1}$ & $H_{0}$ & $H_{2}$ & $R_{1}$ & $I$ & $R_{2}$ \\
+    $H_{2}$ & $H_{2}$ & $H_{1}$ & $H_{0}$ & $R_{2}$ & $R_{1}$ & $I$ \\
+  \end{tabular}
+  
+  \medskip
+  
+  This operation is associative, but it is clearly \emph{not} commutative:
+  $H_{0} \circ H_{1} = R_{1}$, but $H_{1} \circ H_{0} = R_{2}$, for example.
+\end{example}
+
+Some sets have infinite collections of symmetries, but even in these cases
+we can still understand how composition works.
+
+\begin{example}\label{eg:circlesymmetry}
+  Let $\Omega = \{(x,y) \in \reals^{2} : x^{2} + y^{2} = 1\}$ be the unit
+  circle.  Then $\Omega$ has infinitely many symmetries, which fall into two
+  classes:
+  
+  \begin{tabular}{lp{3.5in}}
+    $R_{\theta}$ & Rotation by $\theta$ radians clockwise,
+      $0 \le \theta < 2\pi$ \\
+    $H_{\varphi}$ & Reflection in the line which makes an angle $\varphi$
+      to the $x$-axis at the origin, $0 \le \varphi < \pi$.
+  \end{tabular}
+  
+  The identity is $R_{0}$, rotation by $0$ radians.  We can also check that
+  the inverse of $R_{\theta}$ is $R_{2\pi - \theta}$ for $0 < \theta < 2\pi$,
+  and the inverse of $H_{\varphi}$ is $H_{\varphi}$.
+  
+  Because the set of symmetries is infinite, we can't write down a Cayley
+  table, but we can list how the generic symmetries compose:
+  \begin{alignat*}{4}
+    R_{\theta} \circ R_{\omega} &= R_{\theta + \omega} &\qquad&
+    R_{\theta} \circ H_{\varphi} &=  H_{\varphi - \theta/2}\\
+    H_{\varphi} \circ R_{\theta} &= H_{\varphi + \theta/2}&&
+    H_{\varphi} \circ H_{\psi} &= R_{2\psi - 2\varphi}
+  \end{alignat*}
+  where all angles are reduced to lie in the appropriate ranges.  The easiest
+  way to verify this table is to note that $H_{\varphi} = H_{0} \circ
+  R_{2\varphi} = R_{-2\varphi} \circ H_{0}$, which greatly simplifies
+  calculations involving $H_{\varphi}$.
+\end{example}
+
+All the examples so far have used rotational and reflective symmetries, but
+some sets also have translational symmetry.
+
+\begin{example}
+  Let $\Omega \{(x,y) \in \reals^{2} : y = 0\}$ be the $x$-axis in
+  $\reals^{2}$. Then $\Omega$ has symmetries of the form
+  \[
+    T_{c}(x,y) = (x + c,y),
+  \]
+  ie. right translation by $c$, for any $c \in \reals$, and
+  \[
+    S_{c}(x,y) = (-x + c,y),
+  \]
+  ie. reflection about $0$, followed by right translation by $c$, for any $c
+  \in \reals$ (which is equal to reflection about the point $c/2$).
+  
+  The identity symmetry is $T_{0}$, the inverse symmetry of $T_{c}$ is
+  $T_{-c}$, and the inverse symmetry of $S_{c}$ is $S_{c}$. The
+  symmetries of this set compose by the rules
+  \begin{alignat*}{4}
+    T_{a} \circ T_{b} &= T_{a+b} &\qquad&
+    T_{a} \circ S_{b} &=  S_{a+b}\\
+    S_{a} \circ T_{b} &=  S_{a-b}&&
+    S_{a} \circ S_{b} &=  T_{a-b}
+  \end{alignat*}
+\end{example}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Find the set of symmetries for each capital letter of the alphabet
+    (assume uniform, sans serif letter shapes).
+  
+  \item Prove Proposition~\ref{prop:symmetryfacts} (iii-iv).
+  
+  \item Write down formulas for each of the symmetries in
+    Example~\ref{eg:symmtriangle}.
+    
+    Hint 1: the point $(x,y) \in \reals^{2}$ rotated clockwise by an angle
+    $\theta$ about the origin is $(x\cos \theta + y\sin \theta, -x\sin \theta +
+    y\cos \theta)$.
+    
+    Hint 2: from the Cayley table, we have $H_{1} = R_{1} \circ H_{0}$ and
+    $H_{2} = R_{2} \circ H_{0}$, and it is easy to find the formula of a
+    composition of functions.
+  
+  \item Let $\Omega \subseteq \reals^{2}$ be a square, centred at the origin,
+    with side length 1.
+    Find all 8 symmetries of $\Omega$, and write down the formula for each. 
+    Find the inverses of each symmetry.
+    Write out the Cayley table for the symmetries of a square.
+  
+  \item\label{ex:symtetra} (*) Let $\Omega \subseteq \reals^{3}$ be a regular tetrahedron
+    centred at the origin.  Show that $\Omega$ has 24 symmetries.
+  
+  \item (*) Let $\Omega = \integers^{2} \subseteq \reals^{2}$ be the integer
+    lattice in the plane, ie.
+    \[
+      \integers^{2} = \{ (m,n) \in \reals^{2} : m, n \in \integers \}.
+    \]
+    Classify the symmetries of $\integers^{2}$.
+    Find the inverses of each symmetry.
+    As in Example~\ref{eg:circlesymmetry}, find the product of typical symmetries.
+\end{exercises}
+
+\section{Review: Sets}
+
+Group theory does not require a great deal of mathematical background to
+get started: we really only need the concepts of sets and functions to
+present the basics of the theory. You should have come across the formal definitions of
+these concepts in previous courses, such as a typical discrete mathematics
+course.  A large part of the discussion in this section and the next will be
+to fix notation and terminology.
+
+A \defn{set}{set} is a collection of mathematical objects.  We do not care about
+the order that the objects are presented, nor any potential duplication of
+elements.  The mathematical objects contained in a set $S$ are called
+the \defn{elements}{element} or \defn{members}{member} of a set, and write $x \in S$ to say
+that $x$ is an element of $S$.  We say that two sets are equal if they have
+exactly the same elements.
+
+The simplest way to present a set is as a list of all the elements of
+the set enclosed in braces, such as the set $\{1, 2, 3\}$.  For sets
+with large numbers of elements, or infinite sets, this presentation is
+tedious (or impossible!), so there are two alternatives.  If there is
+a clear pattern to the elements, one can use ellipses to elide the
+majority of the set, leaving just enough to make the pattern of
+elements clear:
+\[
+  \{2, 4, 6, \ldots, 100\} \qquad \text{and} \qquad \{2, 3, 5, 7, 11, 
+  13, 17
+\ldots\}
+\]
+are clearly meant to represent the set of all even numbers from 2 to 100,
+and the set of all prime numbers respectively.  However some sets are too
+complicated for this sort of presentation, and for these we use ``set
+builder'' notation.  In set builder notation we simply specify the set by
+some property $P$ which defines the set:
+\[
+  \{x | x \text{ satisfies } P\} \qquad \text{or} \qquad \{x : x \text{ satisfies }
+P\}.
+\]
+For example, one could write the set of all prime numbers as
+\[
+  \{ x | x \text{ is prime}\},
+\]
+or the set of all numbers greater than $2$ and less than or equal to $10$ as
+\[
+  \{ x : 2 < x \le 10 \}.
+\]
+This last example illustrates an ambiguity: which collection of numbers do
+we mean? Integers? Rational numbers? Real numbers?  To resolve this
+ambiguity, we usually specify the set $S$ from which we take our elements,
+and use the notation
+\[
+  \{x \in S | x \text{ satisfies } P\} \qquad \text{or} \qquad \{x \in S : x
+\text{ satisfies } P\}.
+\]
+Therefore the interval of all real numbers greater than 2 and less than or
+equal to 10 would most clearly be represented by
+\[
+  \{ x \in \reals : 2 < x \le 10\}.
+\]
+
+There are several special sets that come up with sufficient frequency to
+deserve their own notation.  The most important is the \defn{empty set}{set!empty}
+$\emptyset = \{\}$, the set which contains no elements.  The next most
+important are the various sets of numbers:
+
+\begin{alignat*}{4}
+  \naturals &= \{1, 2, 3, 4, \ldots \} & \qquad & \text{\defn{natural
+numbers}{natural numbers}}\\
+  \integers &= \{\ldots, -3, -2, -1, 0, 1, 2, 3, \ldots \} &&
+\text{\defn{integers}{integers}}\\
+  \rationals &= \{p/q : p \in \integers, q \in \naturals, \text{$p$ and $q$
+    coprime}\} && \text{\defn{rational numbers}{rational numbers}}\\
+  \reals &= \{ x : \text{$x$ is an infinite decimal\footnote{This is far
+from the whole story: take a real analysis course for more information.}}\}
+&& \text{\defn{real numbers}{real numbers}}\\
+  \complex &= \{ x+iy : x, y \in \reals \} && \text{\defn{complex numbers}{complex numbers}}
+\end{alignat*}
+
+We  \sidebar{Proving Equality of Sets}{Often we have
+two sets, $A$ and $B$, which we want to show are equal.  A
+very common technique to show that this is in fact the case is to show that
+each set is a subset of the other.  We can then conclude that they are
+equal.  In summary:\\
+\hspace{2em}\fbox{\parbox{1in}{$A \subseteq B$ and $B \subseteq A$
+implies $A = B$}} }
+ say that a set $A$ is a \defn{subset}{subset} of another set $B$, and write $A
+\subseteq B$, if every element of $A$ is an element of $B$.  For example,
+$\{2, 4, 6\} \subseteq \{1, 2, 3, 4, 5, 6\}$.  Note that if $A$ is equal to
+$B$, it is still a subset of $B$, and that the empty set is always a subset
+of any other set.  We say that $A$ is a \defn{proper subset}{subset!proper} of $B$ if $A
+\subset B$ and $A \ne B$, and we denote this by $A \subset B$.
+
+We can combine sets using a number of different \defn{set operations}{set operations}.  The
+\defn{union}{union} of two sets $A$ and $B$ is the set containing all the elements
+of both sets combined, ie.
+\[
+  A \union B = \{ x : x \in A \text{ or } x \in B\}.
+\]
+The \defn{intersection}{intersection} of $A$ and $B$ is the set containing the objects that
+are elements of both of the sets, ie.
+\[
+  A \intersect B = \{ x : x \in A \text{ and } x \in B\}.
+\]
+Intersection and union are both \defn{commutative}{commutative} and \defn{associative}{associative}
+operations, and are \defn{distributive}{distributive} with respect to one another:
+\begin{align*}
+  A \union B  &= B \union A\\
+  A \intersect B  &= B \intersect A\\
+  A \union (B \union C) &= (A \union B) \union C = A \union B \union C\\
+  A \intersect (B \intersect C) &= (A \intersect B) \intersect C = A \intersect B \intersect
+C\\
+  A \union (B \intersect C) &= (A \union B) \intersect (A \union C)\\
+  A \intersect (B \union C) &= (A \intersect B) \union (A \intersect C)\\
+  A \union \emptyset &= A\\
+  A \intersect \emptyset &= \emptyset
+\end{align*}
+
+If there is some natural \defn{universal set}{universal set} $U$ of elements which we are
+considering, we can define the \defn{complement}{complement} of a set $A$ as the set of all
+things in $U$ not in $A$, ie.
+\[
+  A^{c} = \{x \in U : x \notin A \}.
+\]
+The complement of the complement is the original set, and complements
+interact with union and intersection via \defn{DeMorgan's laws}{DeMorgan's laws}:
+\begin{align*}
+  (A^{c})^{c} &= A\\
+  (A \union B)^{c} &= A^{c} \intersect B^{c}\\
+  (A \intersect B)^{c} &= A^{c} \union B^{c}\\
+  \emptyset^{c} &= U \\
+  U^{c} &= \emptyset.
+\end{align*}
+Note that sometimes the notation $\overline{A}$ is used for complements.
+
+Even in the absence of a universal set, we can define the \defn{set
+difference}{set difference} operation: $A \setminus B$ is everything in $A$ which is not in
+$B$.  That is
+\[
+  A \setminus B = \{ x \in A : x \notin B\}.
+\]
+If complements make sense, then we have $A \setminus B = A \intersect
+B^{c}$.  We can also define the \defn{symmetric difference}{symmetric difference} of $A$ and $B$
+as the set of all things in either $A$ or $B$, but not in both,
+\[
+  A \symdiff B = \{x \in A \union B : x \notin A \intersect B\}
+\]
+or equivalently
+\[
+  A \symdiff B = (A \union B) \setminus (A \intersect B) = (A \setminus B)
+\union (B \setminus A).
+\]
+Clearly $A \symdiff B = B \symdiff A$.
+
+Perhaps the most important set operation for our purposes, since it appears
+in just about every core definition in abstract algebra, is the \defn{Cartesian
+product}{cartesian product}.  The product of two sets, $A \cross B$ is the set
+consisting of tuples $(x,y)$, where $x \in A$ and $y \in B$, ie.
+\[
+  A \cross B = \{(x,y) : x \in A, y \in B\}.
+\]
+More generally, we define a product of $n$ sets to be the set of $n$-tuples:
+\[
+  A_{1} \cross A_{2} \cross \cdots \cross A_{n} = \{ (a_{1}, a_{2}, \ldots,
+a_{n}) : a_{k} \in A_{k}, k = 1, 2, \ldots, n\}.
+\]
+We also define
+\[
+  A^{n} = \underbrace{A \cross A \cross \cdots \cross A}_{n\text{ times}}
+\]
+to be the set of all $n$-tuples of elements of $A$. This notation is familiar
+from calculus, where $\reals^{n}$ is the set of all $n$-tuples of real numbers.
+Note that $A \times B$ is not equal to $B \times A$ in general, although they
+are clearly closely related.
+
+If $A \subseteq C$, and $B \subseteq D$ it is straightforward to see that
+$A \cross B \subseteq C \cross D$.
+
+We denote the \defn{cardinality}{cardinality} of a set $A$ by $|A|$.  For sets
+with a finite number of elements, the cardinality of $A$ is simply the number
+of elements in the set.  For infinite sets, cardinality is a more complicated
+matter, but for the purposes of this course it really only matters whether a
+set is infinite or not.  You should, however, be aware that there are
+countably infinite sets (such as $\naturals^{n}$, $\integers^{n}$ and
+$\rationals^{n}$) and uncountably infinite sets (such as $\reals^{n}$ and
+$\complex^{n}$) and that countable and uncountable sets have different
+cardinality.
+
+For finite sets, we have the following facts from basic counting theory:
+the inclusion-exclusion principle
+\[
+  |A \union B| = |A| + |B| - |A \intersect B|,
+\]
+and the multiplication principle
+\[
+  |A \cross B| = |A||B|.
+\]
+Both of these will be of importance when exploring the structure of finite
+groups.
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item In this section many identities are stated without proof.  Pick
+    8 of them and show why they hold.  Be careful not to use any identity
+    or fact which is dependent on what you are proving.
+  
+  \item Show that $|A \setminus B| = |A| - |A \intersect B|$.
+\end{exercises}
+
+\section{Review: Functions}
+
+A \defn{function}{function} $f$ from $A$ to $B$ is a rule which relates every element $x$
+of $A$ to some unique element $y$ of $B$.  What is key here is that the
+function associates $x$ with \emph{precisely} one element of $B$.  We write $y
+= f(x)$.  More formally, we denote the function with the notation
+\begin{align*}
+  f : A & \to B \\
+      x & \mapsto y.
+\end{align*}
+The set $A$ is the \defn{domain}{domain}, the set $B$ the \defn{codomain}{codomain}, while the
+set
+\[
+  f(A) = \{ f(x) : x \in A \}
+\]
+is the \defn{range}{range} of the function.  The \defn{graph}{graph!of a function} of the function is
+the subset
+\[
+  \mathcal{G}_{f} = \{(x, f(x)) : x \in A \}
+\]
+of $A \cross B$.
+
+From time to time, we will wish to specify an abstract function without
+specifying an exact formula or rule.  In this case, we will just write $f: A
+\to B$, specifying the domain and codomain, but nothing else.  We will also
+write $\mathcal{F}(A,B)$ for the set of all functions from $A$ to
+$B$.  Some texts use $B^{A}$ instead for this set.
+
+Given a function $f: A \to B$, and a subset $X \subseteq A$, we define the
+\defn{image}{image} of $X$ to be the subset of $B$ given by
+\[
+  f(X) = \{f(x) : x \in B\}.
+\]
+If $Y \subseteq B$, we also define the \defn{inverse image}{image!inverse}
+of $Y$ to be the subset of $A$ given by
+\[
+  f^{-1}(Y) = \{x \in A : f(x) \in Y\}.
+\]
+In other words $f^{-1}(Y)$ is the set of elements of $A$ whose value lies in
+the set $Y$.
+
+Given a function $g: A \to B$ and another function $f: B \to C$, we define
+the \defn{composition}{composition!of two functions} of $f$ and $g$ to be
+the function $f \circ g : A \to C$ defined by $(f \circ g)(x) = f(g(x))$.
+
+A function is \defn{one-to-one}{one-to-one function} or \defn{injective}{injective function} if it satisfies the
+condition
+\[
+  f(x_{1}) = f(x_{2}) \text{ implies } x_{1} = x_{2}.
+\]
+A function is \defn{onto}{onto function} or \defn{surjective}{surjective function} if the range equals the
+entire codomain, or equivalently
+\[
+  f(A) = B.
+\]
+A function which is both injective and surjective is called a
+\defn{bijective}{bijective function} function.
+
+A bijective function automatically has an \defn{inverse
+function}{function!inverse} $f^{-1}: B \to A$ defined by $f^{-1}(b) = a$ if
+and only if $f(a) = b$.  The fact that $f$ is onto guarantees that $f^{-1}$
+is defined on all of $B$, while the fact that $f$ is injective ensures that
+$f^{-1}$ is a function.  It follows from the definition that $(f \circ
+f^{-1})(x) = x$ and $(f^{-1} \circ f)(x) = x$.
+
+\begin{proposition}\label{prop:functionfacts}
+  Let $A$, $B$ $C$ and $D$ be sets, and $f : A \to B$, $g : B \to C$ and
+  $h: C \to D$ be functions.  Then we have:
+  \begin{theoremenum}
+    \item Composition of functions satisfies an associative law:
+      $(h \circ g) \circ f = h \circ (g \circ f)$.
+    \item If $f$ and $g$ are both one-to-one, then so is $g \circ f$.
+    \item If $f$ and $g$ are both onto, then so is $g \circ f$.
+    \item If $f$ and $g$ are both bijections, then so is $g \circ f$.
+    \item If $f$ is a bijection, then so is $f^{-1}$.
+    \item If $f$ is a bijection $|A| = |B|$.
+  \end{theoremenum}
+\end{proposition}
+\begin{proof}
+  The proof is left as an exercise.
+\end{proof}
+
+\begin{example}
+We could formally write the function $f(x) = \sqrt{x}
++ 1$ as:
+\begin{align*}
+  f : [0,\infty) &\to \reals \\
+      x &\mapsto \sqrt{x} + 1.
+\end{align*}
+As you would expect, the domain is $[0,\infty)$, the codomain is $\reals$,
+the range is $[1, \infty)$, and the graph is the set of points
+\[
+  \{(x, \sqrt{x} + 1) : x \in [0,\infty)\}.
+\]
+The function is one-to-one, but is not surjective or bijective.
+\end{example}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Prove Proposition~\ref{prop:functionfacts}.
+\end{exercises}
+
+\section{Permutations}
+
+A \defn{permutation}{permutation} of a set $X$ is simply a re-arrangement of
+the elements, or more precisely a function $p$ that maps each element of $X$ to
+an element of $X$ with no two distinct elements being mapped to the same
+element (and for infinite sets, we also need $p(X) = X$).  Another way of
+saying this is that a permutation of $X$ is simply a bijection $p: X \to X$.
+
+Normally we are interested only in permutations of finite sets, and we
+really only care how many elements there are to permute.  Hence it is
+customary to consider permutations of the set $\{1, 2, 3, ..., n\}$.
+
+Since permutations are just functions,we can define them as we would any other
+function, by specifying the value that the function takes at each point in the
+domain.  Unfortunately, unlike the usual functions you see in a calculus course,
+you usually can't specify permutations using a formula.
+
+\begin{example}
+  The following function $p$ is a permutation of the set $\{1,2,3,4,5,6,7,8\}$:
+  \begin{alignat*}{8}
+    p(1) &= 2 &\qquad&
+    p(2) &= 4 &\qquad&
+    p(3) &= 6 &\qquad&
+    p(4) &= 8 \\
+    p(5) &= 7 &&
+    p(6) &= 5 &&
+    p(7) &= 3 &&
+    p(8) &= 1  
+  \end{alignat*}
+\end{example}
+
+A more compact way of writing down a permutation is to write it as an array of
+numbers, with $1$, through $n$ on the top row, and the respective image of each
+in the second row, like so:
+\[
+  p = \begin{pmatrix}
+    1 & 2 & 3 & \ldots & n \\
+    p(1) & p(2) & p(3) & \ldots & p(n)
+  \end{pmatrix}
+\]
+
+\begin{example}
+  The permutation $p$ of the previous example can be written as follows:
+  \[
+    p = \begin{pmatrix}
+      1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+      2 & 4 & 6 & 8 & 7 & 5 & 3 & 1
+    \end{pmatrix}
+  \]
+\end{example}
+
+We denote the set of all permutations of $\{1,2,3,\ldots,n\}$ by $S_{n}$.
+
+\begin{example}\label{eg:perm3part1}
+  The set $S_{3}$ is
+  \[
+    \left\{\begin{pmatrix}
+      1 & 2 & 3 \\
+      1 & 2 & 3
+    \end{pmatrix},
+    \begin{pmatrix}
+      1 & 2 & 3 \\
+      3 & 1 & 2
+    \end{pmatrix},
+    \begin{pmatrix}
+      1 & 2 & 3 \\
+      2 & 3 & 1
+    \end{pmatrix},
+    \begin{pmatrix}
+      1 & 2 & 3 \\
+      1 & 3 & 2
+    \end{pmatrix},
+    \begin{pmatrix}
+      1 & 2 & 3 \\
+      2 & 1 & 3
+    \end{pmatrix},
+    \begin{pmatrix}
+      1 & 2 & 3 \\
+      3 & 2 & 1
+    \end{pmatrix} \right\}
+  \]
+\end{example}
+
+Note that, as in the above example, the \defn{identity
+permutation}{permutation!identity} $p(k) = k$ is always a permutation.
+
+Since every permutation is a one-to-one and onto function, there is an inverse
+function $p^{-1}$ associated with every permutation $p$.
+
+We can ``multiply'' two permutations by applying the first permutation, and
+then using the second permutation to permute the result.  If $p$ and $q$ are
+permutations of the same set, $pq(k)$ is the what you get from applying $q$
+to $p(k)$, ie.\ $pq(k) = q(p(k))$, so $pq = q \circ p$ (note the reversal of
+terms in the product versus the composition).
+
+\begin{proposition}\label{prop:permgroup}
+  Let $X$ be any set, and $p$ and $q$ be permutations of $X$, then
+  \begin{theoremenum}
+    \item $p^{-1}$ is a permutation of $X$,
+    \item $pq$ is a permutation of $X$,
+    \item the product satisfies an associative law: $(pq)r = p(qr)$.
+  \end{theoremenum}
+\end{proposition}
+\begin{proof}
+  These follow immediately from Proposition~\ref{prop:functionfacts}:
+  the inverse
+  function of a bijection is a bijection, proving (i); the composition
+  of bijective functions is a bijective function, proving (ii); and
+  composition of functions is associative, so 
+  \[
+    (pq)r = r \circ (q \circ p) = (r \circ q) \circ p = p(qr),
+  \]
+  proving (iii).
+\end{proof}
+
+\begin{example}
+  Let
+  \[
+    p = \begin{pmatrix}
+      1 & 2 & 3 \\
+      3 & 2 & 1
+    \end{pmatrix}
+    \qquad \text{and} \qquad
+    q = \begin{pmatrix}
+      1 & 2 & 3 \\
+      3 & 1 & 2
+    \end{pmatrix}.
+  \]
+  We can find $pq$ fairly easily: for example if
+  $k=1$, we know that $p(1) = 3$, and $q(3) = 2$, so $pq(1) = 2$. Repeating
+  for $k = 2$ and $3$, we get So
+  we have
+  \[
+    pq = \begin{pmatrix}
+      1 & 2 & 3 \\
+      2 & 1 & 3
+    \end{pmatrix}.
+  \]
+\end{example}
+
+\begin{example}\label{eg:perm3part2}
+  We listed all the elements of $S_{3}$ in Example~\ref{eg:perm3part1}.
+  To simplify notation we will give each of these a symbol to identify it:
+  \begin{alignat*}{6}
+    p_{0} &= \begin{pmatrix}
+      1 & 2 & 3 \\
+      1 & 2 & 3
+    \end{pmatrix} &\qquad&
+    p_{1} &= \begin{pmatrix}
+      1 & 2 & 3 \\
+      3 & 1 & 2
+    \end{pmatrix} &\qquad&
+    p_{2} &= \begin{pmatrix}
+      1 & 2 & 3 \\
+      2 & 3 & 1
+    \end{pmatrix}\\
+    p_{3} &= \begin{pmatrix}
+      1 & 2 & 3 \\
+      1 & 3 & 2
+    \end{pmatrix} &&
+    p_{4} &= \begin{pmatrix}
+      1 & 2 & 3 \\
+      2 & 1 & 3
+    \end{pmatrix} &&
+    p_{5} &= \begin{pmatrix}
+      1 & 2 & 3 \\
+      3 & 2 & 1
+    \end{pmatrix}
+  \end{alignat*}
+  It is easy to verify that $p_{0}^{-1} = p_{0}$, $p_{1}^{-1} = p_{2}$,
+  $p_{2}^{-1} = p_{1}$, $p_{3}^{-1} = p_{3}$, $p_{4}^{-1} = p_{4}$, 
+  and $p_{5}^{-1} = p_{5}$.
+  
+  Just as with symmetries, we can write out a Cayley table for the products
+  of these permutations:
+  \[
+  \begin{array}{c|cccccc}
+               & p_{0} & p_{1} & p_{2} & p_{3} & p_{4} & p_{5} \\
+    \hline
+    p_{0} & p_{0} & p_{1} & p_{2} & p_{3} & p_{4} & p_{5} \\
+    p_{1} & p_{1} & p_{2} & p_{0} & p_{4} & p_{5} & p_{3} \\
+    p_{2} & p_{2} & p_{0} & p_{1} & p_{5} & p_{3} & p_{4} \\
+    p_{3} & p_{3} & p_{5} & p_{4} & p_{0} & p_{2} & p_{1} \\
+    p_{4} & p_{4} & p_{3} & p_{5} & p_{1} & p_{0} & p_{2} \\
+    p_{5} & p_{5} & p_{4} & p_{3} & p_{2} & p_{1} & p_{0} 
+  \end{array}
+  \]
+  This product is not commutative.
+  
+  It's probably not immediately obvious, but if you look closely you will see
+  that the pattern of this Cayley table is exactly the same as the pattern of
+  the Cayley table of Example~\ref{eg:symmtriangle}, with the correspondences
+    $p_{0} \leftrightarrow I$,
+    $p_{1} \leftrightarrow R_{1}$,
+    $p_{2} \leftrightarrow R_{2}$,
+    $p_{3} \leftrightarrow H_{0}$,
+    $p_{4} \leftrightarrow H_{1}$,
+    $p_{5} \leftrightarrow H_{2}$.
+  Indeed, the inverses of each element have the same pattern under these same
+  correspondences.
+  
+  In other words, if we look at these two examples abstractly, we seem to be
+  getting the same underlying mathematical object.
+  
+  This correspondence can be made even more concrete in the following way: if
+  we label the vertices of the equilateral triangle of Example~\ref{eg:symmtriangle}
+  with the numbers 1, 2 and 3, starting at $(0,0)$ and working clockwise, we
+  find that the symmetries of the triangle permute the vertices in exactly
+  the same way that the corresponding permutations permute the corresponding
+  numbers.
+\end{example}
+
+\subsection{Cycles}
+
+Even with the current notation, expressing and working with permutations can
+be cumbersome.  There is another, alternative, notation which can speed up
+the process of working with permutations.  This notation works by looking at
+the \defn{cycles}{cycle} withing a permutation.  If $p$ is a permutation
+of the set $X$, the cycle of an element $k$ of $X$ in $p$ is the sequence
+of elements $(k, p(k), p^{2}(k), \ldots, p^{m}(k))$ (where $p^{l}$ is the product
+of $p$ with itself $l$ times) such that $m$ is the smallest number such that,
+$p^{m+1}(k) = k$.
+
+Note that the order of the elements in a cycle is important, but not where we
+start in the cycle.  For example, we regard $(k, p(k), p^{2}(k), \ldots, p^{m}(k))$,
+$(p(k),$ $p^{2}(k),\ldots, p^{m}(k), k)$, $(p^{2}(k), \ldots, p^{m}(k), k, p(k))$, etc.\ as
+representing the same cycle.  If $X$ is the set $\{1, 2, \ldots n\}$, it is
+usual to write a cycle starting with the smallest number in the cycle.
+
+A cycle with $m$ elements is called an \defn{$m$-cycle}{$m$-cycle}.  A 2-cycle
+is sometimes called a \defn{transposition}{transposition}, since it transposes
+two elements.
+
+\begin{example}
+  In the following permutation
+  \[
+    \begin{pmatrix}
+      1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+      2 & 4 & 6 & 8 & 7 & 5 & 3 & 1
+    \end{pmatrix}
+  \]
+  we have $1 \to 2$, $2 \to 4$, $4 \to 8$ and $8 \to 1$, so $(1,2,4,8)$ is
+  a cycle.  We could also write this cycle as $(2, 4, 8, 1)$, $(4,8, 1, 2)$,
+  or $(8, 1, 2, 4)$.
+  
+  The smallest element not in this cycle is $3$, and we have
+  $3 \to 6$, $6 \to 5$, $5 \to 7$ and $7 \to 3$, so $(3, 6, 5, 7)$ is another
+  cycle.
+  
+  Since every element is in one of these two cycles, these are the only cycles
+  in this permutation.
+\end{example}
+
+If we find all of the cycles of a permutation, we can represent the permutation
+as a whole as a product of its cycles.  But to do that we need to understand how
+to multiply cycles.
+
+To work out how a product of cycles permutes a particular element $k$, all you
+need do is work from left to right until you find the element in a cycle, and
+then find the element which follows it in that cycle.  You continue from left
+to right starting with the the next cycle looking for an occurrence of the new
+element.  If there is, then you find the element which follows it in the cycle.
+Continue on in this fashion until you run out of cycles.  The final value of
+the element is the image of $k$ under the product of cycles.
+
+\begin{example}
+  Consider the permutation $p = (1, 3, 5)(2)(4, 6)$ of the set
+  $\{1, 2, 3, 4, 5, 6\}$.  We can calculate $p(1)$ be looking at the first
+  cycle, where we see that the element after $1$ in that cycle is $3$, and we also
+  note that $3$ does not occur in any cycle after the first, so $p(1) = 3$.
+  Similarly, we have $p(2) = 2$, $p(3) = 5$, $p(4) = 6$, $p(5) = 1$ and
+  $p(6) = 4$.  This permutation could also be written as
+  \[
+    \begin{pmatrix}
+      1 & 2 & 3 & 4 & 5 & 6\\
+      3 & 2 & 5 & 6 & 1 & 4
+    \end{pmatrix}.
+  \]
+\end{example}
+
+Notice that there would be no difference in the above example if the cycle
+$(2)$ was omitted.  It is common practise to leave such single-element
+cycles out, particularly when the set which is being permuted is clear.
+
+\begin{example}
+  Consider the product of cycles $p = (1, 3, 5)(2, 3)(4, 6, 5)$ in the set
+  $\{1, 2, 3, 4, 5,$ $6\}$.  We can calculate $p(1)$ be looking at the first
+  cycle, where we see that the element after $1$ in that cycle is $3$; however
+  $3$ occurs in the second cycle, and the element after it in the cycle is $2$;
+  and $2$ does not occur in the remaining cycle, so $p(1) = 2$.  Similarly,
+  we have $3 \to 5$ in the first cycle, and $5 \to 4$ in the last cycle, so
+  $p(3) = 4$.
+  Calculating everything out, we have $p(2) = 3$, $p(4) = 6$, $p(5) = 1$ and
+  $p(6) = 5$.  This permutation could also be written as
+  \[
+    \begin{pmatrix}
+      1 & 2 & 3 & 4 & 5 & 6\\
+      2 & 3 & 4 & 6 & 1 & 5
+    \end{pmatrix},
+  \]
+  or more simply in cycle notation as $(1, 2, 3, 4, 6, 5)$.
+\end{example}
+
+Any permutation can be written as a product of the cycles it contains.
+
+\begin{theorem}
+  Every permutation of $S_{n}$ can be written as a product of disjoint cycles.
+  (Two cycles are disjoint if they have not elements in common.)
+\end{theorem}
+\begin{proof}
+  Let $p$ be a permutation of $S_{n}$.  We let $c_{1}$ be the cycle which
+  includes $1$,
+  \[
+    c_{1} = \{1, p(1), p^{2}(1), \ldots, p^{m_{1}}(1)\},
+  \]
+  and we let $p_{1}$ be the permutation defined by
+  \[
+    p_{1}(k) = \begin{cases}
+      k & \text{if $k \in c_{1}$,}\\
+      p(k) & \text{otherwise}.
+    \end{cases}
+  \]
+  Then it is clear that $p = c_{1}p_{1}$.
+  
+  Now if we have written $p = c_{1}\ldots c_{l}p_{l}$, where $c_{1}, \ldots,\
+  c_{l}$ are disjoint cycles, and $p_{l}$ is a permutation which satisfies
+  has $p_{l}(k) = k$ whenever $k$ is in one of the cycles, then one of two
+  things must be true: either every element of $\{1, 2, \ldots, n\}$ is an
+  element of one of the cycles, or there is some smallest element $k_{l}$
+  which is not in any of the cycles.
+  
+  In the first case, we have that $p_{l}$ must be the identity permutation,
+  so $p = c_{1}\ldots c_{l}$, and we are done.
+  
+  In the second case, we let $c_{l+1}$ be the cycle including $k_{l}$,
+  \[
+    c_{l+1} = \{k_{l}, p(k_{l}), p^{2}(k_{l}), \ldots, p^{m_{l}}(k_{l})\},
+  \]
+  and let $p_{l+1}$ be the permutation defined by
+  \[
+    p_{l+1}(k) = \begin{cases}
+      k & \text{if $k$ is an element of any cycle $c_{1}$, $c_{2}, \ldots, c_{l+1}$}\\
+      p(k) & \text{otherwise}.
+    \end{cases}
+  \]
+  Then $p = c_{1}\ldots c_{l+1}p_{l+1}$.
+  
+  Since $\{1,2,3,\ldots, n\}$ is a finite set, an induction argument using
+  this construction proves the result.
+\end{proof}
+
+\begin{example}
+  The permutation
+  \[
+    \begin{pmatrix}
+      1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+      2 & 4 & 6 & 8 & 7 & 5 & 3 & 1
+    \end{pmatrix}
+  \]
+  can be written as $(1, 2, 4, 8)(3, 6, 5, 7)$ or $(3, 6, 5, 7)(1, 2, 4, 8)$,
+  or in many other ways.  The first is the standard form.
+\end{example}
+
+\begin{example}
+  The elements of $S_{3}$ can be represented in cycle form as follows:
+  \begin{alignat*}{6}
+    \begin{pmatrix}
+      1 & 2 & 3 \\
+      1 & 2 & 3
+    \end{pmatrix} &= (1)(2)(3) &\qquad&
+    \begin{pmatrix}
+      1 & 2 & 3 \\
+      3 & 1 & 2
+    \end{pmatrix} &= (1, 3, 2) &\qquad&
+    \begin{pmatrix}
+      1 & 2 & 3 \\
+      2 & 3 & 1
+    \end{pmatrix} &= (1, 2, 3)\\
+    \begin{pmatrix}
+      1 & 2 & 3 \\
+      1 & 3 & 2
+    \end{pmatrix} &= (1)(2, 3) &&
+    \begin{pmatrix}
+      1 & 2 & 3 \\
+      2 & 1 & 3
+    \end{pmatrix} &= (1, 2)(3)&&
+    \begin{pmatrix}
+      1 & 2 & 3 \\
+      3 & 2 & 1
+    \end{pmatrix} &= (1, 3)(2)
+  \end{alignat*}
+\end{example}
+
+It is often convenient to simply always work with the cycle form of a
+permutation. We can calculate the product of two permutations in cycle
+notation by writing all long product of cycles, and then reducing to
+the standard form of the cycles.
+
+\begin{example}
+  Let $p = (1, 4, 6)(3, 5)$ and $q = (1, 2, 4)(3, 6, 5)$.  Then $pq$ is given
+  by the product of cycles $(1, 4, 6)(3, 5)(1, 2, 4)(3, 6, 5)$.
+  
+  Starting with $1$, we see that $1 \to 4 \to 1$, so the first cycle of the
+  standard form is just $(1)$.
+  
+  Looking at $2$ next, we have $2 \to 4$, so the next cycle
+  starts $(2, 4, \ldots)$.  Looking at $4$, we get $4 \to 6 \to 5$, so $5$
+  is the next entry, and the cycle is starting $(2, 4, 5, \ldots)$.
+  Now starting with $5$ we get $5 \to 3 \to 6$, so $6$
+  is next in the cycle.  Continuing in this manner we get $6 \to 1 \to 2$,
+  and $2$ is the start of the cycle, so the finished cycle is $(2, 4, 5, 6)$.
+  
+  The only remaining number is $3$, so $(3)$ must be the last cycle.
+  
+  Hence $pq = (1)(2, 4, 5, 6)(3)$, which we will usually just write as
+  $pq = (2, 4, 5, 6)$.
+  
+  Similarly we have that $qp = (1, 2, 4)(3, 6, 5)(1, 4, 6)(3, 5)$, and
+  we have $1 \to 2$, $2 \to 4 \to 6$, $6 \to 5 \to 3$ and $3 \to 6 \to 1$,
+  so the first cycle is $(1, 2, 6, 3)$.  Similarly, we have $4 \to 1 \to 4$,
+  so $(4)$ is a cycle.  Finally $5$ is the only element remaining, so $(5)$
+  is a cycle.  Hence $qp = (1, 2, 6, 3)(4)(5) = (1, 2, 6, 3)$.
+\end{example}
+
+\subsection{Parity}
+
+Informally, if we compare the permuations
+\[
+  \begin{pmatrix}
+    1 & 2 & 3\\
+    3 & 1 & 2
+  \end{pmatrix}
+  \qquad \text{and} \qquad
+  \begin{pmatrix}
+    1 & 2 & 3\\
+    3 & 2 & 1
+  \end{pmatrix},
+\]
+we observe that the first ``rotates'' the elements to the right, while
+the second ``reflects'' the elements.  Indeed, if we consider the
+correspondence between these permutations and the symmetries of a triangle
+discussed in Example~\ref{eg:perm3part2}, we see that the first corresponds
+to a rotation, and the second to a reflection.  In this section, we will
+generalize this idea to arbitrary permutations.
+
+The starting point of this discussion is a comparison between the following
+two products: if $p \in S_{n}$ we define
+\[
+  D_{n} = \prod_{1 \le i < j \le n} (j - i)
+\]
+and
+\[
+  D(p) = \prod_{1 \le i < j \le n} (p(j) - p(i)).
+\]
+Given any pair of distinct elements $k,l \in \{1, 2, \ldots, n\}$, both of
+these products contain exactly one factor which is a difference of $k$ and $l$.
+This is easy to see in the product $D_{n}$, but a little thought will convince
+you that it is also the case for $D(p)$.  The difference between the two
+products is that in $D(p)$ it may not necessarily be the larger term minus
+the smaller term.  Hence $D_{n}$ and $D(p)$ have the same magnitude, but may differ
+in sign.
+
+\begin{definition}
+  Let $p \in S_{n}$.  The \defn{parity}{parity} of $p$ is
+  \[
+    \parity(p) = \frac{D(p)}{D_{n}}.
+  \]
+\end{definition}
+
+Clearly the parity of $p$ is $1$ if $D(p) > 0$ and $-1$ if $D(p) < 0$.
+
+\begin{example}
+  Consider the permutations
+  \[
+    p = \begin{pmatrix}
+      1 & 2 & 3\\
+      3 & 1 & 2
+    \end{pmatrix}
+    \qquad \text{and} \qquad
+    q = \begin{pmatrix}
+      1 & 2 & 3\\
+      3 & 2 & 1
+    \end{pmatrix}.
+  \]
+  In both cases
+  \[
+    D_{3} = (3 - 1)(3 - 2)(2 - 1) = 2 \times 1 \times 1 = 2.
+  \]
+  Now
+  \begin{align*}
+    D(p) &= (p(3) - p(1))(p(3) - p(2))(p(2) - p(1)) = (2 - 3)(2 - 1)(1 - 3) \\
+      &= -1 \times 1 \times -2 = 2,
+  \end{align*}
+  so
+  \[
+    \parity(p) = 2/2 = 1.
+  \]
+  On the other hand,
+  \begin{align*}
+    D(q) &= (q(3) - q(1))(q(3) - q(2))(q(2) - q(1)) = (1 - 3)(1 - 2)(2 - 3)\\
+      &= -2 \times -1 \times -1 = -2,
+  \end{align*}
+  so
+  \[
+    \parity(q) = -2/2 = -1.
+  \]
+\end{example}
+
+Calculating the parity in the last example was fairly straightforward,
+but calculating the parity of a general permutation can be quite time
+consuming: a simple counting argument tells us that if $p \in S_{n}$ we
+have $n(n-1)/2$ terms in the product $D(p)$.  We need a better way to
+calculate the parity.
+
+It turns out that there is nothing particularly special about $D_{n}$ in
+the definition of parity.  Let $(x_{1}, x_{2}, \ldots, x_{n})$ be a sequence of distinct numbers, and $p$
+a permutation of $\{1, 2, \ldots n\}$.  We define
+\begin{equation}\label{eqn:permutationaction}
+  p(x_{1}, x_{2}, \ldots, x_{n}) = (x_{p(1)}, x_{p(2)}, \ldots, x_{p(n)}),
+\end{equation}
+and
+\[
+  D(x_{1}, x_{2}, \ldots, x_{n}) = \prod_{1 \le i < j \le n} (x_{j} - x_{i}).
+\]
+The following technical lemma shows that we can use these instead to find the
+parity of $p$.
+
+\begin{lemma}\label{lemma:paritytechnical}
+  If $p$ is a permutation in $S_{n}$, then
+  \[
+    \parity(p) = \frac{D(x_{p(1)}, x_{p(2)}, \ldots, x_{p(n)})}{D(x_{1}, x_{2},
+    \ldots, x_{n})}.
+  \]
+  We say that $p$ is an \defn{even permutation}{permutation!even} if
+  $\parity(p) = 1$, and $p$ is an \defn{odd permutation}{permutation!odd} if
+  $\parity(p) = -1$.
+\end{lemma}
+\begin{proof}
+  See Section~\ref{subsection:parity}.
+\end{proof}
+
+Note that $D_{n} = D(1, 2, \ldots, n)$, and $D(p) = D(p(1), p(2), \ldots, p(n))$.
+
+With this lemma in hand, we can easily prove the following important result:
+
+\begin{theorem}\label{thm:parityproduct}
+  Let $p$ and $q \in S_{n}$.  Then
+  \[
+    \parity(pq) = \parity(p)\parity(q).
+  \]
+\end{theorem}
+\begin{proof}
+  The key observation here is that if we have permutations $p$ and $q$,
+  then
+  \[
+    \parity(p) = \frac{D(pq)}{D(q)}.
+  \]
+  Letting $a_{k} = q(k)$, so that
+  \[
+    D(pq) = D(q(p(1)), q(p(2)), \ldots, q(p(n))) = D(a_{p(1)}, \ldots, a_{p(n)}),
+  \]
+  and
+  \[
+    D(q) = D(a_{1}, \ldots, a_{n}),
+  \]
+  the lemma tells us that
+  \[
+    \parity(p) = \frac{D(a_{p(1)}, \ldots, a_{p(n)})}{D(a_{1}, \ldots, a_{n})}
+     = \frac{D(pq)}{D(q)}.
+  \]
+  
+  It is immediate form this that
+  \[
+    \parity(p) \times \parity(q) = \frac{D(pq)}{D(q)} \times \frac{D(q)}{D_{n}}
+    = \frac{D(pq)}{D_{n}} = \parity(pq).
+  \]
+\end{proof}
+
+Thinking in terms of cycles also helps us to calculate the parity of a
+permutation, as this result shows:
+
+\begin{theorem}
+  Let $c = (k_{1}, k_{2}, \ldots, k_{m})$ be a cycle.  Then
+  \[
+    \parity(c) = \begin{cases}
+      1 & \text{if $m$ is odd} \\
+      -1 & \text{if $m$ is even}.
+    \end{cases}
+  \]
+\end{theorem}
+\begin{proof}
+  First we observe that if $p = (1, 2)$, then all the factors in $D(p)$
+  are positive, except for $p(2) - p(1) = 1 - 2 = -1$.  Hence $D(p)$ is
+  negative, so $\parity(p) = -1$.
+  
+  Now if $i, j > 2$, and $i \ne j$, then simple checking shows that
+  $(i,j) = (1,i)(2,j)(1,2)(1,i)(2,j)$,
+  and, given this fact, the previous theorem tells us
+  \begin{align*}
+    \parity((i,j)) &= \parity((1,i)(2,j)) \times \parity(1,2) \times \parity((1,i)(2,j)) \\
+    &= -\parity((1,i)(2,j))^{2}\\
+    &= -1
+  \end{align*}
+  
+  Finally, we observe that
+  \begin{equation}\label{eqn:cycleproduct}
+    c = (k_{1}, k_{2}, \ldots, k_{m}) = (k_{1}, k_{m})(k_{2}, k_{m})\cdots (k_{m-1}, k_{m}),
+  \end{equation}
+  and so
+  \begin{align*}
+    \parity(c) &= \parity((k_{1}, k_{m})) \times \parity((k_{2}, k_{m})) \times \cdots \times \parity((k_{m-1}, k_{m}))\\
+    &= (-1)^{m-1} \\
+    &= \begin{cases}
+    1 & \text{if $m$ is odd} \\
+    -1 & \text{if $m$ is even.}
+    \end{cases}
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  A permutation $p$ is even iff when it is expressed as a product of
+  cycles there are an even number of commas in the expression.
+\end{corollary}
+
+Another interesting fact that can be squeezed out of the previous theorem
+is the following:
+
+\begin{proposition}
+  Any permutation $p$ can be written as a product of $2$-cycles, and the
+  number of $2$-cycles is even iff $p$ is even.
+\end{proposition}
+\begin{proof}
+  The first fact follows from the fact that every permutation can be written
+  as a product of cycles, and equation (\ref{eqn:cycleproduct}) shows that every cycle
+  is a product of $2$-cycles.
+  
+  The second follows from the previous corollary, coupled with the fact that
+  every $2$-cycle has a single comma.
+\end{proof}
+
+\begin{example}
+  Let $p_{0}$, $p_{1}, \ldots, p_{5}$ be as in Example~\ref{eg:perm3part2}.
+  Then $\parity(p_{0}) = \parity(p_{1}) = \parity(p_{2}) = 1$, and
+  $\parity(p_{3}) = \parity(p_{4}) = \parity(p_{5}) = -1$.
+  
+  Observe that the ``reflections'' have parity -1, while the ``rotations''
+  have parity 1.
+\end{example}
+
+\begin{example}
+  The permutation
+  \[
+    p = \begin{pmatrix}
+     1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+     3 & 5 & 2 & 7 & 8 & 6 & 1 & 4 & 10 & 9
+    \end{pmatrix},
+  \]
+  can be written as $p = (1, 3, 2, 5, 8, 4, 7)(9, 10)$, and since it has $7$
+  commas in the expression, it has parity $-1$.
+\end{example}
+
+\subsection{Permutation Matrices}
+
+Another way of looking at permutations is very closely related to
+Equation~\ref{eqn:permutationaction}.  
+
+Since $x = (x_{1},x_{2},\ldots,x_{n})$ is a vector in $\reals^{n}$, the function
+it implicitly defines, $T_{p}: \reals^{n} \to \reals^{n}$, where
+\[
+  T_{p}x = (x_{p(1)}, x_{p(2)}, \ldots, x_{p(n)})
+\]
+is a linear transformation:
+\begin{align*}
+  T_{p}(x+y) &= (x_{p(1)} + y_{p(1)}, x_{p(2)} + y_{p(2)}, \ldots, x_{p(n)} + y_{p(n)})\\
+    &= (x_{p(1)}, x_{p(2)}, \ldots, x_{p(n)}) + (y_{p(1)}, y_{p(2)}, \ldots, y_{p(n)})
+    = T_{p}x + T_{p}y
+\end{align*}
+and
+\begin{align*}
+  T_{p}(\lambda x) &= (\lambda x_{p(1)}, \lambda x_{p(2)}, \ldots, \lambda x_{p(n)})\\
+    &= \lambda (x_{p(1)}, x_{p(2)}, \ldots, x_{p(n)})
+    = \lambda T_{p}x.
+\end{align*}
+
+Let $e_{k}$ be the $k$th standard orthonormal basis vector in $\reals^{n}$,
+ie.\ $e_{k}$ is the vector with $0$ in every entry except the $k$th entry,
+which is $1$.  By looking at the image of each standard basis vector $e_{k}$
+under the transformation $T_{p}$, we can find a corresponding $n \times n$
+matrix which we will also call $T_{p}$.
+We note that $T_{p}e_{k}$ has zeroes in every entry except the $p^{-1}(k)$th
+entry, which is $1$.  Hence $T_{p}e_{k} = e_{p^{-1}(k)}$, so $T_{p}$ always
+takes basis vectors to basis vectors.
+
+\begin{example}
+  If $p = (1,2,3) \in S_{3}$, then
+  \[
+    T_{p} = \begin{bmatrix}
+      0 & 1 & 0\\
+      0 & 0 & 1\\
+      1 & 0 & 0
+    \end{bmatrix}
+  \]
+\end{example}
+
+\begin{proposition}
+  Let $p \in S_{n}$ be a permutation.  Then
+  \begin{theoremenum}
+    \item $T_{p}$ is an orthogonal matrix
+    \item $T_{p}$ is the matrix with $1$s in the $p^{-1}(k)$th row of the
+      $k$th column, for $k = 1,2,\ldots,n$, and $0$ everywhere else.
+    \item $T_{p}$ is the matrix with $1$s in the $p(k)$th column of the
+      $k$th row, for $k = 1,2,\ldots,n$, and $0$ everywhere else.
+    \item $T_{e} = I_{n}$.
+    \item $T_{p}T_{q} = T_{pq}$.
+    \item $T_{p}^{-1} = T_{p^{-1}}$.
+  \end{theoremenum}
+\end{proposition}
+\begin{proof}
+  (i) is immediate since every column of $T_{p}$ is a standard orthonormal
+  basis vector, and each vector in the basis occurs exactly once.
+  
+  (ii) this is immediate from the fact that the $k$th column is the column
+  vector $e_{p^{-1}(k)}$.
+  
+  (iii) using part (ii), we know that is $k = p^{-1}(j)$, then the entry in
+  the $k$th row and $j$th column is $1$.  But $k = p^{-1}(j)$ if and only if
+  $j = p(k)$, so the $p(k)$th column of the $k$th row is $1$, and all other
+  entries in the row are $0$.
+  
+  (iv) the $k$th row of $T_{e}$ is $e_{k}$, so $T_{e}$ has $1$ in diagonal
+  entries and $0$ everywhere else, so $T_{e} = I$.
+  
+  (v) Looking at the standard basis vectors, we have
+  \[
+    T_{pq}e_{k} = e_{(pq)^{-1}(k)} = e_{p^{-1}(q^{-1}(k))} =
+    T_{p}e_{q^{-1}(k)} = T_{p}T_{q}e_{k}.
+  \]
+  Since any vector $v$ is a linear combination of basis vectors, and the
+  transformations $T_{p}$, $T_{q}$ and $T_{pq}$ are all linear, we have that
+  $T_{pq}v = T_{p}T_{q}v$ for any vector $v$, and so $T_{p}T_{q} = T_{pq}$.
+  
+  (vi) Since $T_{p}$ is orthogonal, it is invertible, and
+  $T_{p}^{-1}e_{p^{-1}(k)} = e_{k}$.  Now $j = p^{-1}(k)$ if and only if
+  $k = p(j)$, so
+  \[
+    T_{p}^{-1}e_{j} = e_{k} = e_{p(j)} = e_{(p^{-1})^{-1}(j)} = T_{p^{-1}}e_{j}.
+  \]
+  As in part (v), it is sufficient to show that this occurs for every basis
+  vector to be able to conclude that $T_{p}^{-1} = T_{p^{-1}}$.
+\end{proof}
+
+\begin{example}
+  We know that in $S_{3}$, if $p = (1,2,3)$ and $q = (1,2)$, then $pq = (2,3)$.
+  The corresponding permutation matrices are
+  \[
+    T_{p} = \begin{bmatrix}
+      0 & 1 & 0\\
+      0 & 0 & 1\\
+      1 & 0 & 0
+    \end{bmatrix}
+    \qquad
+    T_{q} = \begin{bmatrix}
+      0 & 1 & 0\\
+      1 & 0 & 0\\
+      0 & 0 & 1
+    \end{bmatrix}
+    \qquad
+    T_{pq} = \begin{bmatrix}
+      1 & 0 & 0\\
+      0 & 0 & 1\\
+      0 & 1 & 0
+    \end{bmatrix}
+  \]
+  and matrix multiplication confirms that $T_{p}T_{q} = T_{pq}$.
+\end{example}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Let
+    \[
+      p = \begin{pmatrix}
+        1 & 2 & 3 & 4 & 5 & 6 \\
+        4 & 2 & 5 & 1 & 6 & 3
+      \end{pmatrix}
+      \qquad \text{and} \qquad
+      q = \begin{pmatrix}
+        1 & 2 & 3 & 4 & 5 & 6 \\
+        3 & 4 & 5 & 1 & 2 & 6
+      \end{pmatrix}.
+    \]
+    Find $pq$ and $qp$.  Write both permutations using cycle notation.
+    Write down the permutation matrices $T_{p}$ and $T_{q}$.
+    Determine the parity of $p$ and $q$.
+  
+  \item Let $p = (1, 5, 3, 2)(4, 6, 8)$ and $q = (1, 7, 4, 3)(8, 2)(5, 6)$.
+    Find $pq$ and $qp$.  Write both permutations using array notation.
+    Write down the permutation matrices $T_{p}$ and $T_{q}$.
+    Determine the parity of $p$ and $q$.
+
+  \item How many distinct permutations are there of the set $\{1, 2,
+    \ldots, n\}$? (Hint: they're called \emph{permutations}.)
+  
+  \item Let $p \in S_{3}$.  Use the Cayley table for $S_{3}$ to show that
+    $p^{6}$ is always the identity permutation.
+  
+  \item Write down all the elements of $S_{4}$ in array, cycle and matrix form.
+    Calculate the parity of each element.
+    Find the inverse of each element.
+    Choose 5 pairs of non-identity elements, and calculate their product.
+  
+  \item Let $c = (k_{1}, k_{2}, \ldots, k_{m})$ be a cycle.  What is $c^{-1}$?
+    Use your answer to calculate the inverse of the permutation
+    $p = (1,3,4)(2,5)$.
+  
+  \item Show that $D_{n} = (n-1)! (n-2)! \ldots 2! 1!$.
+  
+  \item Show that exactly half the permutations of $S_{n}$ are even, and half
+    are odd.
+  
+  \item (*) Show that $S_{4}$ and the set of symmetries of a regular tetrahedron
+    (see Exercise~\ref{ex:symtetra}) correspond
+    in the same way as $S_{3}$ and the set of symmetries of an equilateral
+    triangle.
+    
+    Hint: you could do this by calculating all $576$ entries in the Cayley
+    table of each, and comparing the two; however it is more practical to
+    find some way to classify the elements of each in a way which makes the
+    correspondence clear.
+  
+  \item (*) Let $\Omega \subseteq \reals^{3}$ be the equilateral triangle
+    with vertices $(1,0,0)$, $(0,1,0)$ and $(0,0,1)$.  Show that every
+    symmetry $S \in \Sym(\Omega)$ is a linear transformation, and that there
+    is a permutation $p_{S} \in S_{3}$ such that $S = T_{p_{S}}$. 
+    Show that the correspondence $S \mapsto p_{S}$ preserves multiplication
+    and inverses, ie.\ $T_{p_{S}p{R}} = SR$, $T_{p_{S}^{-1}} = S^{-1}$.
+  
+  \item (*) Let $|A|$ denote the determinant of the matrix $A$.
+    Prove that $|T_{p}| = \parity(p)$.
+  
+  \item (**) Write a computer program that calculates and prints out the
+    Cayley table for $S_{4}$.  Generalize it to print out the Cayley table
+    for $S_{n}$ for any $n$.
+\end{exercises}
+
+\section{Modulo Arithmetic}\label{section:moduloarithmetic}
+
+We say that two numbers $x$ and $y$ are \defn{equal (modulo $m$)}{modulo!equality} if $x$ and
+$y$ differ by a multiple of $m$, and we write
+\[
+  x \equiv y \pmod m
+\]
+to denote this situation.  Another equivalent (and useful) way to think of
+this situation is that $x$ and $y$ have the same remainder when you divide
+by $m$.  Since any number greater than $m$ is equal (modulo $m$) to a number
+less than $m$, it is customary when working modulo $m$ to reduce your answer
+to a number in the range $[0,m)$.
+
+For example
+\[
+  -1 \equiv 7 \equiv 1023 \pmod 8,
+\]
+and we would usually write any of these three numbers as $7 \mod 8$ if it
+were the solution to a problem.
+
+When we are working modulo $m$, we can perform the operations of addition,
+multiplication and subtraction as normal, but we reduce our answers to the
+range $[0,m)$.  Indeed, in complicated expressions, one can reduce at
+intermediate steps to simplify calculations:
+\[
+  7 \times 6 + 4 \times 3 \equiv 42 + 12 \equiv 54 \equiv 6 \pmod 8
+\]
+could be instead calculated as
+\[
+  7 \times 6 + 4 \times 3 \equiv 42 + 12 \equiv 2 + 4 \equiv 6 \pmod 8.
+\]
+
+Division is a trickier topic, but since we are usually performing modulo
+arithmetic with integers the na\"{i}ve way of defining modulo division does
+not make sense in most cases.  Nevertheless, we will see later on that in
+some cases division does make sense.
+
+We can write out addition and multiplication tables for operations modulo
+some base, and we call these Cayley tables, just as before.
+
+\begin{example}\label{eg:mod6}
+  The addition and multiplication tables, modulo 6 are as follows:
+  \[
+    \begin{array}{c|cccccc}
+      + & 0 & 1 & 2 & 3 & 4 & 5 \\
+      \hline
+      0 & 0 & 1 & 2 & 3 & 4 & 5 \\
+      1 & 1 & 2 & 3 & 4 & 5 & 0 \\
+      2 & 2 & 3 & 4 & 5 & 0 & 1 \\
+      3 & 3 & 4 & 5 & 0 & 1 & 2 \\
+      4 & 4 & 5 & 0 & 1 & 2 & 3 \\
+      5 & 5 & 0 & 1 & 2 & 3 & 4
+    \end{array}
+  \qquad
+    \begin{array}{c|cccccc}
+      \times & 0 & 1 & 2 & 3 & 4 & 5 \\
+      \hline
+      0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      1 & 0 & 1 & 2 & 3 & 4 & 5 \\
+      2 & 0 & 2 & 4 & 0 & 2 & 4 \\
+      3 & 0 & 3 & 0 & 3 & 0 & 3 \\
+      4 & 0 & 4 & 2 & 0 & 4 & 2 \\
+      5 & 0 & 5 & 4 & 2 & 3 & 1
+    \end{array}
+  \]
+\end{example}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Write down the addition and multiplication tables modulo 5 and modulo 8.
+
+  \item\label{ex:zerodivisor} Recall that two natural numbers $p$ and $q$ are \defn{coprime}{coprime} if their
+    highest common factor is $1$.  Show that if $k$ and $m$ are coprime, then
+    $xk \equiv 0 \pmod{m}$ if and only if $x$ is an integer multiple of $m$.
+\end{exercises}
+
+\section{Addendum: Technical Details}
+
+We now provide the technical proofs that were omitted from earlier discussions
+in this chapter.
+
+\subsection{Symmetry}
+
+In Proposition~\ref{prop:symmetryfacts} we make use of the following fact.
+
+\begin{lemma}\label{lemma:isometrybijective}
+  If $T$ is a function from $\reals^{n}$ to $\reals^{n}$ that preserves
+  distance, then $T$ is one-to-one and onto.
+\end{lemma}
+\begin{proof}
+  If $T(x_{1}) = T(x_{2})$ then $d(T(x_{1}), T(x_{2})) = 0$ so the fact that
+$T$ preserves distances means that $d(x_{1}, x_{2}) = 0$.  But this implies
+that $x_{1} = x_{2}$, so $T$ is one-to-one.
+
+  If $x$, $y$ and $z \in \reals^{n}$ are the vertices of a triangle, then
+  $T(x)$, $T(y)$ and $T(z)$ are vertices of a triangle as well, and since
+  $d(T(x), T(y)) = d(x,y)$, $d(T(x), T(z)) = d(x,z)$, and $d(T(y), T(z)) =
+  d(y,z)$, the triangles are congruent.  From this observation, it follows
+  that any parallelogram $x$,$y$, $z$, $w \in \reals^{n}$ is congruent to the
+  corresponding parallelogram $T(x)$,$T(y)$, $T(z)$, $T(w)$.
+
+  If $T(0) = 0$ then this means that in particular, the parallelogram
+  $0$, $x$, $x+y$, $y$ is congruent to the parallelogram $0$, $T(x)$, $T(x+y)$,
+  $T(y)$.  Therefore, comparing opposite sides, $T(y) = T(x+y) - T(x)$, or
+  $T(x+y) = T(x) + T(y)$.  Also, the ``triangle'' with vertices $0$, $x$,
+  $\lambda x$ is congruent to the triangle with vertices $0$, $T(x)$,
+  $T(\lambda x)$, but since the vertices of the first triangle are collinear,
+  so must the vertices of the second, so $T(\lambda x)$ is a scalar multiple
+  of $T(x)$, and $d(T(\lambda x), 0) = |\lambda| d(x,0)$, so $T(\lambda x) =
+  \pm \lambda x$.  However, if $T(\lambda x) = -\lambda x$, then looking
+  at the corresponding sides $x$ to $\lambda x$ and $T(x)$ to $T(\lambda x)$,
+  we would have $d(T(\lambda x),T(x)) = |\lambda + 1| d(x,0)$, rather than
+  $|\lambda - 1| d(x,0)$.
+  
+  Hence if $T(0) = 0$, $T$ is a linear transformation, and a linear transformation
+  from $\reals^{n}$ to $\reals^{n}$ which preserves distance is orthogonal
+  and hence onto.
+  
+  If $T(0) = c$, then the function $S(x) = T(x) - c$ preserves distances, and
+  $S(0) = 0$, so $S$ is orthogonal and hence onto.  But then $T(x) = S(x) + c$,
+  so given any $y$, there is some $x$ such that $S(x) = y-c$, and so $T(x) =
+  S(x) + c = (y-c) + c = y$.  Hence $T$ is onto.
+\end{proof}
+
+\subsection{Parity}\label{subsection:parity}
+
+\begin{proof}[Lemma~\ref{lemma:paritytechnical}]
+  Given any number $k \in \{1, 2, \ldots, n\}$, let $a_{k} = p^{-1}(k)$.
+  Then given any $k > l$, we have that $k = p(a_{k})$ and $l = p(a_{l})$.
+  
+  If $a_{k} > a_{l}$, in which case the corresponding terms in each of the
+  sums $D_{n}$, $D(p)$, $D(x_{1}, \ldots, x_{n})$ and $D(x_{p(1)}, \ldots,
+  x_{p(n)})$ are, respectively, $k - l$, $p(a_{k}) - p(a_{l})$, $x_{k} - x_{l}$,
+  and $x_{p(a_{k})} - x_{p(a_{l})}$, with the first two being equal and the
+  second two being equal, and so these terms in the quotients $D(p)/D_{n}$
+  and $D(x_{p(1)}, \ldots, x_{p(n)})/D(x_{1}, \ldots, x_{n})$, respectively,
+  cancel each other out.
+
+  On the other hand, if $a_{k} < a_{l}$, the corresponding terms in each of the
+  sums $D_{n}$, $D(p)$, $D(x_{1}, \ldots, x_{n})$ and $D(x_{p(1)}, \ldots,
+  x_{p(n)})$ are, respectively, $k - l$, $p(a_{l}) - p(a_{k})$, $x_{k} - x_{l}$,
+  and $x_{p(a_{l})} - x_{p(a_{k})}$, with the first two being negatives and the
+  second two being negatives, and so these terms in the quotients $D(p)/D_{n}$
+  and $D(x_{p(1)}, \ldots, x_{p(n)})/D(x_{1}, \ldots, x_{n})$, respectively,
+  give a factor of $-1$.
+  
+  Hence the number of terms giving each of the factors $1$ and $-1$ in each
+  quotient are equal, so
+  \[
+    \parity(p) = \frac{D(p)}{D_{n}}
+      = \frac{D(x_{p(1)}, x_{p(2)}, \ldots, x_{p(n)})}{D(x_{1}, x_{2}, \ldots, x_{n})}.
+  \]
+\end{proof}
+
+
+\newpage
+\section*{Assignment 1}
+
+The following exercises are due Friday, Februrary 13.
+
+\begin{description}
+  \item[1.1] Exercises 1, 4.
+  \item[1.2] Exercise 2.
+  \item[1.4] Exercises 1, 2, 3, 6.
+  \item[1.5] Exercise 1.
+\end{description}

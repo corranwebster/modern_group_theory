@@ -1,0 +1,2845 @@
+\chapter{The Structure of Groups}
+
+We are interested in understanding the structure of groups, particularly finite
+groups, as a way of potentially distinguishing groups.  In this
+section we will see a number of ways of looking at structure within a group.
+
+\section{The Subgroup Lattice}
+
+At a very coarse level, if two groups are isomorphic then their subgroups
+must be in bijective correspondence with one another.
+
+\begin{proposition}\label{prop:subgroupisom}
+  Let $G$ and $H$ be two groups, and let $\Sub(G)$ and $\Sub(H)$ be the set
+  of subgroups of $G$ and $H$ respectively.  If $G \isom H$ then there is a
+  bijection between $\Sub(G)$ and $\Sub(H)$.
+\end{proposition}
+\begin{proof}
+  Since $G \isom H$ there is an isomorphism $\alpha : G \to H$, and its
+  inverse function $\alpha^{-1}: H \to G$ is also an isomorphism by
+  Proposition~\ref{prop:homomorphismfacts}.  Since by
+  Proposition~\ref{prop:homsubgroup}, the image $\alpha(K)$ of a subgroup $K$
+  of $G$ is a subgroup of $H$, we can define a function
+  \begin{align*}
+    \overline{\alpha} : \Sub(G) & \to \Sub(H) \\
+        K & \mapsto \alpha(K).
+  \end{align*}
+  
+  The function $\overline{\alpha}$ is one-to-one, since if we have two
+  subgroups $K_{1}$ and $K_{2}$ of $G$ such that $\overline{\alpha}(K_{1}) =
+  \overline{\alpha}(K_{2})$, then
+  \[
+    K_{1} = \alpha^{-1}(\alpha(K_{1})) = \alpha^{-1}(\overline{\alpha}(K_{1})) =
+    \alpha^{-1}(\overline{\alpha}(K_{12})) = \alpha^{-1}(\alpha(K_{2})) =
+    K_{2},
+  \]
+  since $\alpha^{-1} \circ \alpha$ is the identity function.
+  
+  The function $\overline{\alpha}$ is onto, since if $K$ is a subgroup of
+  $H$, then $\alpha^{-1}(K)$ is a subgroup of $G$, and
+  \[
+    \overline{\alpha}(\alpha^{-1}(K)) = \alpha(\alpha^{-1}(K)) = K
+  \]
+  since $\alpha \circ \alpha^{-1}$ is the identity function.
+  
+  So $\overline{\alpha}$ is a bijection.
+\end{proof}
+
+\begin{corollary}
+  If $G$ and $H$ are finite groups with different numbers of subgroups, then
+  $G$ and $H$ cannot be isomorphic.
+\end{corollary}
+
+\begin{example}
+  From Example~\ref{eg:C4subgroups} $C_{4}$, we know that $C_{4}$ has 3
+  subgroups.  On the other hand, Example~\ref{eg:4groupsubgroups} tells us
+  that $V$ has $5$ subgroups, so $V$ is not isomorphic to $C_{4}$.
+\end{example}
+
+However, it is certainly conceivable that two groups may have the same
+number of subgroups, but fail to be isomorphic.  In this case we need to
+investigate the relationships between subgroups of a group.  For instance, if
+we have a group $G$ and subgroups $H$ and $K$ of $G$ such that $K \subseteq H$,
+then it is immediate from Corollary~\ref{cor:subgrouptest} that $K$ is a
+subgroup of $H$.  So a good starting point is to consider which subgroups are
+contained in other subgroups.
+
+\begin{example}
+  From Example~\ref{eg:C4subgroups} $C_{4} = \{1, a, a^{2}, a^{3}\}$ has the subgroups
+  $\{1\}$, $\langle a^{2} \rangle = \{1, a^{2}\}$ and
+  $\{1, a, a^{2}, a^{3}\}$.  We can easily see that $\{1\} \le \langle a^{2}
+  \rangle \le C_{4}$.
+ \end{example}
+ 
+  Noting that each of these is subgroups is contained in the next, we can
+  represent this situation diagramatically as follows:
+  
+  \begin{picture}(2,6)(-1,-1)
+    \put(0,0){\makebox(0,0){$\{1\}$}}
+    \put(0,0.5){\line(0,1){1}}
+    \put(0,2){\makebox(0,0){$\langle a^{2} \rangle$}}
+    \put(0,2.5){\line(0,1){1}}
+    \put(0,4){\makebox(0,0){$C_{4}$}}
+  \end{picture}
+
+This sort of diagram is a graphical representation of the \defn{subgroup
+lattice}{lattice!subgroup} of the group.  The idea is that if a
+subgroup is contained in another, with no intermediate subgroups, we write
+it higher on the page and join the two subgroups with a line.  We also try
+to draw the diagram  so that subgroups with the same number of elements are
+the same distance up the page.
+
+Here are some more examples.
+
+\begin{example}
+  From Example~\ref{eg:4groupsubgroups}, the vierergruppe $V = \{1, a, b, ab\}$
+has the subgroups $\{1\}$,
+  $\langle a \rangle = \{1, a\}$, $\langle b \rangle = \{1, b\}$,
+  $\langle ab \rangle = \{1, ab\}$ and $\{1, a, b, ab\}$.
+  
+  The subgroup lattice of $V$ is:
+  
+  \begin{picture}(6,6)(-3,-1)
+    \put(0,0){\makebox(0,0){$\{1\}$}}
+    \put(0,0.5){\line(0,1){1}}
+    \put(0.5,0.5){\line(1,1){1}}
+    \put(-0.5,0.5){\line(-1,1){1}}
+    \put(-2,2){\makebox(0,0){$\langle a \rangle$}}
+    \put(0,2){\makebox(0,0){$\langle b \rangle$}}
+    \put(2,2){\makebox(0,0){$\langle ab \rangle$}}
+    \put(0,2.5){\line(0,1){1}}
+    \put(1.5,2.5){\line(-1,1){1}}
+    \put(-1.5,2.5){\line(1,1){1}}
+    \put(0,4){\makebox(0,0){$V$}}
+  \end{picture}
+\end{example}
+
+\begin{example}
+  From Example~\ref{eg:C6subgroups}, the cyclic group or order $6$, $C_{6} =
+  \{1, a, a^{2}, a^{3}, a^{4}, a^{5}\}$
+  has the subgroups $\{1\}$,
+  $\langle a^{3} \rangle = \{1, a^{3}\}$,
+  $\langle a^{2} \rangle = \{1, a^{2}, a^{4}\}$,
+  and $C_{6}$.
+  The subgroup lattice of $C_{6}$ is:
+  
+  \begin{picture}(6,8)(-3,-1)
+    \put(0,0){\makebox(0,0){$\{1\}$}}
+    \put(-0.5,0.5){\line(-1,1){1}}
+    \put(0.25,0.5){\line(1,2){1.5}}
+    \put(-2,2){\makebox(0,0){$\langle a^{3} \rangle$}}
+    \put(2,4){\makebox(0,0){$\langle a^{2} \rangle$}}
+    \put(-1.75,2.5){\line(1,2){1.5}}
+    \put(1.5,4.5){\line(-1,1){1}}
+    \put(0,6){\makebox(0,0){$C_{6}$}}
+  \end{picture}
+\end{example}
+
+\begin{example}
+  Let $p$ be a prime number, and $C_{p}$ the cyclic group of order $p$.
+  From Example~\ref{eg:Cpsubgroups} $C_{p}$ only has the trivial subgroups $\{1\}$ and $C_{p}$.
+  The subgroup lattice of $C_{p}$ is always:
+  
+  \begin{picture}(2,4)(-1,-1)
+    \put(0,0){\makebox(0,0){$\{1\}$}}
+    \put(0,0.5){\line(0,1){1}}
+    \put(0,2){\makebox(0,0){$C_{p}$}}
+  \end{picture}
+\end{example}
+
+\begin{example}
+  From Example~\ref{eg:D8subgroups}, the dihedral group\index{group!dihedral}
+of order $8$, $D_{8} = \{1, a, a^{2}, a^{3}, b, ab, a^{2}, a^{3}\}$
+  has subgroups $\{1\}$,
+  $\langle a^{2} \rangle = \{1, a^{2}\}$,
+  $\langle b \rangle = \{1, b\}$,
+  $\langle ab \rangle = \{1, ab\}$,
+  $\langle a^{2}b \rangle = \{1, a^{2}b\}$,
+  $\langle a^{3}b \rangle = \{1, a^{3}b\}$,
+  $\langle a \rangle = \{1, a, a^{2}, a^{3}\}$,
+  $\langle a^{2}, b \rangle = \{1, a^{2}, b, a^{2}b\}$,
+  $\langle a^{2}, ab \rangle = \{1, a^{2}, ab, a^{3}b\}$,
+  and $D_{8}$.
+  The subgroup lattice of $D_{8}$ is:
+  
+  \begin{picture}(10,8)(-5,-1)
+    \put(0,0){\makebox(0,0){$\{1\}$}}
+    \put(0,0.5){\line(0,1){1}}
+    \put(0.5,0.5){\line(1,1){1}}
+    \put(0.5,0.25){\line(2,1){3}}
+    \put(-0.5,0.5){\line(-1,1){1}}
+    \put(-0.5,0.25){\line(-2,1){3}}
+    \put(-4,2){\makebox(0,0){$\langle b \rangle$}}
+    \put(-2,2){\makebox(0,0){$\langle a^{2}b \rangle$}}
+    \put(0,2){\makebox(0,0){$\langle a^{2} \rangle$}}
+    \put(2,2){\makebox(0,0){$\langle ab \rangle$}}
+    \put(4,2){\makebox(0,0){$\langle a^{3}b \rangle$}}
+    \put(0,2.5){\line(0,1){1}}
+    \put(3.5,2.5){\line(-1,1){1}}
+    \put(2,2.5){\line(0,1){1}}
+    \put(0.5,2.5){\line(1,1){1}}
+    \put(-3.5,2.5){\line(1,1){1}}
+    \put(-0.5,2.5){\line(-1,1){1}}
+    \put(-2,2.5){\line(0,1){1}}
+    \put(-2,4){\makebox(0,0){$\langle a^{2}, b \rangle$}}
+    \put(0,4){\makebox(0,0){$\langle a \rangle$}}
+    \put(2,4){\makebox(0,0){$\langle a^{2}, ab \rangle$}}
+    \put(0,4.5){\line(0,1){1}}
+    \put(1.5,4.5){\line(-1,1){1}}
+    \put(-1.5,4.5){\line(1,1){1}}
+    \put(0,6){\makebox(0,0){$D_{8}$}}
+  \end{picture}
+\end{example}
+
+Notice that in these diagrams, there is always a unique smallest subgroup which
+is bigger than any pair of subgroups.  This is a corollary of
+Theorem~\ref{thm:subgroupgenbyset}.
+
+\begin{corollary}
+  If $G$ is a group and $H$ and $K$ are subgroups of $G$, then $\langle H
+  \union K \rangle$ is the smallest subgroup which contains both $H$ and $K$.
+\end{corollary}
+
+This subgroup is usually quite different from the union of the two sets. 
+Indeed, we have the following:
+
+\begin{proposition}
+  Let $H$ and $K$ be subgroups of $G$.  Then $H \union K$ is a subgroup if and only
+  if either $H \subseteq K$ or $K \subseteq H$.
+\end{proposition}
+\begin{proof}
+  If $H \subseteq K$, then $H \union K = K$, so $H \union K$ is a subgroup.
+  Similarly, if $K \subseteq H$, then $H \union K = H$, so $H \union K$ is
+  a subgroup.
+  
+  Conversely, if neither $H$ nor $K$ is a subset of the other, then there is
+  some $x \in H \setminus K$ and $y \in K \setminus H$.  Also $x^{-1} \in H$,
+  since $H$ is a subgroup. But then if $xy \in H$, we have $x^{-1}(xy) = y
+  \in H$, but since $y \in K \setminus H$, this means that $y \notin H$, which
+  is a contradicition.  Therefore $xy \notin H$.  But a similar argument
+  shows that $xy \notin K$.  So $xy \notin H \union K$.  So $H \union K$
+  is not a subgroup of $G$.
+\end{proof}
+
+The following theorem shows us that there is also a subgroup which is contained
+in both $H$ and $K$.
+
+\begin{theorem}
+  Let $(G, \ast, e)$ be a group, and $H$ and $K$ subgroups of $G$.  Then
+  $H \intersect K$ is the largest subgroup of $G$ which is contained in both
+  $H$ and $K$.
+\end{theorem}
+\begin{proof}
+  We first need to show that $H \intersect K$ is a subgroup.  If $x$,
+  $y \in H \intersect K$, then $xy^{-1} \in H$, since $H$ is a subgroup,
+  and $xy^{-1} \in K$, since $K$ is a subgroup.  Therefore $xy^{-1} \in
+  H \intersect K$, and so by Corollary~\ref{cor:subgrouptest},
+  $H \intersect K$ is a subgroup of $G$.
+  
+  Since $H \intersect K$ is the largest set contained in both $H$ and $K$,
+  it must also be the largest subgroup contained in both.
+\end{proof}
+
+We will denote $\langle H \union K \rangle$ by $H \vee K$ and call it the
+\defn{join}{join!of subgroups} of $H$ and $K$.  We will denote $H \intersect K$
+by $H \wedge K$, and call it the \defn{meet}{meet!of subgroups} of $H$ and $K$.
+The reason for this terminology will be come clear when we look at abstract
+lattices.
+
+The significance of the lattice of subgroups is that if two groups do not have
+similar lattices of subgroups, they cannot be isomorphic, so it provides a
+nice pictorial way of demonstrating that two groups are distinct.  To show
+this, we first need to show that homomorphisms preserve the relationship of
+inclusion of subgroups.
+
+\begin{proposition}\label{prop:homsubgrouporderpreserving}
+  If $G$ and $H$ are groups, $\alpha : G \to H$ is a homomorphism, and $K_{1}$
+  and $K_{2}$ are subgroups of $G$ with $K_{1} \subseteq K_{2}$, then
+  $\alpha(K_{1})$ is a subgroup of $\alpha(K_{2})$.
+  
+  Furthermore, if $\alpha$ is a monomorphism, and $K_{1} \subset K_{2}$,
+  then $\alpha(K_{1})$ not equal to $\alpha(K_{2})$.
+\end{proposition}
+\begin{proof}
+  We know from Proposition~\ref{prop:homsubgroup} that $\alpha(K_{1})$ and
+  $\alpha(K_{2})$ are subgroups of $H$, and it is immediate from the
+  definition of the image of a set under a function that $\alpha(K_{1}) 
+  \subseteq \alpha(K_{2})$ if $K_{1} \subseteq K_{2}$.  So $\alpha(K_{1}) 
+  \le \alpha(K_{2})$.
+  
+  If $\alpha$ is a monomorphism in addition, then since there is some $g \in
+  K_{2}$, but not in $K_{1}$, we cannot have $\alpha(h) = \alpha(g)$ for any
+  $h \in K_{1}$ (otherwise $\alpha$ would not be one-to-one).  Hence
+  $\alpha(K_{1})$ is properly contained in $\alpha(K_{2})$.
+\end{proof}
+
+\begin{corollary}\label{cor:hommeetandjoin}
+  If $G$ and $H$ are groups, $\alpha : G \to H$ is a homomorphism, and $K_{1}$
+  and $K_{2}$ are subgroups of $G$, then $\alpha(K_{1} \vee K_{2}) =
+  \alpha(K_{1}) \vee \alpha(K_{2})$ and $\alpha(K_{1} \wedge K_{2}) =
+  \alpha(K_{1}) \wedge \alpha(K_{2})$.
+\end{corollary}
+\begin{proof}
+  We know that $\alpha(K_{1}) \vee \alpha(K_{2})$ is the smallest
+  subgroup which contains both $\alpha(K_{1})$ and $\alpha(K_{2})$, but
+  since $K_{1}$ and $K_{2} \subseteq K_{1} \vee K_{2}$, we have that
+  $\alpha(K_{1})$ and $\alpha(K_{2}) \subseteq \alpha(K_{1} \vee K_{2})$,
+  hence $\alpha(K_{1}) \vee \alpha(K_{2}) \subseteq \alpha(K_{1} \vee
+  K_{2})$.
+
+  Conversely, if $\alpha^{-1}(\alpha(K_{1}) \vee \alpha(K_{2}))$ is a
+  subgroup of $G$ which contains both $K_{1}$ and $K_{2}$, so $K_{1} \vee
+  K_{2} \subseteq \alpha^{-1}(\alpha(K_{1}) \vee \alpha(K_{2}))$, and hence
+  \[
+    \alpha(K_{1} \vee K_{2}) \subseteq \alpha(\alpha^{-1}(\alpha(K_{1}) \vee
+    \alpha(K_{2}))) = \alpha(K_{1}) \vee \alpha(K_{2}).
+  \]
+  
+  Hence $\alpha(K_{1}) \vee \alpha(K_{2}) = \alpha(K_{1} \vee K_{2})$.
+  
+  The proof of the case for $\wedge$ is left as an exercise.
+\end{proof}
+
+We will say that two groups $G$ and $H$ have corresponding, or
+isomorphic, subgroup lattices if there is a bijection $f$ from
+$\Sub(G)$ to $\Sub(H)$ so that $f(K_{1}) \vee f(K_{2}) = f(K_{1} \vee
+K_{2})$, and $f(K_{1}) \wedge f(K_{2}) = f(K_{1} \wedge K_{2})$.
+
+\begin{corollary}\label{cor:latticeisomtest}
+  If $G$ and $H$ are two groups whose subgroup lattices do not
+  correspond, then $G$ and $H$ are not isomorphic.
+\end{corollary}
+\begin{proof}
+  If $G$ and $H$ are isomorphic, then
+  Proposition~\ref{prop:subgroupisom} tells us that
+  $\overline{\alpha}$ is a bijection from $\Sub(G)$ to $\Sub(H)$, and
+  Corollary~\ref{cor:hommeetandjoin} says that
+  $\overline{\alpha}(K_{1} \vee K_{2}) = \overline{\alpha}(K_{1}) \vee
+  \overline{\alpha}(K_{2})$ and $\overline{\alpha}(K_{1} \wedge K_{2})
+  = \overline{\alpha}(K_{1}) \wedge \overline{\alpha}(K_{2})$.  So 
+  isomorphic groups have corresponding subgroup lattices.
+  
+  The contrapositive of this result is the corollary.
+\end{proof}
+
+\begin{example}
+  The groups $C_{4}$ and $V$ have different subgroup lattices, so they 
+  are not isomorphic.
+\end{example}
+
+Note that the converse of the corollary is not true.  We know, for example,
+that if $p$ is prime, the groups $C_{p}$ all have corresponding subgroup
+lattices, yet the groups are clearly not isomorphic.
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Find the subgroup lattice of the group $D_{6}$.
+  
+  \item Find the subgroup lattice of the group $C_{8}$.
+      
+  \item Find the subgroup lattice of the group $C_{2} \cross C_{4}$.
+      
+  \item Find the subgroup lattice of the group  $C_{2} \cross C_{2} \cross
+    C_{2}$.
+  
+  \item Find the subgroup lattice of the group $D_{10}$.
+    
+  \item Find the subgroup lattice of the group $D_{12}$.
+      
+  \item Find the subgroup lattice of the group $A_{4}$
+  
+  \item Complete the proof of Corollary~\ref{cor:hommeetandjoin}.
+\end{exercises}
+
+\section{Extension: Lattices}
+
+The pattern that subgroups of a group make under inclusion is a particular
+example of a general phenomenon.  The key idea is that we know when one
+subgroup is ``larger'' than another, that we can find the largest thing
+smaller than two subgroups (the meet) and that we can find the smallest thing 
+larger than the two subgroups (the join).
+
+This idea is essentially the same as what happens with general subsets of a set.
+We know when one subset is ``larger'' than another, we can find the
+largest thing smaller than two subsets (the intersection) and we can find the
+smallest thing larger than the two subsets (the union).
+
+To explore this similarity further, we need to introduce a general concept that
+we can use to model the idea of one thing being larger then another.
+
+\begin{definition}
+  Let $X$ and $Y$ be sets.  A \defn{relation}{relation} between $X$ and $Y$
+  is a subset $R$ of $X \cross Y$, where $x \in X$ and $y \in Y$ are
+  considered to be related by $R$ if and only if $(x,y) \in R$.
+  
+  We write $xRy$ if $(x,y) \in R$.  If $X = Y$ we say that $R$ is a relation
+  on $X$.
+\end{definition}
+
+Note that you should not confuse this definition of relation with the notion
+of a relation on the elements of a group.
+
+The concept of a relation is extremely general, and can be used to model a
+great many fundamental mathematical concepts.
+
+\begin{example}
+  If $X$ is any set, equality can be regarded as the relation $R = \{(x,x) : x
+  \in X\} \subseteq X \cross X$.  Here $xRy$ if and only if $(x,y) \in R$ if and
+  only if $x = y$.
+\end{example}
+
+\begin{example}
+  If $X$ and $Y$ are any sets and $f : X \to Y$ is a function, the graph
+  $R = \{(x, f(x)): x \in X\} \subset X \cross Y$ is a relation where $xRy$ if and only if
+  $y = f(x)$.  In fact functions are sometimes defined in this way as a
+  special case of the concept of a relation.
+\end{example}
+
+\begin{example}
+  In the real numbers, the set $L = \{ (x,y) : x \le y\} \in \reals \cross \reals$
+  is a relation where $xLy$ if and only if $x \le y$.
+\end{example}
+
+\begin{example}
+  If $\powerset(X)$ is the power set of some set $X$, then the set
+  $\subseteq = \{(A,B): \text{$A$ is a subset of $B$}\}$ is a relation
+  where $A \subseteq B$ if and only if $A$ is a subset of $B$.
+\end{example}
+
+\begin{example}
+  If $G$ is a group, and $X$ is the set of subgroups of $G$, then the set
+  $\le = \{(A,B): \text{$A$ is a subgroup of $B$}\}$ is a relation where
+  $A \le B$ if and only $A$ is a subgroup of $B$.
+\end{example}
+
+Because of the generality of relations, we need to impose some additional
+conditions to make them useful in modelling particular situations.
+
+\begin{definition}
+  Let $X$ and $Y$ be sets, and $R$ a relation on $X$.  Let $x, y$ and $z \in X$.
+  
+  We say that $R$ is \defn{reflexive}{relation!reflexive} if $xRx$ for all
+  $x \in X$.
+  
+  We say that $R$ is \defn{symmetric}{relation! symmetric} if $xRy$ implies
+  $yRx$.
+  
+  We say that $R$ is \defn{antisymmetric}{relation! antisymmetric} if $xRy$ and
+  $yRx$ implies $x = y$.
+  
+  We say that $R$ is \defn{transitive}{relation!transitive} if $xRy$ and
+  $yRz$ implies $xRz$.
+  
+  A \defn{partial order}{order!partial} on $X$ is a relation on $X$ which is
+  reflexive, transitive and antisymmetric.
+\end{definition}
+
+\begin{example}
+  The $\le$, $<$, $>$ and $\ge$ relations on any set of numbers. All are
+  antisymmetric and transitive, but not symmetric.  The relations $\le$
+  and $\ge$ are reflexive, but $<$ and $>$ are not.
+\end{example}
+
+\begin{example}
+  The relation $\subseteq$ of $\powerset(X)$ is a partial order.
+\end{example}
+
+\begin{example}
+  The relation $\le$ on the set of subgroups of a group is a partial order.
+\end{example}
+
+Notice that if $\preceq$ is a partial order on a
+set $X$, and $x$, $y \in X$, then it may be the case that neither $x \preceq y$
+nor $y \preceq x$.  If this is the case, we say that $x$ and $y$ are
+\defn{incomparable elements}{incomparable elements} of $X$.
+
+\begin{example}
+  The sets $\{1\}$ and $\{2,3\}$ are incomparable elements of
+  $\powerset(\{1,2,3\})$ under the subset partial order $\subseteq$.
+\end{example}
+
+So a partial order seem to encapsulate the general idea of something being
+bigger than something else.  Now we need to model the idea of a meet and a
+join.
+
+\begin{definition}
+  If $X$ is a set, $\preceq$ is a partial order on $X$, and $x$ and $y \in X$,
+  then $a \in X$ is a \defn{lower bound}{bound!lower} for $x$ and $y$ if $a \preceq x$ and
+  $a \preceq y$.  We say that $a$ is the \defn{greatest lower
+  bound}{bound!greatest lower} of $x$ and $y$ if given any lower bound
+  $z$ of $x$ and $y$, we have that $z \preceq a$.
+  
+  Similarly, $a$ is an \defn{upper bound}{bound!upper} for $x$ and $y$ if
+  $x \preceq a$ and $y \preceq a$.  We say that $a$ is the \defn{least upper
+  bound}{bound!least upper} of $x$ and $y$ if given any upper bound
+  $z$ of $x$ and $y$, we have that $a \preceq z$.
+  
+  In general, we denote the greatest lower bound of $x$ and $y$ by $x \wedge y$,
+  and the least upper bound of $x$ and $y$ by $x \vee y$.
+  
+  A \defn{lattice}{lattice} $(X, \preceq)$ is a set with a partial order such that
+  every pair of elements has a greatest lower bound and a least upper bound.
+\end{definition}
+
+The examples of partial orders earlier in this section all have the lattice
+property.
+
+\begin{example}
+  The pair $(\reals, \le)$ is a lattice.  Since for any $x$ and $y$, we have
+  $x \le y$ or $y \le x$ (or both), then $x \vee y = \min x,y$ and 
+  $x \wedge y = \max x,y$.
+\end{example}
+
+\begin{example}
+  If $X$ is any set, then the pair $(\powerset(X), \subseteq)$ is a
+  lattice.  Given any two subsets $A$ and $B$ of $X$, we have $A
+  \wedge B = A \union B$ and $A \vee B = A \intersect B$.
+\end{example}
+
+\begin{example}
+  The subgroup relation $\le$ on the set of subgroups $\Sub(G)$ of a
+  group $G$ makes $(\Sub(G), \le)$ a lattice, since if $H$ and $K \in
+  \Sub(G)$ we have $H \vee K = \langle H \union K \rangle$ and $H
+  \wedge K = H \intersect K$.
+\end{example}
+
+\begin{example}\label{eg:abstractlattice}
+  Let $X = \{0, x, y, 1\}$, and let $\preceq$ be the partial order
+  defined by $0 \preceq x$, $0 \preceq y$, $0 \preceq x$, $0 \preceq
+  1$, $x \preceq 1$, $y \preceq 1$ and $y \preceq 1$.  Then $(X,
+  \preceq)$ is a lattice, and we can represent it diagramatically as
+
+  \begin{picture}(6,6)(-3,-1)
+    \put(0,0){\makebox(0,0){$0$}}
+    \put(0,0.5){\line(0,1){1}}
+    \put(0.5,0.5){\line(1,1){1}}
+    \put(-0.5,0.5){\line(-1,1){1}}
+    \put(-2,2){\makebox(0,0){$x$}}
+    \put(0,2){\makebox(0,0){$y$}}
+    \put(2,2){\makebox(0,0){$z$}}
+    \put(0,2.5){\line(0,1){1}}
+    \put(1.5,2.5){\line(-1,1){1}}
+    \put(-1.5,2.5){\line(1,1){1}}
+    \put(0,4){\makebox(0,0){$1$}}
+  \end{picture}
+\end{example}
+
+
+In the previous section, we showed that if the subgroup lattice of two 
+groups didn't agree, then the groups could not be isomorphic.  The 
+heart of the result was showing that the isomorphism $\alpha$ between the 
+groups produced a function between the subgroups $\overline{\alpha}$ 
+which preserved meet and join.
+
+\begin{definition}
+  Let $(X, \preceq)$ and $(Y, \le)$ be two partially ordered sets.  A
+  function $\alpha : X \to Y$ is an order-preserving function if whenever
+  we have $x$ and $y \in X$ such that $x \preceq y$, we have $\alpha(x) 
+  \le \alpha(y)$.
+  
+  If $(X, \preceq)$ and $(Y, \le)$ are lattices, then $\alpha: X \to
+  Y$ is a lattice homomorphism if $\alpha(x \vee y) = \alpha(x) \vee
+  \alpha(y)$, and $\alpha(x \wedge y) = \alpha(x) \wedge \alpha(y)$.
+  If $\alpha$ is a bijective lattice homomorphism, we say that it is 
+  a lattice isomorphism.
+\end{definition}
+
+\begin{example}
+  Let $(X, \preceq)$ be as in Example~\ref{eg:abstractlattice}, and 
+  $V$ be the four-group.
+  The function $\alpha : X \to \Sub(V)$ defined by the table
+  \[
+    \begin{array}{cc}
+      t & \alpha(t) \\
+      \hline
+      0 & \{e\} \\
+      x & \{e, a\} \\
+      y & \{e, b\} \\
+      z & \{e, ab\} \\
+      1 & V 
+    \end{array}
+  \]
+  is a lattice isomorphism.  Perhaps the easiest way to grasp this 
+  fact is to observe that the diagrams for each lattice correspond.
+\end{example}
+
+
+\begin{example}
+  Consider the homomorphism $\alpha : V \to C_{4}$ of 
+  Example~\ref{eg:4grouphom}.  The corresponding map between 
+  subgroups of these groups is $\overline{\alpha}$, and is given by 
+  the following table
+  \[
+    \begin{array}{cc}
+      H & \overline{\alpha}(H) \\
+      \hline
+      \{e\} & \{e\} \\
+      \{e, a\} & \{e, a^{2}\} \\
+      \{e, b\} & \{e, a^{2}\} \\
+      \{e, ab\} & \{e\} \\
+      V & \{e, a^{2}\}
+    \end{array}
+  \]
+  is a lattice homomorphism.
+\end{example}
+
+The essential content of
+Proposition~\ref{prop:homsubgrouporderpreserving} and
+Corollary~\ref{cor:hommeetandjoin} is then:
+
+\begin{proposition}
+  If $G$ and $H$ are groups, and $\alpha: G \to H$ is a homomorphism,
+  then $\overline{\alpha} : \Sub(G) \to \Sub(H)$ is an
+  order-preserving map.
+\end{proposition}
+
+\begin{corollary}\label{cor:grouphomtolathom}
+  If $G$ and $H$ are groups, and $\alpha: G \to H$ is a homomorphism, 
+  then $\overline{\alpha} : \Sub(G) \to \Sub(H)$ is a lattice 
+  homomorphism.
+\end{corollary}
+
+So we can then re-phrase Corollary~\ref{cor:latticeisomtest} in the 
+following way:
+
+\begin{corollary}
+  If $G$ and $H$ are groups, and the subgroup lattices of $G$ and $H$
+  are not isomorphic, then $G$ and $H$ are not isomoprhic.
+\end{corollary}
+
+We can use Exercise~\ref{ex:orderfrommeetandjoin} to prove the 
+following proposition.
+
+\begin{proposition}\label{prop:latticehomisorderpreserve}
+  Let $(X, \preceq)$ and $(Y, \le)$ be lattices, and $\alpha : X \to 
+  Y$ a lattice homomorphism.  Then $\alpha$ is an order-preserving 
+  function.
+\end{proposition}
+\begin{proof}
+  See Exercise~\ref{ex:latticehomisorderpreserve}.
+\end{proof}
+
+In fact, we could prove Corollary~\ref{cor:hommeetandjoin} directly, 
+and use this proposition to conclude that 
+Proposition~\ref{prop:homsubgrouporderpreserving} must hold.
+
+So the abstract concept of a lattice helps us understand the structure 
+of subgroups within a group, just as the abstract structure of a group 
+helps us understand concrete situations such as the symmetries of a 
+set.
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item\label{ex:orderfrommeetandjoin} Let $\preceq$ be a partial
+    order on $X$.  Show that if $x \preceq y$ that $x \wedge y = x$ and
+    $x \vee y = y$.
+  
+  \item\label{ex:latticehomisorderpreserve} Prove
+    Proposition~\ref{prop:latticehomisorderpreserve}.
+  
+  \item Consider the natural numbers $\naturals$ with the ``divides''
+    relation $x \mid y$ if and only if $y = kx$ for some $k \in \naturals$
+    (ie.\ if $x$ divides $y$).  Show that $\mid$ is a partial order, and that
+    $x \wedge y$ is the greatest common divisor of $x$ and $y$ and $x \vee y$
+    is the least common multiple of $x$ and $y$.
+  
+  \item Show that if $\preceq$ is a partial order on $X$, then the reverse
+    relation $\succeq$ defined by $x \succeq y$ if and only if $y \preceq x$ is
+    a partial order.  Show that $(X, \preceq)$ is a lattice if and only if
+    $(X, \succeq)$ is a lattice.
+    
+  \item Let $F(D, \reals)$ be the set of real-valued functions on some fixed
+    domain $D \subseteq \reals$ (ie.~the typical functions considered in calculus).
+    Show that the relation defined by $f \le g$ if $f(x) \le g(x)$ for all
+    $x \in D$ is a partial order.
+    
+    Give an example of two functions which are incomparable.
+    
+    Show that $(F(D, \reals), \le)$ is a lattice, where $f \wedge g$ and
+    $f \vee g$ are the functions defined by
+    \[
+      (f \wedge g)(x) = \min f(x), g(x) \qquad \text{and} \qquad
+        (f \vee g)(x) = \max f(x), g(x)
+    \]
+    respectively.
+\end{exercises}
+
+\section{The Centre and Centralizers}
+
+Abelian groups are much nicer to work with algebraically than non-Abelian
+groups.  However, even in the case of non-Abelian groups there may be large
+parts of the group which commute with each other.
+
+Recall that two elements $x$ and $y \in G$ commute with one another if
+\[
+  xy = yx.
+\]
+Multiplying both sides on the right by $x^{-1}$, we can state this
+equivalently as saying that $x$ and $y$ commute if and only if
+\[
+  xyx^{-1} = y,
+\]
+or, multiplying on the other side, if and only if
+\[
+  x^{-1}yx = y.
+\]
+
+The set of all elements which commute with every other element of the 
+group is called the \defn{centre}{centre} of the group, 
+denoted by $Z(G)$.  At the very least we have the identity $e \in 
+Z(G)$, but it is potentially much larger.
+
+\begin{example}
+  The centre of $D_{6}$ is $\{1\}$.  Clearly $1$ always commutes with any
+  element of $D_{6}$.  For the other elements we can always find an element
+  with which it does not commute.  For example, $a$ does not commute with
+  $b$, since $ba = (a^{2})b \ne ab$.  The same equation shows that $a^{2}$
+  does not commute with $b$.  So $a$, $a^{2}$ and $b$ are not in the centre.
+  Similarly $(ab)a = a^{3}b = a^{2}(ab)$, so $ab$ does not commute with $a$,
+  and $(a^{2}b)a = a^{4}b = a^{2}(a^{2}b)$, so $a^{2}b$ does not commute
+  with $a$.
+\end{example}
+
+\begin{example}\label{eg:D8centre}
+  The centre of $D_{8}$ is $\{1, a^{2}\}$.  This follows since $a^{n}a^{2} =
+  a^{n+2} = a^{2}a^{n}$ and
+  \[
+    (a^{n}b)a^{2} = a^{n}a^{3}ba = a^{n+3}a^{3}b = a^{n+6}b = a^{n+2}b =
+    a^{2}(a^{n}b).
+  \]
+   for $n = 0, 1, 2, 3$.  So $a^{2} \in Z(D_{8})$.
+   
+   On the other hand $(a^{n}b)a = a^{n}a^{3}b = a^{3}(a^{n}b)$ for $n = 0, 1,
+   2, 3$, so $a$, $a^{3}$, and $a^{n}b$ are not in the centre.
+\end{example}
+
+\begin{example}
+  The centre of $GL_{n}(\reals)$ is the set
+  \[
+   \reals^{\times} I_{n} = \left\{\begin{bmatrix}
+     a & 0 & \cdots 0 \\
+     0 & a & \cdots 0 \\
+     \vdots & \vdots & \ddots & \vdots \\
+     0 & 0 & \cdots a \\
+   \end{bmatrix} : a \in \reals^{\times} \right\}.
+  \]
+  It is easy to verify with matrix multiplication that every element of this
+  set commutes with every matrix.
+  
+  To simplify calculations, we will just look at the case $n = 2$.  To see that
+  these are the only possible elements of the centre, we note that if
+  \[
+    \begin{bmatrix}
+      a & b \\
+      c & d
+    \end{bmatrix} \in Z(GL_{2}(\reals))
+  \]
+  then we must have
+  \[
+    \begin{bmatrix}
+      a & b \\
+      c & d
+    \end{bmatrix}
+    \begin{bmatrix}
+      0 & 1 \\
+      1 & 0
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      0 & 1 \\
+      1 & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+      a & b \\
+      c & d
+    \end{bmatrix},
+  \]
+  or,
+  \[
+    \begin{bmatrix}
+      b & a \\
+      d & c
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      c & d \\
+      a & b
+    \end{bmatrix}
+  \]
+  and so we conclude that $a = d$ and $b = c$.  We also must have
+  \[
+    \begin{bmatrix}
+      a & b \\
+      b & a
+    \end{bmatrix}
+    \begin{bmatrix}
+      0 & -1 \\
+      1 & 0
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      0 & -1 \\
+      1 & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+      a & b \\
+      b & a
+    \end{bmatrix},
+  \]
+  or,
+  \[
+    \begin{bmatrix}
+      b & -a \\
+      a & -b
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      -b & -a \\
+      a & b
+    \end{bmatrix}
+  \]
+  so $b = -b$.  Hence $b = 0$, and so a matrix is in the centre only if it
+  is in the set $\reals^{\times}I_{2}$.
+\end{example}
+
+The centre is an extremely nice subset of the group.
+
+\begin{proposition}\label{prop:centresubgroup}
+  Let $G$ be a group.  Then $Z(G)$ is an Abelian subgroup of $G$.
+\end{proposition}
+\begin{proof}
+  Given $x$, $y \in Z(G)$, we observe that for any $z \in G$ we have
+  \[
+    (xy)z = xzy = z(xy),
+  \]
+  so $xy \in Z(G)$.  Similarly,
+  \[
+    x^{-1}z = x^{-1}zxx^{-1} = zx^{-1},
+  \]
+  so $x^{-1} \in Z(G)$.  Hence $Z(G)$ is a subgroup of $G$.
+  
+  It is immediate that $Z(G)$ is also Abelian, since every element of $Z(G)$ 
+  commutes with every element of $G$, and $Z(G)$ is a subgroup.
+\end{proof}
+
+You can think of the centre as being a measure of how close the group $G$ is
+to being Abelian.  If $Z(G) = G$, then the group is Abelian, while if $Z(G)$
+is a large subgroup, then $G$ can be thought of having a large Abelian
+component.  On the other hand, if $Z(G) = \{e\}$, the group is very far from
+being Abelian.
+
+\begin{proposition}
+  Let $G$ and $H$ be isomorphic groups.  Then $Z(G)$ and $Z(H)$ are
+  isomorphic groups.
+\end{proposition}
+\begin{proof}
+  We know that there is an isomorphism $\alpha : G \to H$.  If $x \in Z(G)$,
+  then for any $y \in H$, we have that there is some unique $u \in G$ such
+  that $\alpha(u) = y$, and
+  \[
+    \alpha(x)y = \alpha(x)\alpha(u) = \alpha(xu) = \alpha(ux) =
+    \alpha(u)\alpha(x) = y\alpha(x).
+  \]
+  So $\alpha(x) \in Z(H)$.  An identical argument shows that if $x \in
+  Z(H)$, then $\alpha^{-1}(x) \in Z(G)$.
+  
+  Hence $\alpha(Z(G)) = Z(H)$, and the restriction of $\alpha$ to $Z(G)$ is
+  an isomorphism between the centres.
+\end{proof}
+
+\begin{corollary}
+  If $G$ and $H$ have centres which are not isomorphic, then $G$ and $H$ are
+  not isomorphic.
+\end{corollary}
+
+More generally, rather than asking which elements commute with the entire
+group we might ask which elements commute with some subset of the group.
+If $X \subset G$ is any subset of the group $G$,
+then the \defn{centralizer}{centralizer} of $X$ is the set of all elements 
+which commute with every element of $X$, ie.
+\[
+  Z_{G}(X) = \{y \in G : yx = xy\} = \{y \in G : y^{-1}xy = x\} =
+  \{y \in G : yxy^{-1} = x\}.
+\]
+This set always contains at least the identity element $e$.
+
+\begin{proposition}
+  Let $G$ be a group, and $X \subset G$.  Then $Z_{G}(X)$ is a
+  subgroup of $G$.  If $Y \subseteq X$, then $Z_{G}(X)$ is a subgroup of
+  $Z_{G}(Y)$.
+\end{proposition}
+\begin{proof}
+  The proof of the first part of this proposition is essentially the same
+  as the proof of the first part of Proposition~\ref{prop:centresubgroup}, but
+  with $z \in X$ rather than $z \in G$.
+  
+  The second part follows from the fact that if $zx = xz$ for every $x \in
+  X$, then it must also hold for every element of $Y$, since $Y \subseteq
+  X$.  Therefore $Z_{G}(X) \subseteq Z_{G}(Y)$.
+\end{proof}
+
+In particular, this proposition implies that $Z(G) = Z_{G}(G) \subseteq
+Z_{G}(X)$ for all $X$.
+
+The case where $X$ contains a single element $g$ is important enough to have
+its own, slightly different notation.  We define
+\[
+  Z_{G}(g) = \{y \in G : yg = gy\} = \{y \in G : y^{-1}gy = g\} =
+  \{y \in G : ygy^{-1} = g\}.
+\]
+
+\begin{example}
+  The consider the element $a$ of $D_{6}$.  Then $Z_{D_{6}}(a) = \{e, 
+  a, a^{2}\}$.  The elements $b$, $ab$ and $a^{2}b$ are not elements 
+  of $Z_{D_{6}}(a)$.  Similarly, we have:
+  \begin{align*}
+    Z_{D_{6}}(e) &= D_{6},\\
+    Z_{D_{6}}(a^{2}) &= \{e, a, a^{2}\},\\
+    Z_{D_{6}}(b) &= \{e, b\},\\
+    Z_{D_{6}}(ab) &= \{e, ab\},\\
+    Z_{D_{6}}(a^{2}b) &= \{e, a^{2}b\},\\
+  \end{align*}
+\end{example}
+
+Once again, these subsets have very nice properties.
+
+\begin{proposition}
+  Let $G$ be a group and $g \in G$.  Then $\langle g \rangle$ is a subgroup of
+  $G$. Furthermore, $Z_{G}(g) = G$ if and only if $g \in Z(G)$
+\end{proposition}
+\begin{proof}
+  We note that $g \in Z_{G}(g)$, and since $\langle g \rangle$ is the
+  smallest subgroup of $G$ containing $g$, we have that $\langle g \rangle$
+  must be a subgroup of $Z_{G}(g)$.
+  
+  If $g \in Z(G)$, $gx = xg$ for all  $x \in G$, so $Z_{G}(g) = G$.
+  
+  On the other hand, if $Z_{G}(g) = G$, then that implies that for any $x
+  \in G$, $xg = gx$, and so $g \in Z(G)$.
+\end{proof}
+
+You can think of the centralizer of $g$ as measuring how close $g$ is to
+being an element of the centre, or how close it is to commuting with
+everything.
+
+The centralizer plays a key role in the discussion of conjugacy later
+in this chapter.  We finish up with one last result which links the 
+centre and centralizers of elements.
+
+\begin{proposition}
+  Let $G$ be a group.  Then $Z(G)$ is the intersection of all the 
+  subgroups $Z_{G}(g)$.
+\end{proposition}
+\begin{proof}
+  We know that $Z(G) \subseteq Z_{G}(g)$ for every $g$, so
+  \[
+    Z(G) \subseteq \bigcap_{g \in G} Z_{G}(g).
+  \]
+  On the other hand, if $x \in Z_{G}(g)$ for every $g \in G$, then 
+  $xg = gx$ for every $g \in G$, and so $x \in Z(G)$.  Hence
+  \[
+    \bigcap_{g \in G} Z_{G}(g) \subseteq Z(G).
+  \]
+\end{proof}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item  Find the centre of the group $C_{2} \cross D_{6}$.
+  
+  \item  Find the centre of the group $D_{10}$.
+  
+  \item  Show that $Z(D_{2n}) = \{1\}$ if $n$ is odd, and $Z(D_{2n}) = 
+    \{1, a^{n/2}\}$ if $n$ is even.
+  
+  \item  Find the centralizers of each element of $D_{8}$.
+  
+  \item  Find the centralizers of each element of $C_{2} \cross D_{6}$.
+  
+  \item  Find the centralizers of each element of $S_{4}$.  What is 
+    the center of this group?
+  
+  \item  Show that $Z_{G}(X) = Z_{G}(\langle X \rangle)$.
+\end{exercises}
+
+
+\section{Cosets}
+
+There are other subsets of groups which it seems should have some
+significance.  For example in $S_{3}$, the set of ``reflection
+permutations'', ie.  those permutations with odd parity, is $\{ (1,2),
+(1,3), (2,3) \}$ and is not a subgroup.  Nevertheless, the elements
+have a commonality.  To understand such a situation, we need to
+introduce some new notation.
+
+If $\ast: A \cross B \to C$ is any binary relation, then given any 
+$x \in X$ and $Y \subseteq B$, we define
+\[
+  x \ast Y = \{ x \ast y: y \in Y\} \subseteq C.
+\]
+Similarly, if $y \in B$ and $X \subseteq A$, we define
+\[
+  X \ast y = \{ x \ast y: x \in X\} \subseteq C.
+\]
+And analagously, we define
+\[
+  X \ast Y = \{ x \ast y: x \in X, y \in Y\} \subseteq C.
+\]
+We will often omit the operation $\ast$ and simply write $xY$, $Xy$ 
+and $XY$ respectively.
+
+If $\ast$ is a binary operation on $A$, and $X \subseteq A$, we will 
+sometimes write
+\[
+  X^{n} = \underbrace{X \ast X \ast \cdots \ast X}_{\text{$n$ times}}.
+\]
+This is far from ideal notation, since it conflicts with the 
+Cartesian product
+\[
+  X^{n} = \underbrace{X \cross X \cross \cdots \cross X}_{\text{$n$ times}}.
+\]
+However, it is usually clear from context which of the two 
+possibilities we mean.
+
+If $(G, \ast, e)$ is a group, and $X \subseteq G$ then we can also write
+\[
+  X^{-1} = \{x^{-1} : x \in X\}.
+\]
+
+Using this notation, we can write Theorem~\ref{thm:subgrouptest} and
+Corollary~\ref{cor:subgrouptest} as follows:
+
+\begin{corollary}
+  Let $G = (G, \ast e)$ be a group, and $H \subseteq G$. If $H^{2} 
+  \subseteq H$ and $H^{-1} \subseteq H$, then $H \le G$.
+\end{corollary}
+
+\begin{corollary}
+  Let $G = (G, \ast e)$ be a group, and $H \subseteq G$. If $HH^{-1} 
+  \subseteq H$, then $H \le G$.
+\end{corollary}
+
+In fact, if $H$ is a finite subset of $G$, we can use an even weaker 
+condition:
+
+\begin{proposition}\label{prop:subgrouptest3}
+  Let $G = (G, \ast e)$ be a group, and $H$ be a finite subset $G$. If $H^{2} 
+  = H$, then $H \le G$.
+\end{proposition}
+
+To prove this fact, we need a lemma which we will use often in what 
+follows:
+
+\begin{lemma}\label{lemma:translation}
+  Let $G = (G, \ast e)$ be a group, $H \subseteq G$, and $g \in G$. 
+  Then the \defn{right translation}{translation!right} by $g$ function
+  $\rho_{g} : H \to Hg$ defined by $\rho_{g}(x) = xg$ is a bijection.
+  
+  Similarly, the \defn{left translation}{translation!left} by $g$
+  function $\lambda_{g} : H \to gH$ defined by $\lambda_{g}(x) = gx$
+  is a bijection.
+  
+  We also have $|H| = |gH| = |Hg|$.
+\end{lemma}
+
+\begin{proof}
+  That $\rho_{g}$ is onto is trivial, for
+  \[
+    \rho_{g}(H) = \{ \rho_{g}(x) : x \in H \} = \{ xg : x \in H \} = 
+    Hg.
+  \]
+  
+  On the other hand, if $\rho_{g}(x_{1}) = \rho_{g}(x_{2})$, then 
+  this means that $x_{1}g = x_{2}g$, and the cancellation law 
+  (Proposition~\ref{prop:cancellation}) says that $x_{1} = x_{2}$.  
+  Hence $\rho_{g}$ is one-to-one, and so $\rho_{g}$ is a bijection.
+  
+  The result for $\lambda_{g}$ is similar.
+  
+  Since we have bijections between $H$ and $Hg$, and $H$ and $gH$, all 
+  three sets must have the same cardinality 
+  (Proposition~\ref{prop:functionfacts}).
+\end{proof}
+
+With this in hand, the proof is simple.
+
+\begin{proof}[Proposition~\ref{prop:subgrouptest3}]
+  The hypothesis $H^{2} = H$ implies that $xy \in H$ for all $x$, $y 
+  \in H$, so we need only prove that $x^{-1} \in H$.
+  
+  Let $|H| = n$.  Lemma~\ref{lemma:translation} tells us
+  $|Hx| = |H| = n$.  Since $H$ is finite this, together with the fact that $Hx \subseteq
+  H^{2} = H$, implies that $Hx = H$.
+  
+  Hence there must be some element $y \in H$ such that $yx =
+  x$.  By the cancellation law, we have $y = e$, so $x \in H$.
+  
+  But now there must also be some $z \in H$ such that $zx = 
+  e$, so $z = x^{-1}$.
+  
+  Hence $H$ is a subgroup of $G$.
+\end{proof}
+
+Getting back to the example at the start of this section, if $H = 
+\langle (1,2,3) \rangle = \{e, (1,2,3), (1,3,2)\}$, then we can write
+\[
+  \{ (1,2), (1,3), (2,3) \} = (1,2)H.
+\]
+In fact, we also have
+\[
+  \{ (1,2), (1,3), (2,3) \} = (1,3)H = (2,3)H = H(1,2) = H(1,3) = H(2,3).
+\]
+
+This situation is important enough to give it a name.
+
+\begin{definition}\label{defn:coset}
+  Let $G$ be a group, and $H$ a subgroup of $G$.  Sets of the form
+  $xH$ are called \defn{left cosets}{coset!left} of $H$ and sets of
+  the form $Hx$ are called \defn{right cosets}{coset!right} of $H$,
+  where $x$ is any element of $G$.
+  
+  If $G$ is Abelian, then $Hx = xH$, and we simply call the set a 
+  \defn{coset}{coset} of $H$.
+\end{definition}
+
+So $\{ (1,2), (1,3), (2,3) \}$ is both a left and right coset of
+$\{e, (1,2,3), (1,3,2)\}$.
+
+\begin{example}
+  Consider $C_{6} = \{ 1, a, a^{2}, a^{3}, a^{4}, a^{5}\}$.  We know
+  that $H = \langle a^{3} \rangle$ is a subgroup, and its cosets are
+  itself $H = a^{3}H$, $aH = a^{4}H = \{a, a^{4}\}$, and $a^{2}H =
+  a^{5}H = \{a^{2}, a^{5}\}$.
+  
+  Because cyclic groups are Abelian, the left and right cosets are 
+  the same.
+\end{example}
+
+Notice in the examples so far that several different choices for $x$ 
+give the same coset.  This is typical.
+
+\begin{theorem}\label{thm:cosetsequal}
+  Let $G$ be a group, $H$ a subgroup of $G$, and $x$ and $y \in H$.  Then 
+  $xH = yH$ if and only if $x^{-1}y \in H$.  On the other hand, $Hx = 
+  Hy$ if and only if $xy^{-1} \in H$.
+  
+  Furthermore, either $xH = yH$ or $xH \intersect yH = \emptyset$.  
+  Similarly, either $Hx = Hy$ or $Hx \intersect Hy = \emptyset$.
+\end{theorem}
+\begin{proof}
+  A typical element of $yH$ is of the form $yz$, for some $z \in H$. 
+  We note that $x^{-1}yz \in H$, as well, and so multiplying on the
+  left by $x$ we have $x(x^{-1}yz) = yz \in xH$.  So $yH \subseteq
+  xH$.  Similarly, since $(x^{-1}y)^{-1} = y^{-1}x \in H$, given a
+  typical element $xz \in xH$ we have $y^{-1}xz \in H$, and so 
+  $y(y^{-1}xz) = yz \in yH$.  Hence $xH \subseteq yH$, and we 
+  conclude that $xH = yH$.
+  
+  Conversely, if $x^{-1}y \notin H$, we have that $y \notin xH$, since 
+  if that were the case $y = xz$ for some $z \in H$, but $y = 
+  xx^{-1}y$, and the cancellation law implies that then $z = 
+  x^{-1}y$, so $z \notin H$, which is a contradiction.  However, $y = 
+  ye \in yH$, so $xH$ and $yH$ are not equal.
+  
+  Assume that $xH \ne yH$, so that $xy^{-1} \notin H$.  If there were 
+  some $z \in xH \intersect yH$, then we would have $z = xu = yv$ for 
+  some $u$ and $v \in H$.  So $uv^{-1} \in H$.  But
+  \[
+    uv^{-1} = x^{-1}xuv^{-1} = x^{-1}yvv^{-1} = x^{-1}y \notin H.
+  \]
+  This is a contradiction, so there can be no such element $z$.
+  
+  Analagous arguments show that $Hx = Hy$ if and only if $xy^{-1}
+  \in H$, and either $Hx = Hy$ or $Hx \intersect Hy = \emptyset$.
+\end{proof}
+
+Every element of the group must lie in some coset, since $x = xe \in 
+xH$, so the cosets of a subgroup $H$ break the group $G$ up into a 
+collection of disjoint subsets.  Furthermore, we know that each of 
+these subsets has the same cardinality.  This is nice to know for 
+infinite groups, but it is really useful when dealing with finite 
+groups.
+
+\begin{theorem}[Lagrange]\label{thm:lagrange}
+  If $G$ is a finite group, and $H \le G$, then the number of left
+  cosets of $H$ and the number of right cosets of $H$ both equal
+  $|G|/|H|$.
+\end{theorem}
+\begin{proof}
+  Assume that there are $n$ left cosets, and that $g_{1}H$, $g_{2}H,
+  \ldots, g_{n}H$ is a complete list of the distinct left cosets of
+  $H$, so $G$ is a disjoint union of these sets.  The
+  inclusion-exclusion principle tells us that when we have a disjoint
+  union of finite sets, the cardinality of the union is the sum of the
+  cardinality of each set, ie.
+  \[
+    |G| = |g_{1}H| + |g_{2}H| + \cdots + |g_{n}H|.
+  \]
+  But Lemma~\ref{lemma:translation} tells is that $|g_{1}H| = 
+  |g_{2}H| = \cdots = |g_{n}H| = |H|$, so
+  \[
+    |G| = \underbrace{|H| + |H| + \cdots + |H|}_{\text{$n$ times}} = 
+    n|H|.
+  \]
+  Hence the number of left cosets is $n = |G|/|H|$.
+  
+  The argument for right cosets is analagous.
+\end{proof}
+
+The number of cosets of a subgroup is significant enough to be given 
+its own name and notation.
+
+\begin{definition}
+  If $H$ is a subgroup of a group $G$, the \defn{index}{index!of a 
+  subgroup} $[G : H]$ is the number of left (or right) cosets of $H$.
+\end{definition}
+
+The index is sometimes denoted $|G : H|$.  The following corollaries
+of Lagrange's theorem are almost trivial, but they are important
+enough that we state them explicitly.  We will use these some of these
+facts as much, if not more often, than Lagrange's theorem itself.
+
+\begin{corollary}
+  If $H$ is a subgroup of a finite group $G$, $[G : H] = |G|/|H|$.
+\end{corollary}
+
+\begin{corollary}
+  If $H$ is a subgroup of a finite group $G$, then both $[G : H]$ and 
+  $|H|$ divide $|G|$.
+\end{corollary}
+\begin{proof}
+  The numbers $[G : H] = |G|/|H|$, and $|H| = |G|/[G:H]$ are both
+  natural numbers, so $|H| \divides |G|$ and $[G : H] \divides |G|$.
+\end{proof}
+
+\begin{corollary}
+  If $G$ is a finite group, and $x \in G$, then the order of the 
+  $x$, $o(x)$, divides $|G|$.
+\end{corollary}
+\begin{proof}
+  We know that $o(x) = |\langle x \rangle|$, and we also know that 
+  $\langle x \rangle$ is a subgroup.  Hence $|\langle x \rangle|$ 
+  divides $|G|$, and so $o(x)$ divides $G$.
+\end{proof}
+
+This last corollary has some immediate consequences, both for 
+properties of particular elements, and for classifying groups.
+
+\begin{corollary}
+  If $G$ is a finite group, and $n = |G|$, then given any $x \in G$,
+  $x^{n} = e$.
+\end{corollary}
+\begin{proof}
+  Assume that $o(x) = k$, so that in particular $x^{k} = e$.  By the
+  previous corollary, $o(x)$ divides $n$, so we have $n = km$ for 
+  some integer $m$.  But then
+  \[
+    x^{n} = x^{km} = (x^{k})^{m} = e^{m} = e.
+  \]
+\end{proof}
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Identify the cosets of the subgroup $H = \{1, a^{2}\}$ of the group
+    $D_{8}$.  What is the index of $H$ in $G$?
+  
+  \item Verify Lagrange's Theorem for $D_{8}$.
+  
+  \item Show that if $X \subseteq G$ is not a subgroup, then an element may
+    lie in more than one set of the form $aX$.  Show that every element lies
+    in at least one such set.
+  
+  \item Let $C_{n}$ be a cyclic group, and $m$ be a number that divides $n$.
+    Show that there is an element of order $m$ in $C_{n}$.
+  
+  \item Show that if $G$ is a finite group, then the function
+    $\alpha: \Sub(G) \to \naturals$ given by $\alpha(G) = |G|$ is an
+    order-preserving function from the partial ordered set $(\Sub(G),
+    \le)$ to the partially ordered set $(\naturals, \mid )$.
+\end{exercises}
+
+\section{Classifying Groups of Small Order}
+
+We will use the corollaries of Lagrange's theorem to show that groups 
+of low order fall into a few distinct isomorphism classes.  The aim of 
+this section is to show that every group of order less than or equal 
+to $8$ is isomorphic to one of a few standard groups.
+
+\begin{corollary}
+  Let $G$ be a group with $|G| = p$, a prime number.  Then $G$ has no 
+  proper subgroups, and $G$ is cyclic.
+\end{corollary}
+\begin{proof}
+  If $H$ is a subgroup of $G$, then $|H|$ divides $|G| = p$, so $|H|$ 
+  must either be $1$ or $p$.  If $|H| = 1$, then $H = \{e\}$, since 
+  every subgroup must contain the identity element.  On the other 
+  hand, if $|H| = p$, then $H = G$, since $H$ must contain every 
+  element of the group.  So $G$ has no proper subgroups.
+  
+  Now assume that $x \in G$, and $x \ne e$.  Then $H = \langle x
+  \rangle$ is a subgroup of $G$, and $H$ contains at least two
+  elements $x$ and $e$.  Hence $|H| \ne 1$, and so $|H| = p$, which 
+  implies $H = G$.  So $G$ is generated by $x$, and hence is a cyclic 
+  group.
+\end{proof}
+
+This last corollary means that every group of prime order is 
+isomorphic to $C_{p}$.
+
+We can also show that we have found all groups of order $4$.
+
+\begin{proposition}
+  Let $G$ be a group such that $|G| = 4$.  Then either $G \isom 
+  C_{4}$ or $G \isom V \isom C_{2} \cross C_{2}$.
+\end{proposition}
+\begin{proof}
+  We know that the order of every element of $G$ divides $4$, so the 
+  order of an element which is not the idientity must be $2$ or $4$.
+  
+  If there is an element $x$ with $o(x) = 4$, then $x$ must generate 
+  $G$.  Hence $G$ is cyclic, so $G \isom C_{4}$.
+  
+  If there is no element of order $4$, then we must have $x^{2} = e$ 
+  for every $x \in G$.  But then Theorem~\ref{thm:order2group} tells 
+  us that $G \isom C_{2} \cross C_{2}$.
+\end{proof}
+
+This table summarizes the typical groups of each order that we have 
+discovered, up to order 12.
+
+\medskip
+
+  \begin{tabular}{|r|l|}
+  \hline
+  \textbf{Order} & \textbf{Known Groups} \\
+  \hline
+    1 & $C_{1}$ \\
+    2 & $C_{2}$ \\
+    3 & $C_{3}$ \\
+    4 & $C_{4}$, $C_{2} \cross C_{2}$ \\
+    5 & $C_{5}$ \\
+    6 & $C_{6}$, $D_{6}$, ? \\
+    7 & $C_{7}$ \\
+    8 & $C_{8}$, $C_{2} \cross C_{2} \cross C_{2}$, $C_{4} \cross C_{2}$, 
+    $D_{8}$, ? \\
+    9 & $C_{9}$, $C_{3} \cross C_{3}$, ? \\
+    10 & $C_{10}$, $D_{10}$, ? \\
+    11 & $C_{11}$ \\
+    12 & $C_{12}$, $C_{2} \cross C_{6}$, $D_{12}$, $A_{3}$, ? \\
+  \hline
+  \end{tabular}
+
+\medskip
+
+There may be other groups of order $6$, $8$, $10$ and $12$ that we do
+not yet know of, indicated by the question marks in the table.
+
+The following general result tells us that there are no more groups of 
+order 6 and 10 than the ones listed on the table.
+
+\begin{proposition}
+  Let $G$ be a group with $|G| = 2p$, where $p$ is a prime number
+  greater than $2$.  Then either $G$ is cyclic, or $G \isom D_{2p}$.
+\end{proposition}
+\begin{proof}
+  The factors of $2p$ are $1$, $2$, $p$ and $2p$, so the order of each
+  element must be one of those factors.  If $G$ has an element of
+  order $2p$ it is cyclic.
+  
+  Assume that $G$ does not have an element of order $2p$.  If $G$ does
+  not have an element of order $p$, then every non-identity element of
+  $G$ must have order $2$, which means that $x^{2} = e$ for every
+  element of $G$.  That imples that $G$ is a product of copies of 
+  $C_{2}$ by Theorem~\ref{thm:order2group}, and in particular that 
+  $|G| = 2^{n}$, which is impossible if $p > 2$.
+  
+  Hence there is some element $a \in G$ with $o(a) = p$.  Choose any
+  element $b \notin \langle a \rangle$.  Then $G$ breaks into the two
+  right cosets
+  \begin{align*}
+    \langle a \rangle &= \{1, a, a^{2}, \ldots, a^{p-1}\}, \\
+    \langle a \rangle b &= \{b, ab, a^{2}b, \ldots, a^{p-1}b\}.
+  \end{align*}
+  Therefore $b^{2}$ and $(ba)^{2}$ must lie in one of these two cosets.
+  
+  If $b^{2} \in \langle a \rangle b$, then $b^{2} = a^{k}b$ for some 
+  $k$, and the cancellation law tells us that $b = a^{k}$, which is a 
+  contradiction.  Hence $b^{2} \in \langle a \rangle$, so $b^{2} = 
+  a^{k}$ for some $k$.  If $k \ne 0$, then $b^{2} \ne e$, so $o(b) > 2$ 
+  and hence $b$ must have order $p$.  But then since $p$ is odd, $p-1$ 
+  is even, and
+  \[
+    b^{p} = b^{p-1}b = (b^{2})^{(p-1)/2}b = (a^{k})^{(p-1)/2}b = 
+    a^{k(p-1)/2}b \ne e.
+  \]
+  So $b$ cannot have order $p$.  Hence $b^{2} = e$.
+  
+  The same argument with $ba$ in the place of $b$ shows that $(ba)^{2} = 
+  e$.  Hence,
+  \begin{align*}
+    baba &= 1 \\
+    bab &= a^{-1} = a^{p-1} \\
+      ba &= a^{p-1}b^{-1} = a^{p-1}b.\\
+  \end{align*}
+  So $G = \{ 1, a, a^{2}, \ldots, a^{p-1}, b, ab, a^{2}b, \ldots, a^{p-1}b\}$
+  and the relations
+  \[
+    a^{p} = 1, b = 1, \text{and} ba = a^{p-1}b,
+  \]
+  hold, which is precisely the definition of $D_{2p}$.  Hence $G \isom D_{2p}$.
+\end{proof}
+
+There may still be groups of order 8, 9 and 12 which we do not know
+about.  We need to introduce a new concept to fully analyse these
+situations, so we defer them to a later section.
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Show that every Abelian group of order 8 is isomorphic to one of
+  $C_{8}$, $C_{4} \cross C_{2}$, or $C_{2} \cross C_{2} \cross C_{2}$.
+  
+  \item\label{ex:quaterniongroup} For any natural number $n$, define the \defn{quaternion
+  group}{group!quaternion} to be the group
+  \[
+    Q_{4n} = \{1, a, a^{2}, \ldots, a^{2n-1}, b, ab, a^{2}b, \ldots, a^{2n-1}b \}
+  \]
+  where the Cayley table is determined by the relations $a^{2n} = 1$, $b^{2} =
+  a^{n}$, and $b^{-1}ab = a^{-1}$.
+  
+  Show that $Q_{4} \isom C_{2} \cross C_{2}$.
+  
+  Show that $Q_{8}$ is not isomorphic to any one of $C_{8}$, $C_{2} \cross C_{2} \cross
+  C_{2}$, $C_{2} \cross C_{4}$, or $D_{8}$.  In other words, $Q_{8}$ is a new
+  group of order $8$.
+  
+  Find the subgroup lattice for $Q_{8}$.
+\end{exercises}
+
+\section{Excursion: Equivalence Relations}
+
+Underlying the concept of cosets is the notion of an equivalence
+relation.  Equivalence relations are a powerful mathematical concept
+which occur with regularity throughout abstract mathematics. 
+Moreover, you are familiar with some of them already, even though you
+may have not seen the concept formally explained.
+
+\begin{definition}
+  An \defn{equivalence relation}{relation!equivalence} on a set $X$ is a
+  relation $R$ on $X$ which is reflexive, transitive and symmetric. 
+  Equivalence relations are often denoted by the symbol $\sim$.
+\end{definition}
+
+\begin{example}
+  The equality relation is an equivalence relation.  Indeed, it is the
+  prototypical equivalence relation.
+\end{example}
+
+\begin{example}\label{eg:matrixconjugate}
+  Let $M_{n}(\reals)$ be the set of $n$ by $n$ real-valued matrices.  Recall
+  that $A$ and $B$ are equivalent matrices if there is an orthogonal matrix
+  $U$ such that $A = U^{-1}BU$.  The relation $\sim$ defined by $A \sim B$ if
+  and only if $A$ and $B$ are equivalence matrices is an equivalence relation.
+\end{example}
+
+\begin{example}\label{eg:modequivclass}
+  Let $m$ be any natural number.  The relation $\equiv$ on $\integers$
+  defined by $x \equiv y$ if and only if $m$ divides $x-y$ is an equivalence
+  relation.  Another way of looking at it, is that it holds if and only if
+  \[
+    x \equiv y \pmod{m}.
+  \]
+  A third, useful, way of looking at this situation is that the set of
+  all integers divisible by $m$ is the subset $H = m\integers =
+  \{ mn : n \in \integers\}$ of $\integers$, and this is a subgroup, so
+  $x \equiv y$ if and only if $x - y \in H$, and $x-y$ is the additive notation
+  for $xy^{-1}$.  So this is the same condition we were using to test whether
+  two elements were in the same coset.
+\end{example}
+
+We now get to the key example which links this section with what we have
+just discussed by generalizing the above example.
+
+\begin{example}
+  Let $G$ be a group, $H$ a subgroup of $G$, and $x$, $y \in G$.  We define
+  $x \equiv_{R} y \pmod{H}$ if $xy^{-1} \in H$.
+  
+  To prove this, you need to check that each of the three axioms for an 
+  equivalence relation hold.
+  
+  Firstly, $xx^{-1} = e \in H$, so $x \equiv_{R} x \pmod{H}$, and $\equiv_{R} \pmod{H}$ is reflexive.
+  
+  Secondly, if $x \equiv_{R} y \pmod{H}$, then $xy^{-1} \in H$, then
+  $yx^{-1} = (xy^{-1})^{-1} \in H$, so $y \equiv_{R} x \pmod{H}$, and $\equiv_{R} \pmod{H}$ is symmetric.
+  
+  Finally, if $x \equiv_{R} y \pmod{H}$ and $y \equiv_{R} z \pmod{H}$, then $xy^{-1}$ and $yz^{-1} \in H$,
+  so $xz^{-1} = xy^{-1}yz^{-1} \in H$, so $x \equiv_{R} z \pmod{H}$, and $\equiv_{R} \pmod{H}$ is transitive.
+  
+  There is of course the equivalent ``left'' relation $x \equiv_{L} y \pmod{H}$ if $x^{-1}y \in H$,
+  and this too is an equivalence relation.
+\end{example}
+
+Notice how the three group axioms correspond to the three equivalence relation
+axioms in the previous example.  Notice also that with these equivalence
+relations, the cosets are precisely the sets of elements which are equivalent
+to one-another.
+
+\begin{definition}
+  Let $\sim$ be an equivalence relation on $X$.  The \defn{equivalence class}{equivalence class}
+  of $x \in X$ is the set
+  \[
+    [x]_{\sim} = \{ y \in X : x \sim y \}.
+  \]
+  When the equivalence relation is clear, we typically write just $[x]$.
+\end{definition}
+
+\begin{example}
+  For equality, the equivalence class $[x]_{=} = \{x\}$.
+\end{example}
+
+\begin{example}\label{eg:equivmodm}
+  For $\equiv \pmod{m}$, the equivalence class of a number $n$,
+  $[n]_{\equiv}$ is the set of all numbers with the same remainder when divided
+  by $m$, or equivalently,
+  \[
+    [n] = \{\ldots, n-2m, n-m, n, n+m, n+2m, \ldots\}
+  \]
+\end{example}
+
+\begin{example}
+  The equivalence class of $x$ under the equivalence relation $\equiv_{R} \pmod{H}$
+  is the right coset $Hx$.
+
+  The equivalence class of $x$ under the equivalence relation $\equiv_{L} \pmod{H}$
+  is the left coset $xH$.
+\end{example}
+
+A key fact about equivalence classes is that they partition the set $X$ into a
+disjoint collection of subsets whose union is the whole set.
+
+\begin{lemma}
+  Let $\sim$ be an equivalence relation on $X$.  We have $x \sim y$ if and
+  only if $[x] = [y]$.
+  
+  Also, either $[x] = [y]$ or $[x] \intersect [y] = \emptyset$.
+\end{lemma}
+\begin{proof}
+  Assume that $x \sim y$, then given any $z \in [y]$, we have $y \sim z$,
+  and since $\sim$ is transitive, $x \sim z$, so $z \in [x]$.  Hence $[x]
+  \subseteq [y]$.  On the other hand, we know that by symmetry $x \sim y$
+  implies $y \sim x$. If $z \in [x]$, we have $x \sim z$ and since $\sim$ is transitive, $x \sim z$, so $z \in [x]$.  Hence $[x]
+  \subseteq [y]$.  Hence $[x] = [y]$.
+  
+  If $[x] = [y]$, then $y \in [y]$, since $y \sim y$ by reflexivity, and
+  so $y \in [x]$.  Hence $x \sim y$ by definition.
+
+  If $[x] \intersect [y] \ne \emptyset$, then there must be some $z$ in both
+  sets, ie.~$x \sim z$ and $y \sim z$.  Now since $\sim$ is symmetric, $y \sim z$
+  implies $z \sim y$, and since $\sim$ is transitive, $x \sim y$.  The first
+  part of this lemma allows us to conclude that $[x] = [y]$.
+\end{proof}
+
+Theorem~\ref{thm:cosetsequal} is now a trivial corollary of this general fact
+about equivalence relations.  Similarly, Lagrange's Theorem follows from the
+following general fact.
+
+\begin{theorem}\label{thm:countingequivalenceclasses}
+  Let $X$ be a finite set, and let $\sim$ be an equivalence relation on $X$.
+  Choose elements $x_{1}$, $x_{2}, \ldots, x_{n} \in X$ so that no two are
+  equivalent, and so for every $x \in X$, there is some $x_{k}$ such that
+  $[x] = [x_{k}]$ (ie.~this is a complete set of equivalence class
+  representatives).  Then
+  \[
+    |X| = \sum_{k=1}^{n} |[x_{k}]|
+  \]
+\end{theorem}
+\begin{proof}
+  We have that $X$ is the disjoint union of the equivalence classes of the
+  $x_{k}$, ie.
+  \[
+    X = [x_{1}] \union [x_{2}] \union \cdots \union [x_{n}],
+  \]
+  which follows from the fact that every $x$ lies in one of the $[x_{k}]$,
+  and if $k \ne j$,
+  \[
+    [x_{j}] \intersect [x_{k}] = \emptyset,
+  \]
+  since $x_{k} \not\sim x_{j}$.
+  
+  Repeated application of the inclusion-exclusion principle then tells us
+  that
+  \[
+    |X| = |[x_{1}]| + |[x_{2}]| + \cdots + |[x_{n}]|,
+  \]
+  since the intersections are empty.
+\end{proof}
+
+We will use this general theorem in the next section.
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Verify that Example~\ref{eg:modequivclass} is an equivalence 
+  relation.
+  
+  \item Verify that Example~\ref{eg:matrixconjugate} is an equivalence 
+  relation.
+  
+  \item Let $A$ and $B \in M_{n}(\reals)$, and define a relation by $A 
+    \sim B$ if $A = X^{-1}BX$ for some invertible matrix $X$.  SHow 
+    that this is an equivalence relation.
+  
+  \item Can a relation be symmetric and transitive, but not reflexive? Give a proof or counterexample to justify your position.
+  
+  \item (*) Show that if $\sim$ is the equivalence relation of 
+  Example~\ref{eg:matrixconjugate}, and
+  \[
+    A = \begin{bmatrix}
+      1 & 0 \\
+      0 & 2
+    \end{bmatrix}
+  \]
+  then $[A]_{\sim}$ is the set of all symmetric $2 \times 2$ matrices with 
+  eigenvalues $1$ and $2$.
+\end{exercises}
+
+\section{Conjugacy Classes}
+
+There is another equivalence relation which is of interest which is a
+generalization of the idea of conjugate matrices (see
+Example~\ref{eg:matrixconjugate}).
+
+\begin{definition}
+  Let $G$ be a group and let $x$ and $y \in G$.  We say that $y$ is a
+  conjugate of $x$ if $y = u^{-1}xu$ for some $u \in G$.  In this case, we
+  write $x \sim y$.
+\end{definition}
+
+\begin{example}
+  In the group $D_{6} = \{1, a, a^{2}, b, ab, a^{2}b\}$ we have that $a \sim
+  a^{2}$, since $b^{-1}ab = bab = a^{2}bb = a^{2}$.  Similarly, we have that
+  $b \sim ab$ since $a^{-1}ba = a^{2}ba = a^{2}a^{2}b = ab$.
+\end{example}
+
+\begin{proposition}
+  If $G$ is a group, the conjugacy relation $\sim$ is an equivalence
+  relation on $G$.
+\end{proposition}
+\begin{proof}
+  We need to show that $\sim$ is reflexive, symmetric and transitive.
+  
+  Since $x = e^{-1}xe$, we have that $x \sim x$, so $\sim$ is reflexive.
+  
+  If $x \sim y$, then there is an element $u$ such that $y = u^{-1}xu$.  But
+  then $x = uu^{-1}xuu^{-1} = uyu^{-1} = (u^{-1})^{-1}yu^{-1}$.  So $y \sim
+  x$, and $\sim$ is symmetric.
+  
+  If $x \sim y$ and $y \sim z$, then $y = u^{-1}xu$ and $z = v^{-1}yv$ for
+  some $u$ and $v$ in $G$, so $z = v^{-1}u^{-1}xuv = (uv)^{-1}x(uv)$. Hence
+  $x \sim z$, and $\sim$ is transitive.
+\end{proof}
+
+We will call the equivalence class of $x \in G$ the \defn{conjugacy
+class}{conjugacy class} of $x$.  We will denote the conjugacy class 
+of an element $x \in G$ by $C(x)$.  In other words,
+\[
+  C(x) = \{ y \in G: y = u^{-1}xu~\text{for some $u \in G$} \}.
+\]
+
+\begin{example}
+  The conjugacy classes of the four-group are $\{e\}$, $\{a\}$, $\{b\}$,
+  $\{ab\}$.  In other words, each element is in its own conjugacy class.
+\end{example}
+
+\begin{example}
+  The conjugacy classes of the group $D_{6} = \{1, a, a^{2}, b, ab, a^{2}b\}$
+  are $\{1\}$, $\{a, a^{2}\}$, $\{b, ab, a^{2}b\}$.
+\end{example}
+
+The reason that the four-group has a conjugacy class for each element is
+because it is an Abelian group.  In fact if $x$ commutes with everything in
+$G$, then the only element of the conjugacy class of $x$ is itself.
+
+\begin{proposition}\label{prop:centreconjugates}
+  Let $G$ be a group and $x \in G$.  Then $C(x) = \{x\}$ if and only 
+  if $x \in Z(G)$.
+\end{proposition}
+\begin{proof}
+  Assume $x \in Z(G)$.  Let $y \in C(x)$, so that there is some $u \in
+  G$ such that $y = u^{-1}xu$.  But then, since $xu = ux$,
+  \[
+    y = u^{-1}xu = u^{-1}ux = x.
+  \]
+  So $C(x) = \{x\}$.
+  
+  On the other hand, if $C(x) = \{x\}$, then for every $u \in G$, we 
+  have $u^{-1}xu = x$, which means $x$ and $u$ commute.  Hence $x \in 
+  Z(G)$.
+\end{proof}
+
+Notice in this case that we are saying that $u^{-1}xu = v^{-1}xv$ for
+every $u$ and $v \in G$.  This is not going to be the case in general,
+but it is of interest to know for which $u$ and $v$ it occurs.  For
+example, if these quantities were never equal for different $u$ and
+$v$, it would show that the conjugacy class of $x$ has many different 
+elements.
+
+\begin{proposition}
+  Let $G$ be a group and $x \in G$.  Then $u^{-1}xu = v^{-1}xv$ if 
+  and only if $uv^{-1} \in Z_{G}(x)$.
+\end{proposition}
+\begin{proof}
+  If $u^{-1}xu = v^{-1}xv$, then we have
+  \begin{align*}
+    u^{-1}xu &= v^{-1}xv \\
+    xu &= uv^{-1}xv \\
+    xuv^{-1} &= uv^{-1}x.
+  \end{align*}
+  So we can see that $uv^{-1}$ commutes with $x$, and so $uv^{-1} \in 
+  Z_{G}(x)$.
+  
+  On the other hand, if $uv^{-1} \in Z_{G}(x)$, we can run the 
+  calculation backwards:
+  \begin{align*}
+    xuv^{-1} &= uv^{-1}x \\
+    xu &= uv^{-1}xv \\
+    u^{-1}xu &= v^{-1}xv,
+  \end{align*}
+  and so we have the result.
+\end{proof}
+
+Recalling Theorem~\ref{thm:cosetsequal}, this proposition cas the 
+following corollary:
+
+\begin{corollary}
+  Let $G$ be a group and $x \in G$.  Then $u^{-1}xu = v^{-1}xv$ if 
+  and only if $u$ and $v$ are in the same right coset of $Z_{G}(x)$, 
+  ie.~if $Z_{G}(x)u = Z_{G}(x)v$.
+\end{corollary}
+
+Turning this around, it means that $u^{-1}xu \ne v^{-1}xv$ if and only
+if $u$ and $v$ are in different right cosets of $Z_{G}(x)$, which
+means that there is a distinct conjugate of $x$ for each distinct
+right coset of $Z_{G}(x)$.  If $G$ is finite, then Lagrange's Theorem
+tells us that there are exactly $|G : Z_{G}(x)| = |G|/|Z_{G}(x)|$ 
+distinct right cosets of $Z_{G}(x)$.  This proves the following:
+
+\begin{corollary}\label{cor:conjugacyclasssize}
+  Let $G$ be a finite group and $x \in G$.  Then
+  \[
+    |C(x)| = |G : Z_{G}(x)|.
+  \]
+\end{corollary}
+
+Note that this agrees with Proposition~\ref{prop:centreconjugates}, 
+since $x \in Z(G)$ if and only if $Z_{G}(x) = G$, but this happens if 
+and only if $|C(x)| = |G : Z_{G}(x)| = |G|/|G| = 1$.  In other words, 
+if and only if the only conjugate of $x$ is itself.
+
+\begin{example}
+  For the group $D_{6}$ we know that $a$ has conjugacy class $\{a, 
+  a^{2}\}$, and we know that $Z_{D_{6}}(a) = \{1, a, a^{2}\}$.  It is 
+  simple to verify that
+  \[
+    |G|/|Z_{D_{6}}(a)| = 6/3 = 2 = |C(a)|.
+  \]
+  If we look at the other elements of $D_{g}$, we observe that
+  \begin{alignat*}{2}
+    |C(e)| &= 2 &\qquad |G|/|Z_{D_{6}}(e)| &= 6/6 = 1 \\
+    |C(a^{2})| &= 2 &\qquad |G|/|Z_{D_{6}}(a^{2})| &= 6/3 = 2 \\
+    |C(b)| &= 3 &\qquad |G|/|Z_{D_{6}}(b)| &= 6/2 = 3 \\
+    |C(ab)| &= 3 &\qquad |G|/|Z_{D_{6}}(ab)| &= 6/2 = 3 \\
+    |C(a^{2}b)| &= 3 &\qquad |G|/|Z_{D_{6}}(a^{2}b)| &= 6/2 = 3.
+  \end{alignat*}
+\end{example}
+
+We can now apply Theorem~\ref{thm:countingequivalenceclasses} to the 
+conjugacy equivalence relation.
+
+\begin{theorem}[The Class Equation]
+  Let $G$ be a finite group, and let $g_{1}$, $g_{2}$, $g_{n} \in G$ 
+  be chosen so that no two are conjugate, and every conjugacy class 
+  of $G$ occurs as one of the conjugacy classes $C(g_{k})$ (ie.~the 
+  elements $g_{k}$ are a complete set of conjugacy class 
+  representatives).  Then
+  \[
+    |G| = \sum_{k = 1}^{n} |C(g_{k})| = \sum_{k = 1}^{n} |G : 
+    Z_{G}(g_{k})|.
+  \]
+  In fact, if we assume that $Z(G) = \{g_{1}, g_{2}, \ldots, 
+  g_{m}\}$, then
+  \[
+    |G| = |Z(G)| + \sum_{k = m+1}^{n} |G : Z_{G}(g_{k})|.
+  \]
+\end{theorem}
+\begin{proof}
+  Since conjugacy is an equivalence relation, Theorem~\ref{thm:countingequivalenceclasses} 
+  applies and tells us that
+  \[
+    |G| = |C(g_{1})| + |C(g_{2})| + \cdots + |C(g_{n})| = \sum_{k = 1}^{n} |C(g_{k})|.
+  \]
+  But then Corollary~\ref{cor:conjugacyclasssize} tells us that 
+  $|C(g_{k})| = |G : Z_{G}(g_{k})|$, and so we can re-write the equation as
+  \[
+    |G| = \sum_{k = 1}^{n} |G : Z_{G}(g_{k})|.
+  \]
+  
+  Now we know that if $g_{k} \in Z(G)$, then $|C(g_{k})| = 1$, so if
+  $Z(G) = \{g_{1}, g_{2}, \ldots, g_{m}\}$, then
+  \begin{align*}
+    |G| &= |C(g_{1})| + |C(g_{2})| + \cdots + |C(g_{m})| + |C(g_{m + 1})| + 
+    |C(g_{m + 2})| + \cdots + |C(g_{n})| \\
+        &= \underbrace{1 + 1 + \cdots + 1}_{m~\text{times}} + |C(g_{m + 1})| + 
+    |C(g_{m + 2})| + \cdots + |C(g_{n})| \\
+        &= |Z(G)| + \sum_{k = m+1}^{n} |C(g_{k})| \\
+        &= |Z(G)| + \sum_{k = m+1}^{n} |G : Z_{G}(g_{k})|.
+  \end{align*}
+\end{proof}
+
+\begin{example}
+  For the group $D_{6}$ we have that $1$, $a$, and $b$ are 
+  representatives of each conjugacy class, and
+  \[
+    |C(1)| + |C(a)| + |C(b)| = 1 + 2 + 3 = 6 = |D_{6}|.
+  \]
+\end{example}
+
+\begin{example}
+  For the group $D_{8}$, we know from Example~\ref{eg:D8centre} that
+  the centre $Z(D_{8}) = \{1, a^{2}\}$, so $C(1) = \{1\}$ and 
+  $C(a^{2}) = \{a^{2}\}$.
+  
+  We know that $Z_{D_{8}}(a)$ contains $\langle a \rangle$ so 
+  \[
+    |Z_{D_{8}}(a)| \ge  |\langle a \rangle| = o(a) = 4,
+  \]
+  and from Lagrange's theorem $|Z_{D_{8}}(a)|$ divides $8$, so we 
+  conclude that $|Z_{D_{8}}(a)|$ is $4$ or $8$.  But $a \not\in Z(D_{8})$, 
+  so $Z_{D_{8}}(a) \ne D_{8}$, and hence $|Z_{D_{8}}(a)| = 4$.  Hence 
+  $a$ has two conjugates, itself, and $b^{-1}ab = bab = a^{3}b^{2} = 
+  a^{3}$.  So $C(a) = \{a, a^{3}\}$.
+  
+  Now $Z_{D_{8}}(b)$ contains $\langle b \rangle$, so $|Z_{D_{8}}(b)|
+  \ge o(b) = 2$, and $|Z_{D_{8}}(b)|$ divides $8$.  Also $b$ is not in
+  the centre of $D_{8}$, so $|Z_{D_{8}}(b)| \ne 8$, and hence
+  $|Z_{D_{8}}(b)|$ is $2$ or $4$.  Now we know that the centre is a 
+  subgroup of $Z_{D_{8}}(b)$, so $1$ and $a^{2}$ are in the subgroup, 
+  as is $b$ itself.  Hence $|Z_{D_{8}}(b)| > 2$, and we conclude 
+  that $|Z_{D_{8}}(b)| = 4$.  Hence $b$ has two conjugates, itself 
+  and $a^{-1}ba = a^{-1}a^{3}b = a^{2}b$.  So $C(b) = \{b, a^{2}b\}$.
+  
+  Looking at $Z_{D_{8}}(ab)$, an analagous argument tells us that 
+  $|Z_{D_{8}}(ab)| = 4$, and the conjucacy class is $C(ab) = \{ab, 
+  a^{3}b\}$.
+  
+  We can verify that the class equation holds in this example: a 
+  complete collection of equivalence class representatives is $1$, 
+  $a^{2}$, $a$, $b$ and $ab$, and
+  \[
+    |Z(D_{8})| + |C(a)| + |C(b)| + |C(ab)| = 2 + 2 + 2 + 2 = 8 = 
+    |D_{8}|.
+  \]
+\end{example}
+
+We conclude with one last proposition which can help identify which 
+elements are in different conjugacy classes.
+
+\begin{proposition}
+  Let $G$ be a finite group.  If $x$ and $y \in G$ are conjugate, 
+  then $o(x) = o(y)$.
+\end{proposition}
+\begin{proof}
+  Let $x = u^{-1}yu$.  Then if $o(y) = n$,
+  \begin{align*}
+    x^{n} &= (u^{-1}yu)^{n} \\
+          &= \underbrace{(u^{-1}yu)(u^{-1}yu)\cdots 
+          (u^{-1}yu)}{n~\text{times}} \\
+          &= u^{-1}\underbrace{yy\ldots y}{n~\text{times}}u \\
+&= u^{-1}y^{n}u \\
+&= u^{-1}u \\
+&= e.
+  \end{align*}
+  So $o(x)$ divides $n$.  However, if $o(x) = m$, then a similar 
+  calculation shows that
+  \begin{align*}
+    e &= x^{m} \\
+      &= u^{-1}y^{m}u,
+  \end{align*}
+  so $y^{m} = uu^{-1}y^{m}uu^{-1} = ueu^{-1} = e$.  Hence $n$ 
+  divides $m$, and so $n = m$.
+\end{proof}
+
+Note that the converse is not true, since in the group $D_{8}$, the 
+elements $a^{2}$, $b$ and $ab$ all have order $2$, but all are in 
+distinct conjugacy classes.
+
+Notice that every term in the class equation divides the order of 
+the group.  We can use this to prove the following interesting result 
+that will be useful when we look once again at groups of small order.
+
+\begin{theorem}\label{thm:centreprimepower}
+  Let $G$ be a finite group of prime power order, ie.  $|G| = p^{n}$
+  where $p$ is prime and $n \ge 1$.  Then $|Z(G)| = p^{m}$ for some $m
+  \ge 1$.
+\end{theorem}
+\begin{proof}
+  Lagrange's theorem tells us that $|Z(G)| = p^{m}$ for some 
+  $m \ge 0$.
+  
+  Let $x_{1}$, $x_{2}, \ldots, x_{k}$ be a complete set of conjugacy
+  class representatives, and let $Z(G) = \{x_{1}, \ldots, x_{l}\}$. 
+  Now let $n_{i} = |C(x_{i})| = |G : Z_{G}(x_{i})|$, so $n_{i} \mid
+  p^{n}$.  Now for $i > l$, we must have $n_{i} > 1$, so $n_{i}$ must
+  be a multiple of $p$.  Therefore,
+  \[
+    p^{n} = |G| = |Z(G)| + n_{l+1} + n_{l+2} + \cdots n_{k} = l + jp
+  \]
+  for some integer $j$.  But therefore $l$ is a multiple of $p$, and
+  since $e \in Z(G)$, $|Z(G)| \ge 1$.  So we conclude that $|Z(G)| 
+  \ge p$, and hence $m \ge 1$.
+\end{proof}
+
+In other words, groups of prime power must have more than just the 
+identity in their centres.
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item In a group of order 15, what does the Class equation say are
+  possible sizes of the conjugacy classes?  Potentially how many different
+  ways can a group of order 15 be divided into conjugacy classes of these
+  sizes (remembering that the number of conjugacy classes of size 1 has to
+  equal $|Z(G)|$, which has to divide 15).
+  
+  Note: in actual fact, there turns out to be only one group of order 15,
+  so there is just one way to do it once this is taken into account; however
+  you should use the class equation to give you all the potentially possible
+  ways that it could be done.
+  
+  \item Find the conjugacy classes of $D_{10}$, and verify that the 
+  class equation holds.
+
+  \item Find the conjugacy classes of $D_{12}$, and verify that the 
+  class equation holds.
+
+  \item Find the conjugacy classes of $A_{4}$, and verify that the 
+  class equation holds.
+  
+  \item Let $G$ be a finite group, and $x \in G$.  Show that the
+    conjugacy classes $C(x)$ and $C(x^{-1})$ have the same number of
+    elements.
+    
+  \item Show that any group $G$ of even order must contain an
+    element of even order, and use the previous exercise to conclude
+    that there is at least one element $x \in G$ other than $e$ such
+    that $C(x) = C(x^{-1})$.
+
+\end{exercises}
+
+
+\section{Normal Subgroups}
+
+It turns out that many of the ideas relating to centralizers and conjugacy can
+be applied to subgroups instead of individual elements.
+
+\begin{proposition}
+  Let $G$ be a group and $H$ a subgroup of $G$.  Given any $x \in G$, the
+  set
+  \[
+    x^{-1}Hx = \{x^{-1}yx : y \in H \}
+  \]
+  of conjugates of elements of $H$ is a subgroup of $G$.
+\end{proposition}
+\begin{proof}
+  Given any elements $u$ and $v \in x^{-1}Hx$, we have $y$ and $z \in H$
+  such that $u = x^{-1}yx$ and $v = x^{-1}zx$.  Then
+  \[
+    uv^{-1} = x^{-1}yx(x^{-1}zx)^{-1} = x^{-1}yxx^{-1}z^{-1}x =
+      x^{-1}yz^{-1}x,
+  \]
+  which is an element of $x^{-1}Hx$, since $yz^{-1} \in H$.
+  
+  Hence $x^{-1}Hx$ is a subgroup of $G$.
+\end{proof}
+
+If $x \in H$, then $x^{-1}Hx = H$, but if $x \notin H$ we may potentially
+get something else.
+
+\begin{example}
+  In the group $D_{6}$, consider the subgroup $H = \{1, b\}$.  Since
+  $a^{-1}1a = 1$, and $a^{-1}ba = a^{-1}a^{2}b = ab$ , we have
+  \[
+    a^{-1}Ha = \{1, ab\}.
+  \]
+  Similarly, we have
+  \begin{align*}
+    (a^{2})^{-1}Ha^{2} &= \{1, a^{2}b\} \\
+    b^{-1}Hb &= \{1, b\} \\
+    (ab)^{-1}H(ab) &= \{1, a^{2}b\} \\
+    (a^{2}b)^{-1}H(a^{2}b) &= \{1, ab\} \\
+  \end{align*}
+  
+  On the other hand, the subgroup $K = \{1, a, a^{2}\}$ has $x^{-1}Kx = K$
+  for any $x$.  For example, since $b^{-1}1b = 1$, $b^{-1}ab = bab =
+  a^{2}b^{2} = a^{2}$, and $b^{-1}a^{2}b = ba^{2}b = b^{2}a = a$, we have
+  $b^{-1}Kb = K$.  Similar arguments give the remaining cases.
+\end{example}
+
+We will say that two subgroups $H$ and $K$ of $G$ are
+\defn{conjugate}{conjugate!subgroups} if there is some $x \in G$ such that
+\[
+  K = x^{-1}Hx,
+\]
+and we will write $K \sim H$ if this is the case.  It is equivalent to
+say that $K$ and $H$ are conjugate if and only if there is some $x \in G$
+such that $xK = Hx$.
+
+\begin{proposition}
+  Let $G$ be a group.  The conjugacy relation $\sim$ is an equivalence relation
+  on the set $\Sub(G)$ of all subgroups of $G$.  Furthermore if two
+  subgroups are conjugate, they are isomorphic.
+\end{proposition}
+\begin{proof}
+  We need to show that $\sim$ is reflexive, symmetric and transitive.
+  
+  Given a subgroup $H$, we have $H \sim H$ immediately from the fact that
+  $e^{-1}He = H$.
+  
+  If $K$ and $H$ are subgroups with $K \sim H$, then there is some $x \in G$
+  so that $K = x^{-1}Hx$.  But then $H = xKx^{-1} = (x^{-1})^{-1}Kx^{-1}$, and
+  so $H \sim K$.
+  
+  Finally, if $H$, $K$ and $F$ are subgroups, with $H \sim K$ and $K \sim F$, 
+  then there are elements $x$ and $y \in G$ such that $K = x^{-1}Hx$ and $F
+  = y^{-1}Ky$.  But then $F = y^{-1}(x^{-1}Hx)y = (xy)^{-1}H(xy)$, and so
+  $F \sim H$.
+  
+  So conjugacy of subgroups is an equivalence relation.
+  
+  If $K$ and $H$ are conjugate, with $K = x^{-1}Hx$, we define a function
+  $\alpha : H \to K$ by $\alpha(y) = x^{-1}yx$.  This function is a
+  homomorphism, since
+  \[
+    \alpha(y)\alpha(z) = x^{-1}yxx^{-1}zx = x^{-1}yzx = \alpha(yz).
+  \]
+  It is also onto, since $K = \alpha(H)$ by definition.  Finally, it is
+  one-to-one since if $\alpha(y) = \alpha(z)$, then $x^{-1}yx = x^{-1}zx$,
+  and using the cancellation law on the left and right gives $y = z$.
+  
+  So $\alpha$ is an isomorphism from $H$ to $K$, and $H$ and $K$ are
+  isomorphic.
+\end{proof}
+
+\begin{example}
+  Continuing the example of $D_{6}$ from above, we have that $\{1\}$ is only
+  conjugate with itself, $\{1, a, a^{2}\}$ is only conjugate with itself,
+  $\{1, b\} \sim \{1, ab\} \sim \{1, a^{2}b\}$, and $D_{6}$ is only
+  conjugate with itself.
+\end{example}
+
+We recall that elements of a group whose conjugacy class was just themselves
+were special: they formed the centre of the group.  Subgroups which are
+conjugate only with themselves are also special.
+
+\begin{definition}
+  Let $G$ be a group and $K$ a subgroup of $G$.  If the only subgroup
+  conjugate to $K$ is $K$ itself, that is, for any $x \in G$
+  \[
+    x^{-1}Kx = K,
+  \]
+  then we say that $K$ is a \defn{normal subgroup}{subgroup!normal}, and we
+  write $K \lhd G$.
+\end{definition}
+
+Another way of representing the condition that $K$ is normal is that
+\[
+  Kx = xK
+\]
+for every $x \in G$, or in other words that the corresponding left- and right-
+cosets of $K$ are identical.
+
+\begin{example}
+  In the group $D_{6}$ we have that the subgroups $\{1\}$, $\{1, a, a^{2}\}$
+  and $D_{6}$ are normal.  The subgroups $\{1, b\}$, $\{1, ab\}$ and $\{1, 
+  a^{2}b\}$ are not normal.
+\end{example}
+
+\begin{lemma}
+  If $G$ is a group, then $\{e\}$ and $G$ are always normal subgroups of
+  $G$.
+
+  If $G$ is Abelian, then every subgroup of $G$ is normal.
+\end{lemma}
+\begin{proof}
+  We know $x^{-1}ex = x^{-1}x = e$ for every $x$, so $x^{-1}\{e\}x = \{e\}$
+  for all $x$.  We also know that $x^{-1}Gx = G$ for any $x$, since $x \in
+  G$.
+
+  If $G$ is Abelian, we recall that $Kx = xK$ for any subgroup and any $x
+  \in G$ (see Definition~\ref{defn:coset}), hence $K$ is always normal.
+\end{proof}
+
+Not every element of a group is in the centre, and not every subgroup is
+normal.  Similarly, just as the centralizer gives us information about the
+conjugacy classes of elements, we have an analagous concept for conjugacy
+classes of subgroups.
+
+\begin{definition}
+  Let $G$ be a group, and $H$ a subgroup of $G$.  We define the
+  \defn{normalizer}{normalizer} of $H$ to be the set
+  \[
+    N_{G}(H) = \{ x \in G : H = x^{-1}Hx \}
+  \]
+\end{definition}
+
+With this definition, we can duplicate most of the key results about
+centralizers and conjugacy classes.
+
+\begin{theorem}\label{thm:normalizers}
+  Let $G$ be a group and $H$ a subgroup of $G$.  Then
+  \begin{theoremenum}
+    \item $N_{G}(H)$ is a subgroup of $G$,
+    \item $H$ and $Z(G)$ are subgroups of $N_{G}(H)$,
+    \item $N_{G}(H) = G$ if and only if $H$ is normal,
+    \item $x^{-1}Hx = y^{-1}Hy$ if and only if $x$ and $y$ are in the same
+      right coset of $N_{G}(H)$,
+    \item The number of distinct conjugacy classes of $H$ is $|G :
+      N_{G}(H)|$.
+  \end{theoremenum}
+\end{theorem}
+\begin{proof}
+  The proofs of these facts are analogous to the proofs of the corresponding
+  results for centralizers, and are left as an exercise.
+\end{proof}
+
+Normal subgroups play a key role in the theory of groups, and we now turn to
+study them in more detail.  We start with some ways of testing whether a
+subgroup is normal or not, and discovering normal subgroups of a group.
+
+\begin{theorem}
+  Let $G$ be a group and $K$ a subgroup of $G$.  Then the following are
+  equivalent:
+  \begin{theoremenum}
+    \item $K$ is normal,
+    \item $x^{-1}Kx = K$ for all $x \in G$,
+    \item $Kx = xK$ for all $x \in G$,
+    \item $N_{G}(H) = G$,
+    \item $x^{-1}yx \in K$ for all $y \in K$ and $x \in G$,
+    \item $K$ is a union of some of the conjugacy classes of elements of $G$,
+  \end{theoremenum}
+\end{theorem}
+\begin{proof}
+  We have already seen that (i), (ii), (iii) and (iv) are equivalent.
+  
+  If $K$ is normal then $x^{-1}Kx = K$, so for any $y \in K$ we have that
+  $x^{-1}yx \in K$.  Conversely, if $x^{-1}yx \in K$ for all $y \in
+  K$ and $x \in G$, then if we fix $x$ we have that
+  \[
+    x^{-1}Kx = \{x^{-1}yx : y \in K\} \subseteq K.
+  \]
+  On the other hand, given any $y \in K$, we have that $(x^{-1})^{-1}yx^{-1}
+  \in K$, and so
+  \[
+    x^{-1}((x^{-1})^{-1}yx^{-1})x = x^{-1}xyx^{-1}x = y,
+  \]
+  and so $K \subseteq x^{-1}Kx$.  Hence $x^{-1}Kx = K$ for every $x \in G$
+  and so $K$ is normal.
+  
+  So we have just shown that (i) and (v) are equivalent.
+  
+  Another way of stating (v) is that if $y \in K$ then every conjugate of 
+  $y$ is in $K$, so that $C(y) \subseteq K$.  Hence $K$ must be the union of
+  all the conjugacy classes of its elements, ie.
+  \[
+    K = \bigcup_{y \in K} C(y)
+  \]
+  So (v) implies (vi).
+  
+  Conversely, if $K$ is a union of conjugacy classes, then given any element
+  $y \in K$, the conjugacy class $C(y)$ of $y$ must be a subset of $K$, and
+  so we have that $x^{-1}yx \in C(y) \subseteq K$.  Therefore $x^{-1}yx \in
+  K$, and (vi) implies (v).
+\end{proof}
+
+\begin{example}
+  In the group $D_{6}$, we have conjugacy classes $\{1\}$, $\{a, a^{2}\}$
+  and $\{b, ab, a^{2}b\}$.  We can clearly see that each of the normal
+  subgroups are unions of conjugacy classes:
+  \begin{align*}
+    \{1\} &= \{1\} \\
+    \{1, a, a^{2}\} &= \{1\} \union \{a, a^{2}\} \\
+    D_{6} &= \{1\} \union \{a, a^{2}\} \union \{b, ab, a^{2}b\}.
+  \end{align*}
+  
+  Notice that not every union of conjugacy classes gives a normal subgroup,
+  because some unions of conjugacy classes aren't subgroups.  For example,
+  the set $\{1, b, ab, a^{2}b\} = \{1\} \union \{b, ab, a^{2}b\}$ is not a
+  subgroup.
+\end{example}
+
+\begin{example}
+  The group $D_{8}$ has conjugacy classes
+  \[
+    \{1\}, \{a^{2}\}, \{a, a^{3}\}, \{b, a^{2}b\}, \{ab, a^{3}b\}.
+  \]
+  The trivial subgroups $\{1\}$ and $D_{8}$ are automatically normal, but in
+  addition, we have that the subgroups
+  \begin{align*}
+    \{1, a^{2}\} &= \{1\} \union \{a^{2}\} \\
+    \{1, a, a^{2}, a^{3}\} &= \{1\} \union \{a^{2}\} \union \{a, a^{3}\} \\
+    \{1, a^{2}, b, a^{2}b \} &= \{1\} \union \{a^{2}\} \union \{b, a^{2}b\} \\
+    \{1, a^{2}, ab, a^{3}b \} &= \{1\} \union \{a^{2}\} \union \{ab, a^{3}b\}
+  \end{align*}
+  are all normal, as they can be written as unions of conjugacy classes as
+  shown.  These are the only possible normal subgroups.
+\end{example}
+
+There are a number of conditions which guarantee that a subgroup is normal.
+
+\begin{theorem}\label{thm:normalconditions}
+  Let $G$ be a group, and $H$ a subgroup of $G$.  If any
+  of the following holds, $H$ is normal:
+  \begin{theoremenum}
+    \item $H = \{e\}$ or $G$,
+    \item $H \subseteq Z(G)$,
+    \item $|G : H| = 2$,
+    \item $H$ is the only subgroup of order $|H|$ in $G$.
+  \end{theoremenum}
+\end{theorem}
+\begin{proof}
+  We have already seen (i) is true.
+  
+  (ii) Recall that for any element $x \in Z(G)$, $C(x) = \{x\}$, so if $H
+  \subseteq Z(G)$, then
+  \[
+    H = \bigcup_{x \in H} \{x\} = \bigcup_{x \in H} C(x),
+  \]
+  so $H$ is a union of conjugacy classes, and so $H$ is normal.
+  
+  (iii) If $|G : H| = 2$, then $H$ has two left cosets, $H$ itself and $xH$,
+  where $x \notin H$.  Similarly, it has two right cosets $H$ and $Hx$.  Now
+  since every element of $G$ is either in $H$ or $xH$, we have that $xH = G
+  \setminus H$.  But we similarly have that $Hx = G \setminus H$.  Hence $xH
+  = Hx$, and corresponding left and right cosets of $H$ are equal.  Hence
+  $H$ is normal.
+  
+  (iv) We know that every conjugate of $H$ is a subgroup of $G$, and we must
+  have $|x^{-1}Hx| = |H|$.  Hence if $H$ is the only subgroup of order $|H|$,
+  we must have $H = x^{-1}Hx$ for all $x \in G$.  So $H$ is normal.
+\end{proof}
+
+\begin{example}
+  In the dihedral group $D_{2n} = \{1, a, a^{2}, \ldots, a^{n-1}, b, ab,
+  \ldots, a^{n-1}n\}$, the subgroup $\langle a \rangle = \{1, a, a^{2}, \ldots,
+  a^{n-1}\}$ has order $|\langle a \rangle| = o(a) = n$.  So $|D_{2n} :
+  \langle a \rangle| = |D_{2n}|/|\langle a \rangle| = 2n/n = 2$.
+  
+  So $\langle a \rangle$ is always a normal subgroup of $D_{2n}$.
+\end{example}
+
+Normal subgroups also have a nice relationship with the lattice structure of
+subgroups.
+
+\begin{proposition}\label{prop:normalproduct}
+  Let $G$ be a group, $K$ a normal subgroup of $G$, and $H$ an
+  arbitrary subgroup of $G$.  Then $HK$ is a subgroup of $G$, and
+  furthermore $H \vee K = HK = KH$.
+\end{proposition}
+\begin{proof}
+  We start by showing that $HK$ is a group.  Given $x$ and $y \in H$ and $u$
+  and $v \in K$, we have that $xu$ and $yv$ are typical elements of $HK$.
+  Now
+  \[
+    xu(yv)^{-1} = xuv^{-1}y^{-1} = xy^{-1}(y^{-1})^{-1}uv^{-1}y^{-1},
+  \]
+  and we know $xy^{-1} \in H$, and $(y^{-1})^{-1}uv^{-1}y^{-1} \in K$, since
+  it is a conjugate of $uv^{-1} \in K$.  So $xu(yv)^{-1} \in HK$, and hence
+  $HK$ is a subgroup of $G$.
+  
+  Now we need to show that $\langle H \union K \rangle = HK$.  We do this by
+  showing that $HK$ is the smallest subgroup of $G$ containing both $H$ and
+  $K$.  First observe that since $e \in K$, $H = He \subseteq HK$. 
+  Similarly $K = eK \subseteq HK$.  So $HK$ contains both $H$ and $K$.  Now
+  assume that $F$ is a subgroup which contains both $H$ and $K$.  Then given
+  any $x \in H$ and $u \in K$, then $x$ and $u \in F$ and so $xu \in F$. 
+  Hence $HK \subseteq F$.  So $HK$ is the smallest subgroup which contains
+  both $H$ and $K$.
+  
+  A similar argument shows that $KH$ is a subgroup of $G$ and that 
+  $H \vee K = KH$ as well.
+  
+  So we have that $HK = \langle H \union K \rangle = H \vee K = K \vee H =
+  KH$.
+\end{proof}
+
+We can use this fact to show that normal subgroups form a sub-lattice 
+within the lattice of subgroups of a group.
+
+\begin{theorem}
+  Let $G$ be a group, and let $H$ and $K$ be normal subgroups of $G$.  Then
+  $H \vee K = \langle H \union K \rangle$ and $H \wedge K = H \intersect K$
+  are both normal.
+\end{theorem}
+\begin{proof}
+  We know that $H \vee K = HK$, so we will show that $HK$ is a normal
+  subgroup of $G$.  If $x \in H$ and $u \in K$ and $z \in G$, then
+  $xu$ is a typical element of $HK$ and we have that
+  \[
+    z^{-1}xuz = z^{-1}xzz^{-1}uz,
+  \]
+  and $z^{-1}xz \in H$, $z^{-1}uz \in K$, and so $z^{-1}xuz \in HK$.  Hence
+  $HK$ is normal.
+
+  Also, given any $y \in H \intersect K$, and any $x \in G$, we have
+  that $x^{-1}yx \in H$ and $x^{-1}yx \in K$, so $x^{-1}yx \in H
+  \intersect K$, and so $H \intersect K$ is normal.
+\end{proof}
+
+\begin{corollary}
+  If $G$ is a group, then the set of normal subgroups of $G$ is a lattice.
+\end{corollary}
+
+We will use the symbol $\lhd$ to represent the order that gives this
+lattice.  In other words, $H \lhd K$ if and only if both $H$ and $K$
+are normal and $H \le K$.  This extends the use of $\lhd$ to indicate
+a normal subgroup of a group.
+
+\begin{example}
+  The normal subgroup lattice of $D_{8}$ is:
+  
+  \begin{picture}(10,8)(-5,-1)
+    \put(0,0){\makebox(0,0){$\{1\}$}}
+    \put(0,0.5){\line(0,1){1}}
+    \put(0,2){\makebox(0,0){$\langle a^{2} \rangle$}}
+    \put(0,2.5){\line(0,1){1}}
+    \put(0.5,2.5){\line(1,1){1}}
+    \put(-0.5,2.5){\line(-1,1){1}}
+    \put(-2,4){\makebox(0,0){$\langle a^{2}, b \rangle$}}
+    \put(0,4){\makebox(0,0){$\langle a \rangle$}}
+    \put(2,4){\makebox(0,0){$\langle a^{2}, ab \rangle$}}
+    \put(0,4.5){\line(0,1){1}}
+    \put(1.5,4.5){\line(-1,1){1}}
+    \put(-1.5,4.5){\line(1,1){1}}
+    \put(0,6){\makebox(0,0){$D_{8}$}}
+  \end{picture}
+  
+  The lattice diagrams for the subgroup lattice and the normal subgroup
+  lattice are sometimes combined by representing the normal subgroup lattice
+  by thicker lines or double lines.
+  
+  \begin{picture}(10,8)(-5,-1)
+    \put(0,0){\makebox(0,0){$\{1\}$}}
+    \put(0.1,0.5){\line(0,1){1}}
+    \put(-0.1,0.5){\line(0,1){1}}
+    \put(0.5,0.5){\line(1,1){1}}
+    \put(0.5,0.25){\line(2,1){3}}
+    \put(-0.5,0.5){\line(-1,1){1}}
+    \put(-0.5,0.25){\line(-2,1){3}}
+    \put(-4,2){\makebox(0,0){$\langle b \rangle$}}
+    \put(-2,2){\makebox(0,0){$\langle a^{2}b \rangle$}}
+    \put(0,2){\makebox(0,0){$\langle a^{2} \rangle$}}
+    \put(2,2){\makebox(0,0){$\langle ab \rangle$}}
+    \put(4,2){\makebox(0,0){$\langle a^{3}b \rangle$}}
+    \put(0.1,2.5){\line(0,1){1}}
+    \put(-0.1,2.5){\line(0,1){1}}
+    \put(3.5,2.5){\line(-1,1){1}}
+    \put(2,2.5){\line(0,1){1}}
+    \put(0.55,2.45){\line(1,1){1}}
+    \put(0.45,2.55){\line(1,1){1}}
+    \put(-3.5,2.5){\line(1,1){1}}
+    \put(-0.45,2.55){\line(-1,1){1}}
+    \put(-0.55,2.45){\line(-1,1){1}}
+    \put(-2,2.5){\line(0,1){1}}
+    \put(-2,4){\makebox(0,0){$\langle a^{2}, b \rangle$}}
+    \put(0,4){\makebox(0,0){$\langle a \rangle$}}
+    \put(2,4){\makebox(0,0){$\langle a^{2}, ab \rangle$}}
+    \put(0.1,4.5){\line(0,1){1}}
+    \put(-0.1,4.5){\line(0,1){1}}
+    \put(1.55,4.55){\line(-1,1){1}}
+    \put(1.45,4.45){\line(-1,1){1}}
+    \put(-1.55,4.55){\line(1,1){1}}
+    \put(-1.45,4.45){\line(1,1){1}}
+    \put(0,6){\makebox(0,0){$D_{8}$}}
+  \end{picture}
+\end{example}
+
+Part of the importance of normal subgroups is that they are closely related
+to homomorphisms.  In fact every homomorphism gives you a normal subgroup.
+
+\begin{theorem}\label{thm:inversenormal}
+  Let $G$ and $H$ be groups and $\alpha: G \to H$ a homomorphism.  If $K$ is
+  a normal subgroup of $H$, then $\alpha^{-1}(K)$ is a normal subgroup of
+  $G$.
+  
+  In particular, $\ker \alpha$ is always normal.
+\end{theorem}
+\begin{proof}
+  We know that $\alpha^{-1}(K)$ is a subgroup of $G$.  Given any $x \in G$,
+  and any $y \in \alpha^{-1}(K)$, we have that
+  \[
+    \alpha(x^{-1}yx) = (\alpha(x))^{-1}\alpha(y)\alpha(x),
+  \]
+  and $\alpha(y) \in K$, so $(\alpha(x))^{-1}\alpha(y)\alpha(x) \in K$. 
+  Therefore, $x^{-1}yx \in K$, and so $K$ is normal.
+  
+  We recall that $\ker \alpha = \alpha^{-1}(\{e\})$, and $\{e\}$ is always
+  normal, so $\ker \alpha$ is normal.
+\end{proof}
+
+\begin{corollary}
+  If $G$ and $H$ are groups, and $\alpha : G \to H$ is an isomorphism, then
+  a subgroup $K$ of $G$ is normal if and only if $\alpha(K)$ is normal.
+\end{corollary}
+
+\begin{corollary}
+  If $G$ and $H$ are isomorphic, then the lattice of normal subgroups of $G$
+  and the lattice of normal subgroups of $H$ are isomorphic.
+\end{corollary}
+
+\begin{example}
+  Consider the homomorphism $\alpha: D_{8} \to V$ defined by 
+  $\alpha(a) = a$, and $\alpha(b) = b$.  Looking at the image of each 
+  element, we see get the following table:
+  \[
+    \begin{array}{c|c}
+      x & \alpha(x) \\
+      \hline
+      1 & 1 \\
+      a & a \\
+      a^{2} & 1 \\
+      a^{3} & a \\
+      b & b \\
+      ab & ab \\
+      a^{2}b & b \\
+      a^{3}b & ab
+    \end{array}
+  \]
+  
+  Since $V$ is Abelian, every subgroup is normal, and the inverse 
+  images of each subgroup are the normal subgroups
+  \begin{align*}
+     \alpha^{-1}(\{1\}) &= \{1, a^{2}\} \\
+     \alpha^{-1}(\{1, a\}) &= \{1, a, a^{2}, a^{3}\} \\
+     \alpha^{-1}(\{1, b\}) &= \{1, b, a^{2}, a^{2}b\} \\
+     \alpha^{-1}(\{1, ab\}) &= \{1, ab, a^{2}, a^{3}b\} \\
+     \alpha^{-1}(V) &= D_{8}.
+  \end{align*}
+\end{example}
+
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Prove Theorem~\ref{thm:normalizers}.
+  
+  \item Let $H = \langle X \rangle$ be a subgroup of a group $G$. 
+    Show that $H$ is normal if and only if $g^{-1}xg \in H$ for all $x
+    \in X$.
+  
+  \item Find the normal subgroup lattice of $D_{10}$.
+
+  \item Find the normal subgroup lattice of $D_{12}$.
+  
+  \item Find the normal subgroup lattice of $A_{4}$.
+  
+  \item\label{ex:commutatorsubgroup} Given elements $x$ and $y \in G$,
+    their \defn{commutator}{communtator} is the element
+    \[
+      [x,y] = x^{-1}y^{-1}xy.
+    \]
+    The \defn{derived}{subgroup!derived} or \defn{commutator
+    subgroup}{subgroup!commutator} is the subgroup generated by all 
+    the commutators of elements of $G$
+    \[
+      G' = \langle \{ [x,y] : x, y \in G\} \rangle
+    \]
+    
+    \begin{theoremenum}
+      \item Show that if $x$ and $y$ commute, then $[x,y] = e$.  
+        Conclude that the commutator subgroup of an Abelian group is 
+        always $\{e\}$.
+      
+      \item Show that $G'$ is normal.
+      
+      \item Find the commutator subgroup of $D_{8}$.
+      
+      \item If $H$ and $K$ are normal subgroups of $G$, show that the 
+        commutator $[x,y]$ of any pair $x \in H$ and $y \in K$ lies 
+        in $H \wedge K$.  Show that if $H \wedge K = \{e\}$, then any 
+        element of $H$ commutes with any element of $K$.
+
+    \end{theoremenum}
+\end{exercises}
+
+\section{Groups of Small Order, Part II}
+
+In previous sections we have discovered that all the groups of order 
+less than $8$ are isomorphic to one of a small collection of groups.  
+We do not know what groups there are of order $8$, however.
+
+We have identified $C_{8}$, $C^{2} \cross C^{4}$, $C_{2} \cross C_{2}
+\cross C_{2}$ and $D_{8}$, but there could potentially be more.  In fact,
+in Exercise~\ref{ex:quaterniongroup}, there was the following definition.
+
+\begin{definition}
+  For any natural number $n$, the \defn{quaternion group}{group!quaternion} is
+  the group with elements
+  \[
+    Q_{4n} = \{1, a, a^{2}, \ldots, a^{2n-1}, b, ab, a^{2}b, \ldots, a^{2n-1}b \}
+  \]
+  where the Cayley table is determined by the relations $a^{2n} = 1$, $b^{2} =
+  a^{n}$, and $b^{-1}ab = a^{-1}$.
+\end{definition}
+
+In Exercise~\ref{ex:quaterniongroup} it was shown that $Q_{8}$
+is not isomorphic to any other known group of order $8$.  In fact, $Q_{8}$
+completes the set of isomorphism classes of groups of order $8$.
+
+\begin{theorem}
+  If $G$ is a group of order $8$, then $G$ is isomorphic to one of $C_{8}$,
+  $C_{2} \cross C_{4}$, $C_{2} \cross C_{2} \cross C_{2}$, $D_{8}$ or $Q_{8}$.
+\end{theorem}
+\begin{proof}
+  If $G$ has an element of order $8$, then Theorem~\ref{thm:cyclicgroups} tells
+  us that $G$ is cyclic, and so $G \isom C_{8}$.
+
+  If every element of $G$ other then $e$ has order $2$, then
+  Theorem~\ref{thm:order2group} tells us that $G$ is a direct product of
+  cyclic groups of order $2$. So $G \isom C_{2} \cross C_{2} \cross C_{2}$.
+
+  If $G$ is not isomorphic to one of these two groups, it must have an element
+  of order 4, and no elements of order 8.  Let $a$ be this element of 
+  order $4$ in $G$, and let $H = \langle a \rangle$.  Since $|G : H| = 
+  |G|/|H| = 8/4 = 2$, so if $b \in G \setminus H$, then $H$ has two cosets $H$
+  and $Hb$, and $G$ is the disjoint union of $H$ and $Hb$.  So
+  \[
+    G = \{e, a, a^{2}, a^{3}, b, ab, a^{2}b, a^{3}b\}.
+  \]
+
+  If $G$ is Abelian, then $ab = ba$, and $b$ must either be of order 
+  $2$ or $4$.  If $b^{2} = 1$, then $G \isom C_{4} \cross C_{2}$ where 
+  the isomorphism is given by $\alpha(u^{k}, v^{l}) = a^{k}b^{l}$, 
+  where $C_{4} = \langle u \rangle$ and $C_{2} = \langle v \rangle$.  
+  If $b^{2} \ne e$, then we must have $b^{2} = a^{k}$, since if 
+  $b^{2} = a^{k}b$, then the cancellation law tells us that $b = a^{k} 
+  \in H$, which is a contradiction.  Furthermore if $k = 1$ or $k = 3$, 
+  then $b^{4} = a^{2} \ne e$, which is a contradiction.  So then 
+  $b^{2} = a^{2}$.  But in this case, $ab$ has order $2$, and $G \isom
+  C_{4} \cross C_{2}$ where the isomorphism is given by $\alpha(u^{k}, v^{l}) 
+  = a^{k}(ab)^{l}$.
+  
+  So the only Abelian groups of order $8$ are $C_{8}$, $C_{4} \cross C_{2}$
+  and $C_{2} \cross C_{2} \cross C_{2}$.
+
+  If $G$ is not Abelian, we note that Theorem~\ref{thm:normalconditions} says
+  that since $|G : H| = 2$, $H$ is normal in $G$, which means that $b^{-1}ab
+  \in H$, so
+  \[
+    b^{-1}ab = a^{k}
+  \]
+  where $k$ is one of $0$, $1$, $2$ or $3$.  But $k \ne 0$, since 
+  otherwise $a \in C(e) = \{e\}$, which cannot happen.  If $k = 2$, then
+  \[
+   b^{-1}a^{2}b = b^{-1}abb^{-1}ab = a^{2}a^{2} = a^{4} = e,
+  \]
+  so $a^{2} \in C(e)$, which is also impossible.  If $k = 1$, then $b^{-1}ab
+  = a$ implies $ab = ba$, so $G$ is Abelian.  So the only remaining
+  possibility is that $k = 3$.
+
+  As before, the order of $b$ must be either $2$ or $4$.  If $b$ has order $2$,
+  then $b^{2} = 1$.  This means that $b = b^{-1}$, and so $b^{-1}ab = a^{3}$
+  implies that $ba = a^{3}b$. So $G$ is determined by the relations
+  $a^{4} = 1$, $b^{2} = 1$ and $ba = a^{3}b$, and $G$ is isomorphic to $D_{8}$
+  under the trivial isomorphism $\alpha(a^{k}b^{l}) = a^{k}b^{l}$.
+  
+  Finally, if $b$ has order $4$, then the same argument as the Abelian case
+  tells us that $b^{2} = a^{2}$.  We then observe that since $b^{3} = b_{-1}$,
+  we have that $G$ is determined by the relations $a^{4} = 1$, $b^{2} = a^{2}$
+  and $b^{-1}ab = a^{-1}$, and $G$ is isomorphic to $Q_{8}$
+  under the trivial isomorphism $\alpha(a^{k}b^{l}) = a^{k}b^{l}$.
+\end{proof}
+
+The next lowest order that we don't have full information on is groups of
+order $9$.  We know that we have $C_{9}$ and $C_{3} \cross C_{3}$, but there
+could potentially be other groups of order $9$.
+
+\begin{theorem}\label{thm:groupsoforder9}
+  Let $G$ be a group of order $9$.  Then $G$ is isomorphic to one of $C_{9}$
+  or $C_{3} \cross C_{3}$.
+\end{theorem}
+\begin{proof}
+  From Lagrange's theorem, the elements of $G$ all have orders dividing $9$,
+  so they have order $1$, $3$ or $9$.  If there is an element of order $9$,
+  then Theorem~\ref{thm:cyclicgroups} tells us that $G \isom C_{9}$.  So if
+  $G$ is not isomorphic to $C_{9}$, then every
+  element other than the identity must have order $3$.
+  
+  Choosing an element $a \ne e$, we have that the subgroup $H = \langle
+  a \rangle$ has order $3$.  Now choose $b \not\in H$.  Now $b^{2} \not\in H$,
+  since that would imply $b^{2} = a^{k}$, where $k = 1$ or $2$, and in either
+  case $b$ would have order $6$.  Similarly $b^{2} \notin Hb$ since then we
+  would have $b^{2} = a^{k}b$, where $k = 1$ or $2$, and then since $G$ is
+  Abelian $b^{3} = a^{k}b^{2} = a^{2k}b \ne e$, since $b \notin H$.  So the
+  right cosets of $H$ are $H$, $Hb$ and $Hb^{2}$, and therefore
+  \[
+    G = \{e, a, a^{2}, b, ab, a^{2}b, b^{2}, ab^{2}, a^{2}b^{2}\}.
+  \]
+
+  Theorem~\ref{thm:centreprimepower} tells us that the centre of $G$ has
+  $|Z(G)| = 3$ or $|Z(G)| = 9$.  If $|Z(G)| = 9$, then $G$ is Abelian, and
+  $G \isom C_{3} \cross C_{3}$ via the isomorphism $\alpha(u^{k}, u^{l}) =
+  a^{k}b^{l}$, where $C_{3} = \langle u \rangle$.
+  
+  So assume that $|Z(G)| = 3$.  Without loss of generality in the above
+  discussion, we could have assumed that we chose $a \in Z(G)$, so that
+  $H = Z(G)$.  Therefore $a$ commutes with every element of $G$, so in
+  particular, $ba = ab$.  But since $G = \langle a, b \rangle$, $G$ is Abelian
+  and $|Z(G)| = |G| = 9$.  So every group of order 9 is Abelian.
+\end{proof}
+
+At this point we have classified every group of order up to and including 11. 
+It turns out that any group of order $12$ is isomorphic to one of $C_{12}$,
+$C_{6} \cross C_{2}$, $D_{12}$, $Q_{12}$ or the alternating group $A_{4}$.
+However, the proof of this fact requires considerably more powerful techniques
+than we have available right now.
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Show that if $p$ is a prime number, and $G$ is a group with $|G| =
+  p^{2}$, then $G$ is isomorphic to one of $C_{p^{2}}$ or $C_{p} \cross C_{p}$.
+  
+  Hint: generalize the case of $|G| = 9$.
+  
+  \item Explain why there is one group of order $13$ and two groups 
+    of order $14$.
+  
+  \item Show that $C_{15} \isom C_{5} \cross C_{3}$.
+\end{exercises}
+
+\section{Extension: Cayley Graphs}
+
+Cayley graphs are closely related to generators, and give a nice way 
+of picturing groups.  Unfortunately, they are not that useful in 
+distingishing between groups which are not isomorphic, but they are 
+of some independent interest, particularly when considering how one 
+can computerize calculations involving groups.
+
+\begin{definition}
+  Let $(G, \ast, e)$ be a group, and let $S = \{ g_{1}, a_{2}, 
+  \ldots, g_{n}\}$ be a finite set which generates $G$, ie. $G = 
+  \langle S \rangle$.  The \defn{Cayley graph}{Cayley graph} of $G$ 
+  with the generating set $S$ is the graph $\Gamma_{G} = (G, E)$ 
+  with vertices being the elements of $G$, and two vertices $x$ and
+  $y \in G$ are connected by an edge if $x = yg$ for some
+  $g \in S \union S^{-1}$.
+\end{definition}
+
+Definitions vary somewhat from source to source.  Some may define the Cayley
+graph as a directed graph with directed edges of the form $(x, xg)$ for
+$g \in S \union S^{-1}$, while others allow a double edge $(x,y)$ if
+both $x = yg$ and $y = xg$.
+
+\begin{example}
+  The cyclic group $C_{4} = \{1, a, a^{2}, a^{3}\}$ has a generating set
+  $S = \{a\}$. The Cayley graph of $G$ with this generating set has edges
+  $(1,a)$, $(a,a^{2})$, $(a^{2}, a^{3})$ and $(a^{3}, 1)$.  In other words,
+  it looks like this:
+  
+  \begin{picture}(4,4)(-1,-1)
+    \put(0,0){\line(1,0){2}}
+    \put(0,0){\line(0,1){2}}
+    \put(0,2){\line(1,0){2}}
+    \put(2,0){\line(0,1){2}}
+    \put(0,0){\circle*{0.2}}
+    \put(0,2){\circle*{0.2}}
+    \put(2,0){\circle*{0.2}}
+    \put(2,2){\circle*{0.2}}
+    \put(-0.5,-0.5){\makebox(0,0){$1$}}
+    \put(-0.5,2.5){\makebox(0,0){$a$}}
+    \put(2.5,-0.5){\makebox(0,0){$a^{3}$}}
+    \put(2.5,2.5){\makebox(0,0){$a^{2}$}}
+  \end{picture}
+  
+  This group is also generated (somewhat redundantly) by the set
+  $S = \{a, a^{2}\}$.  This gives a Cayley graph which looks like this:
+  
+  \begin{picture}(4,4)(-1,-1)
+    \put(0,0){\line(1,0){2}}
+    \put(0,0){\line(0,1){2}}
+    \put(0,0){\line(1,1){2}}
+    \put(0,2){\line(1,0){2}}
+    \put(0,2){\line(1,-1){2}}
+    \put(2,0){\line(0,1){2}}
+    \put(0,0){\circle*{0.2}}
+    \put(0,2){\circle*{0.2}}
+    \put(2,0){\circle*{0.2}}
+    \put(2,2){\circle*{0.2}}
+    \put(-0.5,-0.5){\makebox(0,0){$1$}}
+    \put(-0.5,2.5){\makebox(0,0){$a$}}
+    \put(2.5,-0.5){\makebox(0,0){$a^{3}$}}
+    \put(2.5,2.5){\makebox(0,0){$a^{2}$}}
+  \end{picture}
+\end{example}
+
+\begin{example}
+  The four-group $V = \{1, a, b, ab\}$ has a generating set
+  $S = \{a, b\}$. The Cayley graph of $G$ with this generating set has edges
+  $(1,a)$, $(a,ab)$, $(1, b)$ and $(b, ab)$.  In other words,
+  it looks like this:
+  
+  \begin{picture}(4,4)(-1,-1)
+    \put(0,0){\line(1,0){2}}
+    \put(0,0){\line(0,1){2}}
+    \put(0,2){\line(1,0){2}}
+    \put(2,0){\line(0,1){2}}
+    \put(0,0){\circle*{0.2}}
+    \put(0,2){\circle*{0.2}}
+    \put(2,0){\circle*{0.2}}
+    \put(2,2){\circle*{0.2}}
+    \put(-0.5,-0.5){\makebox(0,0){$1$}}
+    \put(-0.5,2.5){\makebox(0,0){$a$}}
+    \put(2.5,-0.5){\makebox(0,0){$b$}}
+    \put(2.5,2.5){\makebox(0,0){$ab$}}
+  \end{picture}
+  
+  This group is also generated by the set
+  $S = \{a, b, ab\}$.  This gives a Cayley graph which looks like this:
+  
+  \begin{picture}(4,4)(-1,-1)
+    \put(0,0){\line(1,0){2}}
+    \put(0,0){\line(0,1){2}}
+    \put(0,0){\line(1,1){2}}
+    \put(0,2){\line(1,0){2}}
+    \put(0,2){\line(1,-1){2}}
+    \put(2,0){\line(0,1){2}}
+    \put(0,0){\circle*{0.2}}
+    \put(0,2){\circle*{0.2}}
+    \put(2,0){\circle*{0.2}}
+    \put(2,2){\circle*{0.2}}
+    \put(-0.5,-0.5){\makebox(0,0){$1$}}
+    \put(-0.5,2.5){\makebox(0,0){$a$}}
+    \put(2.5,-0.5){\makebox(0,0){$b$}}
+    \put(2.5,2.5){\makebox(0,0){$ab$}}
+  \end{picture}
+\end{example}
+
+Notice that in each case, the graphs look the same, even though the groups
+are not isomorphic.
+
+\begin{proposition}
+  Let $G$ be a finite group.  The Cayley graph with generating set taken to
+  be all of $G$ is the complete graph on $|G|$ vertices.
+\end{proposition}
+\begin{proof}
+  Given any pair of vertices $x$, $y$, the element $g = y^{-1}x$ is in the
+  generating set $G$, and $yg = yy^{-1}x = x$, so there is an edge joining
+  $x$ and $y$.  Hence the Cayley graph is a complete graph.
+\end{proof}
+
+With careful selection of the generating set, however, the Cayley graph can
+reveal a lot about the structure of the group.
+
+\begin{example}
+  The group of integers $(\integers, +, 0)$ is generated by the 
+  element $1$.  The Cayley graph is infinite, but the region near $0$ 
+  looks like:
+  
+  \begin{picture}(14,2)(-7,-1)
+    \multiput(-6,0)(2,0){6}{\line(1,0){2}}
+    \multiput(-6,0)(2,0){7}{\circle*{0.2}}    
+    \put(-6,-0.5){\makebox(0,0){$-3$}}
+    \put(-4,-0.5){\makebox(0,0){$-2$}}
+    \put(-2,-0.5){\makebox(0,0){$-1$}}
+    \put(0,-0.5){\makebox(0,0){$0$}}
+    \put(2,-0.5){\makebox(0,0){$1$}}
+    \put(4,-0.5){\makebox(0,0){$2$}}
+    \put(6,-0.5){\makebox(0,0){$3$}}    
+    \put(-6.5,0){\makebox(0,0){$\cdots$}}    
+    \put(6.5,0){\makebox(0,0){$\cdots$}}    
+  \end{picture}
+  
+\end{example}
+
+
+Cayley graphs have some regularities that normal graphs do not.
+
+\begin{proposition}
+  Let $G$ be a group, and $S$ a finite set which generates $G$.
+  The Cayley graph of $G$ with generating set $S$ has the following
+  properties:
+  \begin{theoremenum}
+    \item the graph is connected.
+    
+    \item every vertex is an end of exactly $|S \union S^{-1}|$ edges
+  \end{theoremenum}
+\end{proposition}
+\begin{proof}
+  (i) Every element $x$ can be written as a product $x = x_{1}x_{2}\cdots x_{n}$
+  of elements $x_{k} \in S \union S^{-1}$, so $e, x_{1}, x_{1}x_{2}, \ldots,
+  x_{1}x_{2}\cdots x_{n-1}, x$ is a path from $e$ to $x$.  So the Cayley graph
+  is connected.
+  
+  (ii) Given any $x \in G$, if we consider the set
+  \[
+    X = \{ xg : g \in S \union S^{-1} \},
+  \]
+  then we note that if $xg_{1} = xg_{2}$, the cancellation law says that
+  $g_{1} = g_{2}$.  Therefore every edge $(x, xg)$ is distinct, and $|X| =
+  |S \union S^{-1}|$.  Furthermore, if there is some $y$ such that $(y,x)$
+  is an edge, then $x = yg$ for some $g \in S \union S^{-1}$, so $y =
+  xg^{-1} \in X$.  So $X$ is exactly the set of all vertices connected to
+  $x$ by one edge.  So $x$ is an end of exactly $|S \union S^{-1}|$ edges.
+\end{proof}
+
+
+\subsection*{Exercises}
+
+\begin{exercises}
+  \item Draw the Cayley graph of $C_{6}$ with generating set $\{a\}$.
+  
+    Draw the Cayley graph of $C_{6}$ with generating set $\{a^{2}, a^{3}\}$.
+
+  \item Draw the Cayley graph of $D_{6}$ with generating set $\{a,b\}$.
+
+  \item Draw the Cayley graph of $D_{8}$ with generating set $\{a,b\}$.
+
+  \item Draw the Cayley graph of $C_{2} \cross C_{4}$ with generating set 
+  $\{(a,1), (1,b)\}$.
+
+  \item Draw the region near $0$ of the Cayley graph of $\integers$ with
+    generating set $\{2, 3\}$.
+
+  \item Draw the region near $0$ of the Cayley graph of $\integers^{2}$ with
+    generating set $\{(1,0), (0,1)\}$.
+    
+    Draw the same region if the generating set is $\{(1,0), (0,1), 
+    (1,1)\}$.
+  
+  \item Draw the region near $e$ of the Cayley graph of the free
+    group\index{group!free} $F_{2}$ with generating set $\{a, b\}$.
+\end{exercises}
+
+
+\newpage
+\section*{Assignment 4}
+
+The following exercises are due Monday, April 19th.  Since this is a
+long assignment, it will be worth twice as much as the other 3 assignments.
+
+\begin{description}
+  \item[3.1] Exercises 2, 4, 6.
+  \item[3.2] Exercises 1, 3, 5.
+  \item[3.3] Exercises 1, 3, 5.
+  \item[3.4] Exercises 1, 4, 5.
+  \item[3.5] Exercises 2.
+  \item[3.6] Exercises 4.
+  \item[3.7] Exercises 1, 2, 5, 6.
+  \item[3.8] Exercises 2, 3, 6.
+  \item[3.9] Exercises 1, 2.
+  \item[3.10] Exercises 1, 2, 5, 6.
+\end{description}
+

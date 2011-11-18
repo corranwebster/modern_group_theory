@@ -1,0 +1,41 @@
+
+\subsection*{Extension: Topological Groups}
+
+Prerequisite: to do this extension you should have taken either 
+Topology or Real Analysis.
+
+When groups appear in various areas of mathematics, they often have 
+additional structure.  In Analysis and Geometry/Topology, this 
+additional structure is often topological in nature, but this 
+topological structure is consistent with the group operations.
+
+\begin{definition}
+  A \defn{topological group}{group!topological} is a group $(G, 
+  \ast, e)$ together with a topology $\tau$ on $G$, such that 
+  $\ast: G \cross G \to G$ and ${}^{-1} : G \to G$ are both 
+  continuous.
+\end{definition}
+
+It turns out that it is sufficient to bundle the two conditions of 
+this definition into one:
+
+\begin{proposition}
+  A group $(G, \ast, e)$ together with a topology $\tau$ on $G$, is a 
+  topological group if and only if the function $(x,y) \mapsto 
+  xy^{-1}$ is continuous from $G \cross G \to G$.
+\end{proposition}
+
+
+\begin{enumerate}
+    \item Show that $(\reals, +, 0)$ is a topological group with its 
+    usual topology.
+
+    \item Show that $((0,\infty), \cdot, 1)$ is a topological group with its 
+    usual topology.
+    
+    \item Find a homeomorphic group isomorphism between the 
+    topological groups of the previous two problems.
+    
+    \item Prove Proposition.
+\end{enumerate}
+
